@@ -1,0 +1,111 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.enipro"
+        minSdkVersion 19
+        multiDexEnabled true
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.google.firebase:firebase-storage:11.4.2'
+    implementation 'com.google.firebase:firebase-auth:11.4.2'
+    implementation 'com.google.firebase:firebase-messaging:11.4.2'
+    compile "com.android.support:cardview-v7:27.0.1"
+    compile "com.android.support:recyclerview-v7:27.0.1"
+    compile "com.android.support:design:27.0.1"
+    // Retrofit, RxJava and OkHttp
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+
+    compile 'com.afollestad.material-dialogs:core:0.9.5.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'
+
+    // Joda Date
+    compile 'net.danlew:android.joda:2.9.9.1'
+    compile 'com.github.johnkil.android-robototextview:robototextview:4.0.0'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Room persistence library
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    implementation "android.arch.lifecycle:extensions:1.0.0"
+
+
+    implementation("com.mikepenz:materialdrawer:6.0.1@aar") {
+        transitive = true
+    }
+
+    implementation 'com.mikepenz:google-material-typeface:3.0.1.2.original@aar'
+    implementation 'com.mikepenz:fontawesome-typeface:4.7.0.2@aar'
+
+    compile 'de.hdodenhof:circleimageview:1.2.1'
+    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
+
+    // Butterknife annotation library
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // Multidex to allow for more thatn 64k in .dex file
+    compile 'com.android.support:multidex:1.0.2'
+
+    compile 'net.danlew:android.joda:2.9.9.1'
+    implementation 'com.libRG:customtextview:1.1'
+
+    compile 'com.github.stfalcon:chatkit:0.2.2'
+
+}
+
+
+
+
+
+
+
+
+
+
+
+apply plugin: 'com.google.gms.google-services'

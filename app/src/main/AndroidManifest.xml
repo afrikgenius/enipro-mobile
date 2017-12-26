@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.enipro">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- On android M and above, the permission is requested on run time. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:name=".Application"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".presentation.chat.ChatActivity" android:label="@string/title_activity_chat"/>
+        <activity android:name=".presentation.forums.ForumActivity" android:label="@string/title_activity_forum"/>
+        <activity android:name=".presentation.help.HelpActivity" />
+        <activity
+            android:name=".presentation.login.LoginActivity"
+            android:noHistory="true" />
+        <activity android:name=".presentation.post.PostActivity" />
+        <activity android:name=".presentation.profile.ProfileActivity" />
+        <activity android:name=".presentation.search.UserSearchActivity" />
+        <activity
+            android:name=".presentation.signup.SignUpActivity"
+            android:noHistory="true" />
+        <activity android:name=".presentation.home.HomeActivity" />
+        <activity android:name=".presentation.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".presentation.profile.ProfileEditActivity" />
+
+        <!-- Instance ID Service for firebase. -->
+        <service android:name=".firebase.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Messaging service for feeds. -->
+        <service android:name=".firebase.EniproMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".presentation.feeds.FeedCommentActivity"
+            android:windowSoftInputMode="adjustResize" android:label="@string/feed_comment_label"/>
+        <activity android:name=".presentation.signup.AddPhotoActivity" />
+        <activity android:name=".presentation.chat.ChatMessagesActivity" />
+        <activity android:name=".presentation.chat.ChatUsersActivity" />
+    </application>
+
+</manifest>

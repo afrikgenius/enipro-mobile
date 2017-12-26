@@ -1,0 +1,224 @@
+<resources>
+
+
+    <string name="hello_world">Hello World</string>
+    <string name="app_name">Enipro</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_swipe_view_demo1">Swipe Demo1</string>
+    <string name="title_activity_swipe_view_demo2">Swipe Demo2</string>
+    <string name="title_activity_login">Login Activity</string>
+    <string name="title_activity_sign_up">Sign up</string>
+
+    <!-- Strings used in the view pager activity and its fragments. (Main Activity) -->
+    <string name="login_text">Login</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="member">Don\'t have an account?</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="wait">Please wait &#8230;</string>
+
+
+    <!-- Strings used in Sign up activity-->
+    <string name="already_a_user">Already have an account?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email">Email</string>
+    <string name="password">Password(above 8 characters)</string>
+    <string name="pass">Password</string>
+    <string name="sign_up_btn_text">CREATE ACCOUNT</string>
+
+    <!-- Strings used in Login activity -->
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_pass">Forgot Password</string>
+    <string name="input_content">Email</string>
+    <string name="empty"></string>
+    <string name="title_activity_quick_reservation">QuickReservation</string>
+    <string name="login_btn_text">LOGIN</string>
+
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="title_activity_forgot_password">ForgotPassword</string>
+
+    <string name="tandc">By logging in, you agree to Enipro\'s Privacy Policy and Terms of Use</string>
+    <string name="tandcs">By creating an account, you agree to Enipro\'s Privacy Policy and Terms of Use</string>
+
+    <string-array name="nav_footer_items">
+        <item>LOG OUT</item>
+    </string-array>
+
+    <!-- Test data for opening and closing of the navigation drawer -->
+    <string name="openDrawer">Drawer Open</string>
+    <string name="closeDrawer">Drawer Closed</string>
+    <string name="title_activity_map">MapActivity</string>
+
+    <!-- Text to display on the snack bar when there is no internet connection. -->
+    <string name="no_internet">No Internet Connection</string>
+    <string name="try_again">TRY AGAIN</string>
+
+    <!-- GPS alert dialog strings. -->
+    <string name="enable_gps_title">Location Services Disabled</string>
+    <string name="enable_gps">Please enable location services.</string>
+    <string name="enable">Enable</string>
+    <string name="cancel">Cancel</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- List of country codes accepted by the application and shown in the sign up activity spinner view. -->
+    <string-array name="country_codes">
+        <item>+33</item>
+        <item>+234</item>
+    </string-array>
+
+    <!-- List of types of users supported by the application. -->
+    <string-array name="user_type">
+        <item>select a user type</item>
+        <item>student</item>
+        <item>professional</item>
+    </string-array>
+
+    <string name="invalid_pass">Please enter a valid password. Password must be more than 8 characters, must contain a number and a symbol.</string>
+    <string name="service_not_available">Service not available</string>
+    <string name="invalid_lat_long_used">Invalid Location</string>
+    <string name="no_address_found">Address Not Found</string>
+    <string name="address_found">Address Found</string>
+    <string name="done">DONE</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_payments">PaymentsActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="logging_in">Logging in..</string>
+    <string name="showcaseContentView">Click on this button to make a reservation.</string>
+    <string name="title_activity_reservation_action">ReservationActionActivity</string>
+
+    <!-- Reservation action activity. -->
+    <string name="get_price_btn">Get Price Quote</string>
+    <string name="confirm">Confirm</string>
+    <string name="price">PRICE: </string>
+    <string name="stub_price">€200</string>
+    <string name="distance">DISTANCE: </string>
+    <string name="stub_distance">THE DISTANCE BETWEEN THE PICK UP LOCATION AND DESTINATION IS 20km</string>
+    <string name="making_reservation">Making Reservation</string>
+    <string name="reservation">Reservation</string>
+    <string name="destination_hint">Enter destination</string>
+    <string name="pickUp_hint">Enter pickup location</string>
+    <string name="history">History</string>
+    <string name="payments">Payments</string>
+
+
+    <string name="intro_message">
+        <![CDATA[
+
+
+            This sample uses the Google Places Geo Data API for Android to provide autocomplete suggestions.
+            It shows how to use a custom Adapter to display suggestions in an AutocompleteTextView.
+            Once selected, details about a place are retrieved based on its Place id from the
+            Places Geo Data API.
+
+
+        ]]>
+    </string>
+    <string name="autocomplete_hint">Enter place name or address</string>
+    <string name="selected_place">Last Selected Place:</string>
+    <string name="clear_text">Clear Text</string>
+
+    <!-- getString(String, Object...) does not support HTML tags directly, they need to be encoded first.
+    Original string: <b>%1$s</b><br/><i>Place Id: %2$s</i><br/>Address: %3$s<br/>Phone: %4$s<br/>Website: %5$s-->
+    <string name="place_details">&lt;b&gt;%1$s&lt;/b&gt;&lt;br/&gt;&lt;i&gt;Place Id: %2$s&lt;/i&gt;&lt;br/&gt;Address: %3$s&lt;br/&gt;Phone: %4$s&lt;br/&gt;Website: %5$s</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_spash_screen">SpashScreenActivity</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_home">Home</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="search_icon_title">Search</string>
+    <string name="user_post_mock_name">Agbanagba Oghenetega</string>
+    <string name="user_post_mock_first_name">Oghenetega Agbanagba</string>
+    <string name="user_post_mock_last_name">Agbanagba</string>
+    <string name="user_post_mock_date">2d</string>
+    <string name="user_post_mock_date_prefix">on</string>
+    <string name="user_post_mock_time">3:45 pm</string>
+    <string name="user_post_headline">Software Engineer, Bank of America Merrill Lynch</string>
+    <string name="search_headline">Civil Engineering Student, University of Lagos.</string>
+    <string name="user_post_mock_content">You’ve already noticed our content flash to celebrate the Retrofit 2 release. This is another post as part of our contribution to push the Retrofit community forward by sharing the knowledge about internal changes of this Retrofit release. If you worked with Retrofit 1, you know the rudimentary behavior in regard to url handling. With Retrofit 2, there’s a kind of fundamental shift in how to think and apply your urls including any type of parameter.</string>
+    <string name="post_likes_count">12</string>
+    <string name="post_comment_responses">15</string>
+    <string name="view_more">view more</string>
+    <string name="title_activity_user_search">UserSearchActivity</string>
+
+    <string name="button_like">Like</string>
+    <string name="button_more">More</string>
+    <string name="button_comment">Comment</string>
+    <string name="title_activity_post">PostActivity</string>
+
+    <string name="post_text">POST</string>
+    <string name="post_hint">Write Post&#8230;</string>
+    <string name="post_hint_2">What\'s happening?</string>
+    <string name="tags_hint">Tags</string>
+
+    <!-- Navigation drawer items -->
+    <string name="nav_profile">Profile</string>
+    <string name="nav_forums">Forum</string>
+    <string name="nav_chats">Chat</string>
+    <string name="nav_settings">Settings and Privacy</string>
+    <string name="nav_help">Help Centre</string>
+    <string name="nav_communicate">Communicate</string>
+    <string name="title_activity_profile_activty">ProfileActivty</string>
+    <string name="title_activity_forum">Forum</string>
+    <string name="title_activity_chat">Chat</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="feed_comment_label">Comments</string>
+
+
+    <string name="save_as_draft">Save as draft?</string>
+    <string name="discard">DISCARD</string>
+    <string name="save">SAVE</string>
+    <string name="saved">Saved</string>
+
+    <string name="sending_post">Sending Post&#8230;</string>
+    <string name="sent">Sent</string>
+    <string name="noti_error">Error Sending Post. Please try again.</string>
+
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit">Edit</string>
+    <string name="logout">Log out</string>
+    <string name="share_text">Share via</string>
+
+    <string name="no_feed_data">No Feed Data</string>
+    <string name="no_feed_data_instructions">Tap the \'+\' button to create a feed item.</string>
+    <string name="add_comment_hint">Post a comment&#8230;</string>
+    <string name="btn_finish">Finish</string>
+    <string name="btn_skip">SKIP</string>
+
+    <!-- List item showing in material dialog when a profile image is to be selected. -->
+    <string-array name="photo_items">
+        <item>Take a photo</item>
+        <item>Choose existing photo</item>
+    </string-array>
+
+    <string name="camera_rationale">Camera permission is needed to take a photo.</string>
+    <string name="permission_not_granted">Permission not granted.</string>
+    <string name="external_storage_rationale">External storage permission is needed to access items in device.</string>
+    <string name="add_profile_text">Add a profile image</string>
+
+    <string name="request_intro">When you send a mentoring or tutoring request, they are shown here and also requests from professionals are displayed</string>
+
+    <string name="request_intro2">Mentoring and Tutoring Request are shown here.</string>
+    <string name="hint_enter_a_message">Type a message…</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_copy">Copy</string>
+    <string name="copied_message">Message copied!</string>
+    <string name="date_header_today">Today</string>
+    <string name="date_header_yesterday">Yesterday</string>
+    <string name="user_type">Professional</string>
+
+    <string name="no_chatuser">No Chat User</string>
+    <string name="no_chat_inst_prof1">Users in your network will appear here.</string>
+    <string name="no_chat_inst_prof2">Add users to your network.</string>
+    <string name="no_chat_inst_stu1">Users in your circle will appear here.</string>
+    <string name="no_chat_inst_stu2">Add users to your circle.</string>
+
+</resources>

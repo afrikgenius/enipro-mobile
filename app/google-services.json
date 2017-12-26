@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "935340262284",
+    "firebase_url": "https://enipro-56ea8.firebaseio.com",
+    "project_id": "enipro-56ea8",
+    "storage_bucket": "enipro-56ea8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935340262284:android:a38eff8a72d0b159",
+        "android_client_info": {
+          "package_name": "com.enipro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935340262284-t5b29jd1abec5odqcvsq83m80oq6p3ls.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enipro",
+            "certificate_hash": "a28d4cd5af47d94f86ad0b60fb08956aa87657a3"
+          }
+        },
+        {
+          "client_id": "935340262284-su3tli9339p9jv378jguiir3st70jqog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWykoFYRd-buWaFr0xM3xu5PfSnVmligM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935340262284-su3tli9339p9jv378jguiir3st70jqog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

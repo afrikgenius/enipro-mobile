@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="178dp"
+    android:background="@drawable/nav_header_672">
+
+
+    <RelativeLayout
+        android:id="@+id/emailAndNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/usersName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            app:robotoTypeface="roboto_medium" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/usersEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usersName"
+            android:layout_marginEnd="16dp"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            app:robotoTypeface="roboto_regular" />
+    </RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@id/emailAndNameLayout"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/circle_image" />
+
+
+</RelativeLayout>
