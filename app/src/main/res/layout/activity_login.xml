@@ -26,12 +26,12 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/editTxtPasswordLogin"
         android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/editTxtEmailAddressLogin"
+        android:layout_marginTop="15dp"
         app:passwordToggleContentDescription="@string/pass"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorAccent"
-        android:layout_below="@id/editTxtEmailAddressLogin">
+        app:passwordToggleTint="@color/colorAccent">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/passwordLogin"
@@ -49,23 +49,23 @@
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text"
+        android:layout_below="@+id/editTxtPasswordLogin"
+        android:layout_marginTop="17dp"
         android:text="@string/forgot_password"
         android:textSize="15sp"
-        app:robotoTypeface="roboto_light"
-        android:layout_marginTop="17dp"
-        android:layout_below="@+id/editTxtPasswordLogin"
-        android:layout_alignEnd="@+id/text" />
+        app:robotoTypeface="roboto_light" />
 
     <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/forgot_password"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/tandc"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/forgot_password"
         android:textSize="15sp"
         app:robotoTypeface="roboto_light" />
 
@@ -75,46 +75,46 @@
         style="@style/ButtonTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_teal"
         android:text="@string/login_btn_text"
-        app:robotoTypeface="roboto_medium"
-        android:layout_below="@+id/text"
-        android:layout_centerHorizontal="true" />
+        app:robotoTypeface="roboto_medium" />
 
     <!-- Text view directing the user to sign up for an account if they don't have one. -->
     <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLoginInLogin"
+        android:layout_marginTop="18dp"
+        android:layout_toStartOf="@+id/forgot_password"
+        android:gravity="center"
         android:text="@string/member"
         android:textSize="15sp"
-        app:robotoTypeface="roboto_light"
-        android:gravity="center"
-        android:layout_marginTop="18dp"
-        android:layout_below="@+id/btnLoginInLogin"
-        android:layout_toStartOf="@+id/forgot_password" />
+        app:robotoTypeface="roboto_light" />
 
     <!-- Text view directing the user to sign up for an account if they don't have one. -->
     <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/clickable_sign_up_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/signup_text"
-        android:textSize="15sp"
-        android:layout_marginStart="5dp"
-        app:robotoTypeface="roboto_light"
         android:layout_alignBaseline="@+id/member"
         android:layout_alignBottom="@+id/member"
-        android:layout_toEndOf="@+id/member" />
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/member"
+        android:text="@string/signup_text"
+        android:textSize="15sp"
+        app:robotoTypeface="roboto_light" />
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snackbar_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/btnLoginInLogin"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/member" />
 
 </RelativeLayout>

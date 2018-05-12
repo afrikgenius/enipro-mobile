@@ -21,15 +21,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.chat.ChatActivity" android:label="@string/title_activity_chat"/>
-        <activity android:name=".presentation.forums.ForumActivity" android:label="@string/title_activity_forum"/>
-        <activity android:name=".presentation.help.HelpActivity" />
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_test_c4758269916b3a51781514eb32c06a61bb406dee" />
+
         <activity
             android:name=".presentation.login.LoginActivity"
             android:noHistory="true" />
-        <activity android:name=".presentation.post.PostActivity" />
+        <activity
+            android:name=".presentation.post.PostActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".presentation.profile.ProfileActivity" />
-        <activity android:name=".presentation.search.UserSearchActivity" />
+        <activity
+            android:name=".presentation.search.UserSearchActivity"
+            android:noHistory="true" />
         <activity
             android:name=".presentation.signup.SignUpActivity"
             android:noHistory="true" />
@@ -50,7 +55,6 @@
             </intent-filter>
         </service>
 
-        <!-- Messaging service for feeds. -->
         <service android:name=".firebase.EniproMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -59,10 +63,33 @@
 
         <activity
             android:name=".presentation.feeds.FeedCommentActivity"
-            android:windowSoftInputMode="adjustResize" android:label="@string/feed_comment_label"/>
+            android:label="@string/feed_comment_label"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".presentation.signup.AddPhotoActivity" />
-        <activity android:name=".presentation.chat.ChatMessagesActivity" />
-        <activity android:name=".presentation.chat.ChatUsersActivity" />
+        <activity android:name=".presentation.messages.MessagesSearch" />
+        <activity android:name=".presentation.messages.MessageActivity" />
+        <activity android:name=".presentation.base.PhotoActivity" />
+        <activity android:name=".presentation.profile.InterestActivity" />
+        <activity android:name=".presentation.profile.ViewPostsActivity" />
+        <activity android:name=".presentation.signup.AddInterestsActivity" />
+        <activity android:name=".presentation.signup.VerifyMobileActivity" />
+        <activity android:name=".presentation.signup.VerifyEmailActivity" />
+        <activity android:name=".presentation.signup.AddEducationActivity" />
+        <activity android:name=".presentation.signup.AddExperienceActivity" />
+        <activity android:name=".presentation.profile.BioActivity" />
+        <activity android:name=".presentation.feeds.VideoActivity" />
+        <activity android:name=".presentation.profile.NewEducationActivity" />
+        <activity android:name=".presentation.profile.NewExperienceActivity" />
+
+        <receiver android:name=".services.SessionScheduleService" />
+
+        <activity android:name=".presentation.profile.student_search.StudentSearch" />
+        <activity android:name=".presentation.payments.PaymentsFormActivity">
+
+        </activity>
+        <activity android:name=".presentation.requests.session_schedule.SessionScheduleActivity">
+
+        </activity>
     </application>
 
 </manifest>

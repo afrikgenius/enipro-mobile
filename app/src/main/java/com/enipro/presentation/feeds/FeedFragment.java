@@ -18,14 +18,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
-import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
+import com.enipro.presentation.generic.FeedRecyclerAdapter;
 import com.enipro.presentation.post.PostActivity;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,8 @@ public class FeedFragment extends Fragment implements FeedContract.View {
 
     RecyclerView mRecyclerView;
     FeedRecyclerAdapter feedRecyclerAdapter;
+    FloatingActionButton fab;
+    CircularProgressView progressView;
 
 
     NotificationCompat.Builder mBuilder; // Notification used to display progress.
@@ -62,7 +66,6 @@ public class FeedFragment extends Fragment implements FeedContract.View {
         if (savedInstanceState != null && savedInstanceState.containsKey(FEED_ADAPTER_STATE)) {
 //            mAdapterSavedState = savedInstanceState.getParcelableArrayList(FEED_ADAPTER_STATE);
         }
-        Log.d(Enipro.APPLICATION, "In FeedFragment.onCreate()");
     }
 
     @Nullable
@@ -70,21 +73,35 @@ public class FeedFragment extends Fragment implements FeedContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(v -> startActivityForResult(PostActivity.newIntent(getActivity(), null), FeedContract.Presenter.POST_FEED_REQUEST));
+        progressView = view.findViewById(R.id.progress_view);
+        fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(v -> startActivityForResult(PostActivity.newIntent(getActivity()), FeedContract.Presenter.POST_FEED_REQUEST));
 
         // Swipe to refresh action to update feeds in app.
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_feeds);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.update_feeds(); // TODO Update UI with feeds.
-            mSwipeRefreshLayout.setRefreshing(false); // Remove the refresh button from screen and updates UI with update.
+//            presenter.update_feeds(); // TODO Update UI with feeds.
+            presenter.loadFeeds(result -> {
+                // Check if result is null
+                if (result == null) {
+                    // Unhide no feed text views.
+                    view.findViewById(R.id.no_feed_layout).setVisibility(View.VISIBLE);
+                } else {
+                    // Set feed data to result
+                    feeds = new ArrayList<>(result);
+                    // Clear feed recycler adapter
+                    feedRecyclerAdapter.clear();
+                    feedRecyclerAdapter.setItems(feeds);
+                }
+                mSwipeRefreshLayout.setRefreshing(false); // Remove the refresh button from screen and updates UI with update.
+            });
         });
 
-        Log.d(Enipro.APPLICATION, "In FeedFragment.onCreateView()");
         // Recycler view and adapter for news feed items
         mRecyclerView = view.findViewById(R.id.feeds_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new Utility.DividerItemDecoration(getContext()));
+        setRVScrollEvent();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,6 +110,9 @@ public class FeedFragment extends Fragment implements FeedContract.View {
         presenter = new FeedPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), getContext());
         presenter.attachView(this);
 
+        feedRecyclerAdapter = new FeedRecyclerAdapter(getContext(), null, presenter, false);
+        mRecyclerView.setAdapter(feedRecyclerAdapter);
+
         // Load feeds from local storage and also from API
         presenter.loadFeeds(result -> {
             // Check if result is null
@@ -100,26 +120,34 @@ public class FeedFragment extends Fragment implements FeedContract.View {
                 // Unhide no feed text views.
                 view.findViewById(R.id.no_feed_layout).setVisibility(View.VISIBLE);
             } else {
-                Log.d(Enipro.APPLICATION, "Result is not null");
+                Log.d(Application.TAG, "Result is not null");
                 // Set feed data to result
                 feeds = new ArrayList<>(result);
-            }
-
-            // Create adapter on the UI thread in order to access it on the UI thread.
-            try {
-                this.getActivity().runOnUiThread(() -> {
-                    // Waits on the disk IO thread to return data before creating adapter on the UI thread.
-                    // Adapter to handle recycler view.
-                    feedRecyclerAdapter = new FeedRecyclerAdapter(getContext(), feeds, presenter);
-                    mRecyclerView.setAdapter(feedRecyclerAdapter);
-                });
-            } catch (NullPointerException ex){
-                Log.d(Enipro.APPLICATION, "");
+                feedRecyclerAdapter.setItems(feeds);
             }
         });
 
         // TODO Some non-view operations should be in onCreate() in the fragment to allow for performance boost.
         return view;
+    }
+
+    public void setRVScrollEvent() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fab.isShown())
+                    fab.hide();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
     }
 
     @Override
@@ -130,7 +158,7 @@ public class FeedFragment extends Fragment implements FeedContract.View {
             if (resultCode == RESULT_OK) {
                 // Get feed information from intent
                 Feed feed = data.getParcelableExtra(FeedContract.Presenter.ACTIVITY_RETURN_KEY);
-                presenter.sendPostToAPI(feed); // Send feed to presenter to create feed.
+                presenter.processFeed(feed); // Send feed to presenter to create feed.
             }
         }
     }
@@ -161,10 +189,20 @@ public class FeedFragment extends Fragment implements FeedContract.View {
     }
 
     @Override
+    public void showErrorMessage() {
+
+    }
+
+    @Override
+    public void onSavedFeedsRetrieved(List<Feed> feeds) {
+
+    }
+
+    @Override
     public void updateUI(Feed feedItem, User user) {
         // Get rid of the no feed layout.
         View no_feed_layout = getView().findViewById(R.id.no_feed_layout);
-        if(no_feed_layout.getVisibility() == View.VISIBLE)
+        if (no_feed_layout.getVisibility() == View.VISIBLE)
             no_feed_layout.setVisibility(View.GONE);
 
         feedRecyclerAdapter.addItem(feedItem);
@@ -172,9 +210,31 @@ public class FeedFragment extends Fragment implements FeedContract.View {
     }
 
     @Override
+    public void showLoading() {
+        progressView.setVisibility(View.VISIBLE);
+        progressView.startAnimation();
+        mRecyclerView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideLoading() {
+        progressView.setVisibility(View.GONE);
+        progressView.stopAnimation();
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mSwipeRefreshLayout.isRefreshing())
+            mSwipeRefreshLayout.setRefreshing(false); // Remove the refresh button from screen and updates UI with update.
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(Enipro.APPLICATION, "In FeedFragment.onDestroy()");
+        if (mSwipeRefreshLayout.isRefreshing())
+            mSwipeRefreshLayout.setRefreshing(false); // Remove the refresh button from screen and updates UI with update.
         if (presenter != null)
             presenter.detachView();
     }

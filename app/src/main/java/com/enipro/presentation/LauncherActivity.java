@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.AppLaunchChecker;
 import android.support.v7.app.AppCompatActivity;
 
+import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
+import com.enipro.model.Constants;
 import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
 import com.enipro.presentation.profile.ProfileActivity;
@@ -52,9 +55,10 @@ public class LauncherActivity extends AppCompatActivity {
             Intent intent;
             List<User> users = db.userDao().getUsers();
 
-            if(users.size() == 1)
+            if(users.size() == 1) {
                 intent = HomeActivity.newIntent(this); // Launch Home activity
-            else
+                intent.putExtra(Constants.APPLICATION_USER, users.get(0)); // Pass the application user down to home activity.
+            } else
                 intent = LoginActivity.newIntent(this);   // No user exists and launch sign up activity
 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -70,5 +74,12 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         overridePendingTransition(0, R.anim.fade_out);
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        diskIOExecutor.shutdownNow();
     }
 }

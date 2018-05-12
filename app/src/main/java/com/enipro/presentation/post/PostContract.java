@@ -1,5 +1,7 @@
 package com.enipro.presentation.post;
 
+import android.graphics.Bitmap;
+
 import com.enipro.data.remote.model.Feed;
 import com.enipro.presentation.base.MvpPresenter;
 import com.enipro.presentation.base.MvpView;
@@ -25,8 +27,6 @@ public class PostContract {
     interface Presenter extends MvpPresenter<PostContract.View> {
 
         String ACTIVITY_RETURN_KEY = "Return Data";
-
-        void postFeedItem(Feed feedData);
 
     }
 }

@@ -4,41 +4,416 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey1"
     tools:context=".presentation.profile.ProfileActivity">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/cover_photo"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:src="@drawable/profile_image"/>-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <!--<de.hdodenhof.circleimageview.CircleImageView-->
-        <!--android:id="@+id/imageView"-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:layout_marginStart="140dp"-->
-        <!--android:layout_marginTop="100dp"-->
-        <!--android:src="@drawable/image003"-->
-        <!--app:border_color="@color/colorPrimary"-->
-        <!--app:border_width="1dp"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/more_options_profile"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:paddingBottom="10dp"-->
-        <!--android:contentDescription="@string/button_more"-->
-        <!--android:src="@drawable/ic_more_vert"-->
-        <!--/>-->
-    
-    <TextView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_settings" />
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Not Implemented"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/appbar">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/cover_photo"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_cover" />
+
+
+            <RelativeLayout
+                android:id="@+id/progfile_image_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_imageview"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="100dp"
+                    android:src="@drawable/profile_image" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/profile_header"
+                android:layout_marginEnd="15dp">
+
+                <ImageButton
+                    android:id="@+id/edit_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_edit" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/profile_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progfile_image_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/user_post_mock_name"
+                    android:textSize="20sp"
+                    app:robotoTypeface="roboto_light" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/profile_headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_name"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:text="@string/user_post_headline"
+                    android:textSize="17sp" />
+
+                <RelativeLayout
+                    android:id="@+id/country_user_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_headline"
+                    android:layout_centerHorizontal="true">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/user_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_type"
+                        android:textColor="@color/material_grey_800"
+                        android:textSize="15sp"
+                        app:robotoTypeface="roboto_light_italic" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_toEndOf="@id/user_type"
+                        android:text="@string/country"
+                        android:textColor="@color/material_grey_800_" />
+                </RelativeLayout>
+
+                <!--<RelativeLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:layout_below="@id/country_user_type"-->
+                <!--android:layout_centerHorizontal="true">-->
+
+                <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                <!--android:id="@+id/connection_number"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="200" />-->
+
+                <!--<com.devspark.robototextview.widget.RobotoTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="6dp"-->
+                <!--android:layout_toEndOf="@id/connection_number"-->
+                <!--android:text="in Circle" />-->
+                <!--</RelativeLayout>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/action_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_header"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="6dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="6dp">
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:id="@+id/add_action"
+                    style="@style/ButtonTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/message_user"
+                    android:background="@drawable/button_bg"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingBottom="9dp"
+                    android:paddingEnd="13dp"
+                    android:paddingStart="13dp"
+                    android:paddingTop="9dp"
+                    app:robotoTypeface="roboto_medium" />
+
+                <ImageButton
+                    android:id="@+id/message_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_profile_msg"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <!-- TODO People in the network and circle.  -->
+
+            <RelativeLayout
+                android:id="@+id/bio_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/action_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="6dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="6dp">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/bio_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+
+            <!-- Interests, activity and saved posts. -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/interest_post_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bio_layout"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/interests_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ic_interests"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_light_bulb" />
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/interests_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ic_interests"
+                            android:text="@string/mock_interests"
+                            android:textSize="16sp"
+                            app:robotoTextWeight="medium" />
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/interests_text"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@id/ic_interests"
+                            android:text="@string/mock_interests_desc"
+                            android:textColor="@color/material_grey_800_"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                    <!--Draw a line across-->
+                    <View
+                        android:id="@+id/line_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_above="@id/saved_layout"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/material_grey_300_" />
+
+                    <RelativeLayout
+                        android:id="@+id/saved_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/interests_layout"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/ic_saved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_bookmark" />
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:id="@+id/saved_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/ic_saved"
+                            android:text="@string/mock_saved"
+                            android:textSize="16sp"
+                            app:robotoTextWeight="medium" />
+
+                        <com.devspark.robototextview.widget.RobotoTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/saved_text"
+                            android:layout_marginTop="5dp"
+                            android:layout_toEndOf="@id/ic_saved"
+                            android:text="@string/mock_saved_desc"
+                            android:textColor="@color/material_grey_800_"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Card View for education. -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/education_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/interest_post_card"
+                android:layout_marginBottom="6dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/edu_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/education_text"
+                        android:textSize="16sp"
+                        app:robotoTextWeight="medium" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/education_recyclerview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edu_text"
+                        android:layout_marginTop="10dp">
+
+                    </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!-- Card View for experience. -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/exp_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/education_card"
+                android:layout_marginBottom="6dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="6dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/exp_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/exp_text"
+                        android:textSize="16sp"
+                        app:robotoTextWeight="medium" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/experience_recyclerview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exp_text"
+                        android:layout_marginTop="10dp" />
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

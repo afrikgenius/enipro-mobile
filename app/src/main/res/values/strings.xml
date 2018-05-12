@@ -31,8 +31,10 @@
     <string name="forgot_pass">Forgot Password</string>
     <string name="input_content">Email</string>
     <string name="empty"></string>
+    <string name="bio">Biography</string>
     <string name="title_activity_quick_reservation">QuickReservation</string>
     <string name="login_btn_text">LOGIN</string>
+    <string name="country">Nigeria</string>
 
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
@@ -41,7 +43,13 @@
 
     <string name="tandc">By logging in, you agree to Enipro\'s Privacy Policy and Terms of Use</string>
     <string name="tandcs">By creating an account, you agree to Enipro\'s Privacy Policy and Terms of Use</string>
+    <string name="mock_bio">
+        As a design thinker, my skills and process revolve around people; consequently, I adhere to an iterative process over quick and invalidated results. I believe that by articulating the right problem, designers can architect solutions ingrained with empathy and genuine intent. I am an asset to any creative or product team in search of burgeoning, diverse talent with disruptive ideas and intense work ethic. I believe that by balancing business objectives, executing on product vision, and obsessively prioritizing consumers, genuine brands remain innovative and successful.
 
+Knowledge Domains: User experience design, User Research (evaluative), Service Design, Usability Testing, Design Thinking, Qualitative Research, Storytelling, Agile/Lean Methodologies, Product Management, Product/feature planning, Consumer Segmentation, Brand Development, Design Collaboration, Web Accessibility, Apple HIG: iOS, MacOS, WatchOS, tvOS ; Material Design; Microsoft Design Language, IBM Design Language
+    </string>
+
+    <string name="static_bio_string">Tell a professional story with a bio about you</string>
     <string-array name="nav_footer_items">
         <item>LOG OUT</item>
     </string-array>
@@ -60,6 +68,10 @@
     <string name="enable_gps">Please enable location services.</string>
     <string name="enable">Enable</string>
     <string name="cancel">Cancel</string>
+    <string name="unsaved_changes">You have unsaved changes. Do you want to discard or cancel.</string>
+
+    <string name="achievement_edit">Achievements</string>
+    <string name="mock_uni">University of Lagos</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -73,37 +85,14 @@
 
     <!-- List of types of users supported by the application. -->
     <string-array name="user_type">
-        <item>select a user type</item>
-        <item>student</item>
-        <item>professional</item>
+        <item>-</item>
+        <item>Student</item>
+        <item>Professional</item>
+        <item>Company</item>
+        <item>School</item>
     </string-array>
 
     <string name="invalid_pass">Please enter a valid password. Password must be more than 8 characters, must contain a number and a symbol.</string>
-    <string name="service_not_available">Service not available</string>
-    <string name="invalid_lat_long_used">Invalid Location</string>
-    <string name="no_address_found">Address Not Found</string>
-    <string name="address_found">Address Found</string>
-    <string name="done">DONE</string>
-    <string name="title_activity_profile">Profile</string>
-    <string name="title_activity_payments">PaymentsActivity</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="logging_in">Logging in..</string>
-    <string name="showcaseContentView">Click on this button to make a reservation.</string>
-    <string name="title_activity_reservation_action">ReservationActionActivity</string>
-
-    <!-- Reservation action activity. -->
-    <string name="get_price_btn">Get Price Quote</string>
-    <string name="confirm">Confirm</string>
-    <string name="price">PRICE: </string>
-    <string name="stub_price">€200</string>
-    <string name="distance">DISTANCE: </string>
-    <string name="stub_distance">THE DISTANCE BETWEEN THE PICK UP LOCATION AND DESTINATION IS 20km</string>
-    <string name="making_reservation">Making Reservation</string>
-    <string name="reservation">Reservation</string>
-    <string name="destination_hint">Enter destination</string>
-    <string name="pickUp_hint">Enter pickup location</string>
-    <string name="history">History</string>
-    <string name="payments">Payments</string>
 
 
     <string name="intro_message">
@@ -147,6 +136,8 @@
     <string name="post_comment_responses">15</string>
     <string name="view_more">view more</string>
     <string name="title_activity_user_search">UserSearchActivity</string>
+    <string name="chat_last_time">15:43</string>
+    <string name="chat_last_message">Hello Please message me when you get this.</string>
 
     <string name="button_like">Like</string>
     <string name="button_more">More</string>
@@ -158,13 +149,6 @@
     <string name="post_hint_2">What\'s happening?</string>
     <string name="tags_hint">Tags</string>
 
-    <!-- Navigation drawer items -->
-    <string name="nav_profile">Profile</string>
-    <string name="nav_forums">Forum</string>
-    <string name="nav_chats">Chat</string>
-    <string name="nav_settings">Settings and Privacy</string>
-    <string name="nav_help">Help Centre</string>
-    <string name="nav_communicate">Communicate</string>
     <string name="title_activity_profile_activty">ProfileActivty</string>
     <string name="title_activity_forum">Forum</string>
     <string name="title_activity_chat">Chat</string>
@@ -176,10 +160,21 @@
     <string name="discard">DISCARD</string>
     <string name="save">SAVE</string>
     <string name="saved">Saved</string>
+    <string name="save2">Save</string>
 
     <string name="sending_post">Sending Post&#8230;</string>
     <string name="sent">Sent</string>
+    <string name="sent_indicator">SENT</string>
     <string name="noti_error">Error Sending Post. Please try again.</string>
+    <string name="bio_edit">Bio</string>
+    <string name="profile_headline">Profile Headline</string>
+    <string name="degree">Degree</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="session_timing">Session Timing</string>
+    <string name="session_period">Session Period</string>
+    <string name="next">Next</string>
+    <string name="search_student">Search Student</string>
 
 
     <string name="edit_profile">Edit Profile</string>
@@ -188,10 +183,29 @@
     <string name="share_text">Share via</string>
 
     <string name="no_feed_data">No Feed Data</string>
+    <string name="no_saved_feed">No saved Feed</string>
     <string name="no_feed_data_instructions">Tap the \'+\' button to create a feed item.</string>
-    <string name="add_comment_hint">Post a comment&#8230;</string>
+    <string name="add_comment_hint">Write a comment&#8230;</string>
+    <string name="add_tags">Add Tags</string>
     <string name="btn_finish">Finish</string>
+    <string name="btn_continue">CONTINUE</string>
     <string name="btn_skip">SKIP</string>
+
+    <string name="university">University</string>
+    <string name="course">Course of Study</string>
+    <string name="start_year">Start Year</string>
+    <string name="end_year">End Year</string>
+    <string name="edu_desc">You will be connected to people based on where you went to school.</string>
+    <string name="edu_top_text">Where do you study?</string>
+
+    <string name="exp_top_text">Where do you work?</string>
+    <string name="industry">Industry</string>
+    <string name="organisation">Organisation</string>
+    <string name="role">Role</string>
+
+    <string name="interests_desc">Add interests to improve feeds and get feeds based on your interests.</string>
+    <string name="current_work">I currently work here</string>
+
 
     <!-- List item showing in material dialog when a profile image is to be selected. -->
     <string-array name="photo_items">
@@ -199,10 +213,42 @@
         <item>Choose existing photo</item>
     </string-array>
 
+    <string-array name="attachement_items">
+        <item>Image</item>
+        <item>Document</item>
+    </string-array>
+
+    <string-array name="video_items">
+        <item>Take a video</item>
+        <item>Choose existing video</item>
+    </string-array>
+
+    <!-- List item showing actions on an image to be uploaded. -->
+    <string-array name="photo_edit_items">
+        <item>Edit Title</item>
+        <item>Delete</item>
+    </string-array>
+
+    <string-array name="app_user_more_items">
+        <item>Edit Post</item>
+        <item>View Tags</item>
+        <item>Delete Post</item>
+    </string-array>
+
+    <string-array name="foreign_user_more_items">
+        <item>Hide Post</item>
+        <item>View Tags</item>
+    </string-array>
+
+
+    <string name="enforce_tags">Post must have a tag</string>
+
+    <string name="comment_error">Can\'t post comment. Please try again.</string>
+    <string name="comments">Comments</string>
     <string name="camera_rationale">Camera permission is needed to take a photo.</string>
     <string name="permission_not_granted">Permission not granted.</string>
     <string name="external_storage_rationale">External storage permission is needed to access items in device.</string>
-    <string name="add_profile_text">Add a profile image</string>
+    <string name="add_profile_text">Add a photo so people can recognize you.</string>
 
     <string name="request_intro">When you send a mentoring or tutoring request, they are shown here and also requests from professionals are displayed</string>
 
@@ -220,5 +266,141 @@
     <string name="no_chat_inst_prof2">Add users to your network.</string>
     <string name="no_chat_inst_stu1">Users in your circle will appear here.</string>
     <string name="no_chat_inst_stu2">Add users to your circle.</string>
+    <string name="launcher_text">enipro</string>
+    <string name="search_hint">Search</string>
+    <string name="mock_user_type">Professional</string>
+
+    <string name="mock_interests">Interests</string>
+    <string name="mock_interests_desc">Update your interests to get feeds tailored to what you like</string>
+
+    <string name="mock_saved">Saved Posts</string>
+    <string name="mock_saved_desc">View all posts saved for later</string>
+
+    <string name="education_text">Education</string>
+    <string name="edu_school">University of Lagos</string>
+    <string name="edu_degree">Bachelor of Science(B.Sc) Civil And Environmental Engineering</string>
+    <string name="hyphen">-</string>
+    <string name="edu_from">2011</string>
+    <string name="edu_to">2016</string>
+
+    <string name="exp_text">Experience</string>
+    <string name="exp_org">Unilever Plc Nigeria</string>
+    <string name="exp_industry">Manufacturing</string>
+    <string name="exp_role">Manager, Machine Operations</string>
+    <string name="exp_from">2017</string>
+    <string name="exp_to">Present</string>
+
+    <string name="in_circle">IN CIRCLE</string>
+    <string name="add_circle">ADD TO CIRCLE</string>
+    <string name="in_network">IN NETWORK</string>
+    <string name="add_network">ADD TO NETWORK</string>
+    <string name="connected">Connected</string>
+    <string name="request_mentoring">REQUEST_MENTORING</string>
+    <string name="request_tutoring">REQUEST_TUTORING</string>
+    <string name="available_mentoring">AVAILABLE FOR MENTORING</string>
+    <string name="available_tutoring">AVAILABLE FOR TUTORING</string>
+
+    <string name="remove">Remove</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="verify_email">Verify Email</string>
+    <string name="verify_mobile">Verify Mobile Number</string>
+    <string name="email_ver_note">Click the link sent to your email address to finish verification process</string>
+    <string name="verify_mobile_note">We\'ll need a verification code which will be sent to you to complete the registration process</string>
+    <string name="send_code">Send Code</string>
+    <string name="video_limit">Video must be less than 8 mins</string>
+
+    <string name="request_text">Requests</string>
+
+    <string name="card_number">0000 0000 0000 0000</string>
+    <string name="cvv">CVV</string>
+    <string name="date">MM/YY</string>
+    <string name="create_token">Create token</string>
+    <string name="no_card_yet">No card yet</string>
+    <string name="no_token">No token</string>
+    <string name="token_null_message">Token was null</string>
+    <string name="token_not_gotten">Unable to get token</string>
+    <string name="sample_card">4123450131001381</string>
+    <string name="sample_cvv">883</string>
+    <string name="sample_month">01</string>
+    <string name="sample_year">2020</string>
+    <string name="no_transaction_yet">No transaction yet</string>
+    <string name="amount_in_kobo">Amount in Kobo</string>
+
+    <string name="bank_txt">Bank Name</string>
+    <string name="bank_account_txt">Bank Account Number</string>
+    <string name="premium_info">As per the Terms and Condition of Enipro, proceeds from each premium content transaction goes 60/40. </string>
+    <string name="bank_account_desc">Enter 10-digit NUBAN number</string>
+    <string name="amount">Amount</string>
+
+    <string-array name="banks">
+        <item>-</item>
+        <item>Access Bank</item>
+        <item>Citibank</item>
+        <item>Diamond Bank</item>
+        <item>Ecobank Nigeria</item>
+        <item>Fidelity Bank</item>
+        <item>First Bank of Nigeria</item>
+        <item>First City Monument Bank</item>
+        <item>Guaranty Trust Bank</item>
+        <item>Heritage Bank plc</item>
+        <item>Keystone Bank Limited</item>
+        <item>Providus Bank plc</item>
+        <item>Skye Bank</item>
+        <item>Stanbic IBTC Bank</item>
+        <item>Standard Chartered Bank</item>
+        <item>Sterling Bank</item>
+        <item>Suntrust Bank</item>
+        <item>Union Bank of Nigeria</item>
+        <item>United Bank for Africa</item>
+        <item>Unity Bank plc</item>
+        <item>Wema Bank</item>
+        <item>Zenith Bank</item>
+    </string-array>
+
+    <string name="doc_limit">The document is bigger than 10MB</string>
+    <string name="pdf_doc_name">Introduction to Information Theory</string>
+
+    <string name="accept">ACCEPT</string>
+    <string name="decline">DECLINE</string>
+    <string name="reply_label"> REPLY</string>
+
+    <string name="send">Send</string>
+
+    <!--Days of the week for session schedule-->
+    <string name="monday">Mondays</string>
+    <string name="tuesday">Tuesdays</string>
+    <string name="wednesday">Wednesdays</string>
+    <string name="thurssday">Thursdays</string>
+    <string name="friday">Fridays</string>
+    <string name="saturday">Saturdays</string>
+    <string name="sunday">Sundays</string>
+
+    <string name="what_time">At what time?</string>
+    <string name="daysofweek">Schedule a date for the session</string>
+    <string name="choose_a_date">Please pick a date for session.</string>
+    <string name="select_time">Please select a time frame.</string>
+    <string name="start_time_less">Start time must be less than end time</string>
+    <string name="bio_add">ADD A PROFESSIONAL SUMMARY</string>
+
+    <string name="pay">Pay NGN</string>
+
+    <string name="enter_card_details">Enter Card details</string>
+    <string name="expiry_date_help">The expiry date on your card is the 4-digit number on the front of your card (the same side as the chip). It is usually written in the format \'12/34\'.</string>
+    <string name="cvv_help">Your CVV is the 3 or 4-digit number on the back of your card (the side without the chip).</string>
+    <string name="card_number_help">Your card number is the longest number on the front of your card (the same side as the chip). It is usually a sequence of 16 &#8211; 19 numbers grouped in fours.</string>
+
+    <string name="card_number_error">Please enter a valid card number</string>
+    <string name="expiry_date_error">Plese enter a valid expiry date</string>
+    <string name="cvv_error">Please enter a valid cvv</string>
+
+    <string name="circle_requests">Circle Requests</string>
+    <string name="network_requests">Network Requests</string>
+    <string name="mentoring_requests">Mentoring Requests</string>
+    <string name="tutoring_requests">Tutoring Requests</string>
+
+    <string name="show_more">SHOW MORE</string>
+
 
 </resources>

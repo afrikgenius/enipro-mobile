@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context=".presentation.post.PostActivity">
 
@@ -11,17 +12,111 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="0dp">
-
 
         <include layout="@layout/post_toolbar" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- Body of the post activity as a large text area for text. -->
-    <include layout="@layout/content_post" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tags_view"
+        android:layout_below="@id/appbar">
 
-    <include layout="@layout/footer_post"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <!-- Body of the post activity as a large text area for text. -->
+            <include
+                android:id="@+id/post_content"
+                layout="@layout/content_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-</android.support.design.widget.CoordinatorLayout>
+            <include
+                android:id="@+id/media_view"
+                layout="@layout/media_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/post_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="40dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <!-- View where tags are added. -->
+    <RelativeLayout
+        android:id="@+id/tags_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/footer"
+        android:visibility="gone"
+        android:layout_marginBottom="25dp"
+        android:layout_marginStart="12dp">
+
+        <ImageView
+            android:id="@+id/tags_imgview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tags" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tags_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/tags_imgview"
+            android:orientation="horizontal" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/doc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tags_view"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="12dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/doc_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_docs" />
+
+        <TextView
+            android:id="@+id/doc_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/doc_icon"
+            android:text="@string/pdf_doc_name" />
+
+        <ImageView
+            android:id="@+id/doc_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_clear_black" />
+
+    </RelativeLayout>
+
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/footer_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

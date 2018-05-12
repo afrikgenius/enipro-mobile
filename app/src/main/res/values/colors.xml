@@ -16,9 +16,11 @@
     <color name="white">#ffffff</color>
     <color name="light_grey">#DEDEDE</color>
     <color name="gray_light">#e8e8e8</color>
+    <color name="grey1">#f8f8f8</color>
     <color name="gray_dark">#858585</color>
     <color name="black">#000000</color>
     <color name="dark_gray">#A9A9A9</color>
+    <color name="color1">#cccccc</color>
 
     <color name="material_teal_A100">#A7FFEB</color>
     <color name="material_teal_A200">#64FFDA</color>
@@ -27,6 +29,7 @@
     <color name="material_teal_700">#00796B</color>
     <color name="material_teal_S700">#00BFA5</color>
 
+    <color name="colorPrimaryTransparent">#331DE9B6</color>
     <color name="text_primary">@color/material_teal_A400</color>
 
     <color name="colorPrimary">@color/material_teal_S700</color>
@@ -34,7 +37,9 @@
     <color name="colorAccent">@color/colorPrimary</color>
 
     <drawable name="custom_view_option_on">@color/material_grey_400_</drawable>
+    <drawable name="custom_view_option">@color/light_grey</drawable>
     <drawable name="custom_view_option_off">@color/white</drawable>
+    <drawable name="selectedColor">@color/colorPrimaryTransparent</drawable>
 
 
     <color name="cornflower_blue">#6274e2</color>
@@ -51,5 +56,6 @@
     <color name="green_dark">#2da346</color>
     <color name="red">#e94f4f</color>
     <color name="brown">#4e342e</color>
+    <color name="error_red">#a84551</color>
 
 </resources>

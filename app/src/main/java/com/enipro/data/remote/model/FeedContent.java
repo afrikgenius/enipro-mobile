@@ -2,11 +2,15 @@ package com.enipro.data.remote.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.enipro.Application;
 import com.enipro.db.EniproDatabase;
+import com.google.firebase.database.Exclude;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,70 +18,147 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@org.parceler.Parcel
 @Entity(tableName = "feed_content")
-public class FeedContent implements Parcelable {
+public class FeedContent {
 
     @PrimaryKey
-    private int content_id = new Random().nextInt();
+    public int content_id = new Random().nextInt();
 
     @SerializedName("text")
     @Expose
-    private String text;
+    public String text;
 
     @SerializedName("image")
     @Expose
-    private List<String> imageURLS;
+    public String image;
 
     @SerializedName("video")
     @Expose
-    private String video;
+    public String video;
 
-    public FeedContent(){}
+    @SerializedName("doc")
+    @Expose
+    public Document doc;
 
-    public FeedContent(Parcel in){
-        this.content_id = in.readInt();
-        this.text = in.readString();
-        this.imageURLS = new ArrayList<>();
-//       TODO  in.readList(imageURLS, List.class.getClassLoader());
-        this.video = in.readString();
+    public boolean docExists = false;
+
+    /**
+     * Type of media item for this feed content.
+     */
+    public int mediaType;
+
+    public FeedContent() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+//    public FeedContent(Parcel in) {
+//        this.content_id = in.readInt();
+//        this.text = in.readString();
+//        this.image = in.readString();
+//        this.video = in.readString();
+//        this.doc = in.readParcelable(getClass().getClassLoader());
+//        this.mediaType = in.readInt();
+//        this.docExists = in.readByte() != 0;
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(content_id);
+//        dest.writeString(text);
+//        dest.writeString(image);
+//        dest.writeString(video);
+//        dest.writeParcelable(doc, flags);
+//        dest.writeInt(mediaType);
+//        dest.writeByte((byte) (docExists ? 1 : 0));
+//    }
+
+    public int getMediaType() {
+        return this.mediaType;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(content_id);
-        dest.writeString(text);
-//      TODO   dest.writeList(imageURLS);
-        dest.writeString(video);
+    public void setMediaType(int mediaType) {
+        this.mediaType = mediaType;
     }
 
-    public void setContent_id(int content_id){ this.content_id = content_id; }
-    public int getContent_id(){ return this.content_id; }
+    public void setContent_id(int content_id) {
+        this.content_id = content_id;
+    }
 
-    public void setText(String text){ this.text = text; }
-    public String getText(){return this.text; }
+    public int getContent_id() {
+        return this.content_id;
+    }
 
-    public void setVideo(String video){this.video = video;}
-    public String getVideo(){ return this.video; }
+    public void setText(String text) {
+        this.text = text;
+    }
 
-    public void setImageURLS(List<String> imageURLS){ this.imageURLS = imageURLS; }
-    public List<String> getImageURLS(){ return this.imageURLS; }
+    public String getText() {
+        return this.text;
+    }
 
-    public static final Parcelable.Creator<FeedContent> CREATOR = new Parcelable.Creator<FeedContent>() {
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
-        @Override
-        public FeedContent createFromParcel(Parcel source) {
-            return new FeedContent(source);
-        }
+    public String getVideo() {
+        return this.video;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-        @Override
-        public FeedContent[] newArray(int size) {
-            return new FeedContent[size];
-        }
-    };
+    public String getImage() {
+        return this.image;
+    }
+
+    /**
+     * Returns a name used to save the comment image file.
+     *
+     * @return
+     */
+    public String getMediaName() {
+        return Application.getActiveUser().get_id().get_$oid() + new java.util.Random().nextLong() + new java.util.Date();
+    }
+
+    public Document getDoc() {
+        return doc;
+    }
+
+    public void setDoc(Document doc) {
+        this.doc = doc;
+    }
+
+    public boolean isDocExists() {
+        return docExists;
+    }
+
+    public void setDocExists(boolean docExists) {
+        this.docExists = docExists;
+    }
+
+//    public static final Parcelable.Creator<FeedContent> CREATOR = new Parcelable.Creator<FeedContent>() {
+//
+//        @Override
+//        public FeedContent createFromParcel(Parcel source) {
+//            return new FeedContent(source);
+//        }
+//
+//
+//        @Override
+//        public FeedContent[] newArray(int size) {
+//            return new FeedContent[size];
+//        }
+//    };
+
+    public class MediaType {
+        public static final int IMAGE = 0x005;
+        public static final int VIDEO = 0x002;
+        public static final int DOC = 0x003;
+    }
 }

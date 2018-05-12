@@ -13,10 +13,4 @@ public class PostPresenter extends BasePresenter<PostContract.View> implements P
     public PostPresenter(EniproRestService eniproRestService, Scheduler ioScheduler, io.reactivex.Scheduler mainScheduler, ValidationService validationService){
         super(eniproRestService, ioScheduler, mainScheduler);
     }
-
-    @Override
-    public void postFeedItem(Feed feedData) {
-        checkViewAttached();
-        getView().sendFeedItem(feedData);
-    }
 }

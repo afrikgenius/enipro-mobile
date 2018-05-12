@@ -21,6 +21,7 @@ import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
+import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 import com.enipro.presentation.home.HomeActivity;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,30 +32,19 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.internal.Util;
 
-public class AddPhotoActivity extends AppCompatActivity implements SignupContract.View{
+public class AddPhotoActivity extends AppCompatActivity implements SignupContract.View {
 
     public static final String TAG = ".AddPhotoActivity";
-    private static final int CAMERA = 0x00; // Request code for opening camera application
-    private static final int GALLERY = 0x01; // Request code for accessing gallery on the device
-
-    /**
-     * URL of the default profile image used in the application stored in Firebase Storage.
-     */
-    private static final String DEFAULT_PROFILE_URL = "https://firebasestorage.googleapis.com/v0/b/enipro-56ea8.appspot.com/o/profile_image.png?alt=media&token=26a1181a-bcf0-4f63-abda-8d78d65f12f4";
-
-    /**
-     * URL of the default profile cover image used in the application stored in Firebase Storage.
-     */
-    private static final String DEFAULT_PROFILE_COVER_URL = "https://firebasestorage.googleapis.com/v0/b/enipro-56ea8.appspot.com/o/Avatar_Cover.png?alt=media&token=4314280f-c04a-494b-97e6-5b60d060e803";
-
-    private static final String FIREBASE_UPLOAD_REF = "reference";
-
     StorageReference mStorageRef;
 
-    @BindView(R.id.profile_image) CircleImageView profile_image;
-    @BindView(R.id.finish) RobotoButton btnFinish;
-    @BindView(R.id.skip) RobotoButton btnSkip;
+    @BindView(R.id.profile_image)
+    CircleImageView profile_image;
+    @BindView(R.id.finish)
+    RobotoButton btnFinish;
+    @BindView(R.id.skip)
+    RobotoButton btnSkip;
 
     private MaterialDialog progressDialog;
 
@@ -62,6 +52,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
 
     /**
      * Returns a new intent to open an instance of this activity.
+     *
      * @param context the context to use
      * @return intent.
      */
@@ -82,7 +73,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         User user = getIntent().getParcelableExtra(TAG);
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
-                EniproDatabase.getInstance(this));
+                EniproDatabase.getInstance(this), this);
         presenter.attachView(this);
 
         // On click on image to upload a profile photo.
@@ -91,7 +82,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
             new MaterialDialog.Builder(this)
                     .items(R.array.photo_items)
                     .itemsCallback((dialog, view, which, text) -> {
-                        if(which == 0){
+                        if (which == 0) {
                             // Open Camera
                             launchCamera();
                         } else {
@@ -104,8 +95,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
 
         // Skip the image process and insert a default image in body of request.
         btnSkip.setOnClickListener(v -> {
-            user.setAvatar(DEFAULT_PROFILE_URL);  // set avatar to default profile image.
-            user.setAvatar_cover(DEFAULT_PROFILE_COVER_URL);
+            user.setAvatar(Constants.DEFAULT_PROFILE_URL);  // set avatar to default profile image.
+            user.setAvatar_cover(Constants.DEFAULT_PROFILE_COVER_URL);
             presenter.persistUser(user);
         });
 
@@ -115,11 +106,11 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
             // Set up storage reference
             mStorageRef = FirebaseStorage.getInstance().getReference();
             // navigate to profile_avatar reference
-            mStorageRef = mStorageRef.child("images/profile_avatar/" + user.getFirstName() + user.getLastName() + user.getEmail() + ".jpg");
+            mStorageRef = mStorageRef.child(Constants.FIREBASE_PROFILE_REF + user.getFirstName() + user.getLastName() + user.getEmail() + ".jpg");
             presenter.persistAvatarFirebase(user, profile_image, mStorageRef, (firebasePersistedUser) -> {
                 // Sending the avatar to firebase storage is done on a separate thread and persisting user with
                 // a call to the API should be done when the avatar is successfully sent to firebase storage.
-                firebasePersistedUser.setAvatar_cover(DEFAULT_PROFILE_COVER_URL);
+                firebasePersistedUser.setAvatar_cover(Constants.DEFAULT_PROFILE_COVER_URL);
                 presenter.persistUser(firebasePersistedUser);
             });
         });
@@ -130,8 +121,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         super.onSaveInstanceState(outState, outPersistentState);
 
         // If there is a firebase storage upload in progress, save the reference so it can be queried later.
-        if(mStorageRef != null)
-            outState.putString(FIREBASE_UPLOAD_REF, mStorageRef.toString());
+        if (mStorageRef != null)
+            outState.putString(Constants.FIREBASE_UPLOAD_REF, mStorageRef.toString());
     }
 
 
@@ -140,8 +131,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         super.onRestoreInstanceState(savedInstanceState, persistentState);
 
         // Get the reference of an upload if there is any in progress
-        final String stringReference = savedInstanceState.getString(FIREBASE_UPLOAD_REF);
-        if(stringReference == null) return;
+        final String stringReference = savedInstanceState.getString(Constants.FIREBASE_UPLOAD_REF);
+        if (stringReference == null) return;
 
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(stringReference);
 
@@ -152,52 +143,52 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
      * Requests a permission for the camera intent and opens the camera application
      * in order to take a photo.
      */
-    private void launchCamera(){
+    private void launchCamera() {
         // Check camera permission and request permission if not granted.
         boolean check = Utility.checkPermission(this, Manifest.permission.CAMERA, Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA, getResources().getString(R.string.camera_rationale));
-        if(check){
+        if (check) {
             // Launch camera
             Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(takePicture, CAMERA);//zero can be replaced with any action codes
+            startActivityForResult(takePicture, Utility.CAMERA_REQUEST_CODE);//zero can be replaced with any action codes
         }
     }
 
     /**
      * Requests a permission to access photos and opens the gallery to select a picture.
      */
-    private void launchGallery(){
+    private void launchGallery() {
         boolean check = Utility.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE, getResources().getString(R.string.external_storage_rationale));
-        if(check){
+        if (check) {
             // Open gallery
             Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(pickPhoto , GALLERY);
+            startActivityForResult(pickPhoto, Utility.GALLERY_REQUEST_CODE);
         }
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
+        if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
             // Check if the permission was accepted or denied.
-            if(grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Camera permission has now been granted.");
                 // Launch Camera to take a picture
                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePicture, CAMERA);//zero can be replaced with any action codes
+                startActivityForResult(takePicture, Utility.CAMERA_REQUEST_CODE);//zero can be replaced with any action codes
             } else {
                 Log.i(TAG, "Camera permission was not granted ");
                 // Show snackbar.
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show();
             }
 
-        } else if(requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE){
-            if(grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        } else if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "External Storage permission has now been granted");
                 // Open gallery
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , GALLERY);
+                startActivityForResult(pickPhoto, Utility.GALLERY_REQUEST_CODE);
             } else {
                 Log.i(TAG, "External storage permission was not granted ");
                 // Show snackbar.
@@ -211,16 +202,16 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
-            case CAMERA: // Camera selected
-                if(resultCode == RESULT_OK) {
+        switch (requestCode) {
+            case Utility.CAMERA_REQUEST_CODE: // Camera selected
+                if (resultCode == RESULT_OK) {
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
                     profile_image.setImageBitmap(imageBitmap);
                 }
                 break;
-            case GALLERY: // Photo picked from gallery
-                if(resultCode == RESULT_OK)
+            case Utility.GALLERY_REQUEST_CODE: // Photo picked from gallery
+                if (resultCode == RESULT_OK)
                     profile_image.setImageURI(data.getData());
                 break;
             default: // DO NOTHING
@@ -239,6 +230,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     public void showProgress() {
         progressDialog = new MaterialDialog.Builder(this)
                 .content(R.string.wait)
+                .canceledOnTouchOutside(false)
+                .cancelable(false)
                 .progress(true, 0)
                 .show();
     }
@@ -251,38 +244,48 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @Override
     public void openApplication(User user) {
         Intent intent = HomeActivity.newIntent(this);
-        intent.putExtra(HomeActivity.EXTRA_DATA, user);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Constants.APPLICATION_USER, user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void showMessage(int message) {}
+    public void showMessage(int message) {
+    }
 
     @Override
-    public void showMessage(String type, String message) {}
+    public void showMessage(String type, String message) {
+    }
 
     @Override
-    public void showMessageDialog(int title, int message) {}
+    public void showMessageDialog(int title, int message) {
+    }
 
     @Override
-    public void showMessageDialog(int title, String message) {}
+    public void showMessageDialog(int title, String message) {
+    }
 
     @Override
-    public void showMessageDialog(String title, int message) {}
+    public void showMessageDialog(String title, int message) {
+    }
 
     @Override
-    public void showMessageDialog(String title, String message) {}
+    public void showMessageDialog(String title, String message) {
+    }
 
     @Override
-    public void setViewError(View view, String errorMessage) {}
+    public void setViewError(View view, String errorMessage) {
+    }
 
     @Override
-    public String getSpinnerData(String spinner_name) {return null;}
+    public String getSpinnerData(String spinner_name) {
+        return null;
+    }
 
     @Override
-    public void advanceProcess(User user) {}
+    public void advanceProcess(User user) {
+    }
 
     @Override
     public SignupContract.Presenter getPresenter() {

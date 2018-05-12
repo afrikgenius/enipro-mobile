@@ -1,65 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_post"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_post">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/post_content_edit"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/transparent"
-        android:gravity="start"
-        android:hint="@string/post_hint_2"
-        android:inputType="textMultiLine"
-        android:textSize="22sp" />
+    <RelativeLayout
+        android:id="@+id/text_content_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <!--<android.support.design.widget.TextInputEditText-->
-        <!--android:id="@+id/post_tags_edit"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="20dp"-->
-        <!--android:layout_marginTop="12dp"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:gravity="bottom"-->
-        <!--android:hint="@string/tags_hint"-->
-        <!--android:inputType="textMultiLine"-->
-        <!--android:textSize="15sp" />-->
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/post_content_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:hint="@string/post_hint_2"
+            android:inputType="textMultiLine"
+            android:textSize="22sp" />
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_below="@id/post_content_edit"-->
-        <!--android:gravity="bottom">-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/post_add_image"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/white"-->
-            <!--android:src="@drawable/ic_image" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/post_add_video"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_toEndOf="@id/post_add_image"-->
-            <!--android:background="@color/white"-->
-            <!--android:src="@drawable/ic_videocam" />-->
-
-        <!--<ImageButton-->
-        <!--android:id="@+id/post_add_tags"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <!--</RelativeLayout>-->
+    </RelativeLayout>
 
 </RelativeLayout>

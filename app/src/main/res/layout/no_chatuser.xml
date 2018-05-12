@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|center_vertical"
-    android:gravity="center">
+    android:layout_gravity="center_horizontal|center_vertical">
 
     <com.devspark.robototextview.widget.RobotoTextView
         android:id="@+id/no_chatuser_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:text="@string/no_chatuser"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
         app:robotoTypeface="roboto_bold" />
 
     <com.devspark.robototextview.widget.RobotoTextView
@@ -21,10 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/no_chatuser_data"
-        android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:paddingStart="30dp"
+        android:layout_marginTop="8dp"
         android:paddingEnd="30dp"
+        android:paddingStart="30dp"
         android:text="@string/no_chat_inst_prof1"
         app:robotoTypeface="roboto_light" />
 
@@ -34,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/no_chatuser_instructions"
         android:layout_centerHorizontal="true"
-        android:paddingStart="30dp"
         android:paddingEnd="30dp"
+        android:paddingStart="30dp"
         android:text="@string/no_chat_inst_prof2"
         app:robotoTypeface="roboto_light" />
 </RelativeLayout>

@@ -20,11 +20,15 @@ import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.ApplicationService;
+import com.enipro.model.Constants;
 import com.enipro.model.EditTextDataExtractor;
 import com.enipro.model.ServiceType;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,25 +39,27 @@ import io.reactivex.schedulers.Schedulers;
 public class SignUpActivity extends FragmentActivity implements SignupContract.View {
 
     private EditText emailEditText, passwordEditText, firstNameEditText, lastNameEditText, mobileEditText;
-
     private CoordinatorLayout coordinatorLayout;
-
     private SignupContract.Presenter presenter;
-
     private MaterialDialog progressDialog;
 
-    // Spinners that hold country code and user type.
-    private Spinner country_code;
-    private Spinner user_type;
+    // Spinners that hold user type.
+    private MaterialSpinner user_type;
 
-    @BindView(R.id.first_name_layout) TextInputLayout firstNameTextInputLayout;
-    @BindView(R.id.last_name_layout) TextInputLayout lastNameTextInputLayout;
-    @BindView(R.id.signUpEmail_Layout) TextInputLayout emailTextInputLayout;
-    @BindView(R.id.mobile_number_layout) TextInputLayout mobileTextInputLayout;
-    @BindView(R.id.signUpPassword_Layout) TextInputLayout passTextInputLayout;
+    private String selectedUserType;
+
+    @BindView(R.id.first_name_layout)
+    TextInputLayout firstNameTextInputLayout;
+    @BindView(R.id.last_name_layout)
+    TextInputLayout lastNameTextInputLayout;
+    @BindView(R.id.signUpEmail_Layout)
+    TextInputLayout emailTextInputLayout;
+    @BindView(R.id.signUpPassword_Layout)
+    TextInputLayout passTextInputLayout;
 
     /**
      * Returns a new intent to open an instance of this activity.
+     *
      * @param context the context to use
      * @return intent.
      */
@@ -74,16 +80,15 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
         emailEditText = emailTextInputLayout.getEditText();
         firstNameEditText = firstNameTextInputLayout.getEditText();
         lastNameEditText = lastNameTextInputLayout.getEditText();
-        mobileEditText = mobileTextInputLayout.getEditText();
         passwordEditText = passTextInputLayout.getEditText();
 
         // Get login data input from the user. Data is retrieved from presenter the way it is inserted into extractor.
-        int[] editTextIds = {R.id.first_name, R.id.last_name, R.id.mobile_number, R.id.signUpEmail, R.id.signUpPassword};
+        int[] editTextIds = {R.id.first_name, R.id.last_name, R.id.signUpEmail, R.id.signUpPassword};
         EditTextDataExtractor _extractor = new EditTextDataExtractor(this, editTextIds);
 
         ValidationService validationService = (ValidationService) ApplicationService.getInstance(ServiceType.ValidationService);
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), validationService,
-                EniproDatabase.getInstance(this));
+                EniproDatabase.getInstance(this), this);
         presenter.attachView(this);
 
         // Attach view items to presenter
@@ -106,17 +111,10 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
             startActivity(intent);
         });
 
-        // Country codes for mobile number
-        country_code = findViewById(R.id.country_code_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.country_codes, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        country_code.setAdapter(adapter);
-
         // Spinner adapter for user types
         user_type = findViewById(R.id.user_type);
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.user_type, android.R.layout.simple_spinner_item);
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        user_type.setAdapter(typeAdapter);
+        user_type.setItems(Arrays.asList(getResources().getStringArray(R.array.user_type)));
+        user_type.setOnItemSelectedListener((view, position, id, item) -> selectedUserType = item.toString());
     }
 
     @Override
@@ -134,7 +132,7 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     @Override
     public void showMessage(String type, String message) {
-        switch (type){
+        switch (type) {
             case MESSAGE_SNACKBAR:
                 Snackbar snack = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
                 ((TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text))
@@ -190,7 +188,7 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     @Override
     public void setViewError(View view, String errorMessage) {
-        if(view == emailEditText || view == passwordEditText)
+        if (view == emailEditText || view == passwordEditText)
             ((EditText) view).setError(errorMessage);
     }
 
@@ -210,12 +208,9 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
     @Override
     public String getSpinnerData(String spinner_name) {
         String spinner_data = null;
-        switch(spinner_name){
+        switch (spinner_name) {
             case SPINNER_USER_TYPE:
-                spinner_data = user_type.getSelectedItem().toString();
-                break;
-            case SPINNER_COUNTRY_CODE:
-                spinner_data = country_code.getSelectedItem().toString();
+                spinner_data = selectedUserType;
                 break;
         }
         return spinner_data;
@@ -233,9 +228,17 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
     @Override
     public void advanceProcess(User user) {
         // Open add photo activity passing the user object as a bundle
-        Intent addPhotoIntent = AddPhotoActivity.newIntent(this);
-        addPhotoIntent.putExtra(AddPhotoActivity.TAG, user);
-        startActivity(addPhotoIntent);
+        String user_type = getSpinnerData(SPINNER_USER_TYPE).toUpperCase();
+        // TODO Sort the spinner type generating error when student not clicked.
+        Intent intent = null;
+        if (user_type.equals(Constants.STUDENT)) {
+            intent = AddEducationActivity.newIntent(this);
+            intent.putExtra(AddEducationActivity.TAG, user);
+        } else if (user_type.equals(Constants.PROFESSIONAL)) {
+            intent = AddExperienceActivity.newIntent(this);
+            intent.putExtra(AddExperienceActivity.TAG, user);
+        }
+        startActivity(intent);
     }
 
     @Override

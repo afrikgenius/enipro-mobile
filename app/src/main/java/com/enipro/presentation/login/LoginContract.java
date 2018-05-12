@@ -46,5 +46,12 @@ public class LoginContract {
          * @param email the email address
          */
         void sendFPRequest(String email);
+
+        /**
+         * Logs in using firebase auth using Email/Password Authentication.
+         * @param email the email address to use
+         * @param password the password.
+         */
+        void loginFirebaseAuth(String email, String password);
     }
 }

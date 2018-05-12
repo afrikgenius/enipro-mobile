@@ -14,11 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.ApplicationService;
+import com.enipro.model.Constants;
 import com.enipro.model.Enipro;
 import com.enipro.model.ServiceType;
 import com.enipro.model.ValidationService;
@@ -33,6 +35,8 @@ import io.reactivex.schedulers.Schedulers;
 
 import com.enipro.model.EditTextDataExtractor;
 
+import org.parceler.Parcels;
+
 public class LoginActivity extends FragmentActivity implements LoginContract.View {
 
 
@@ -43,10 +47,12 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
     private MaterialDialog progressDialog;
 
     /* Edit text used to collect email address from the user. */
-    @BindView(R.id.editTxtEmailAddressLogin) TextInputLayout emailTextInputLayout;
+    @BindView(R.id.editTxtEmailAddressLogin)
+    TextInputLayout emailTextInputLayout;
 
     /* Edit text used to collect password from user*/
-    @BindView(R.id.editTxtPasswordLogin) TextInputLayout passTextInputLayout;
+    @BindView(R.id.editTxtPasswordLogin)
+    TextInputLayout passTextInputLayout;
 
     // Edit text for password on login screen
     private EditText passEditText;
@@ -54,6 +60,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
 
     /**
      * Returns a new intent to open an instance of this activity.
+     *
      * @param context the context to use
      * @return intent.
      */
@@ -67,11 +74,11 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        emailEditText = emailTextInputLayout.getEditText();
-        passEditText = passTextInputLayout.getEditText();
-
         // Animate the activity into the screen from the bottom.
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.pull_hold);
+
+        emailEditText = emailTextInputLayout.getEditText();
+        passEditText = passTextInputLayout.getEditText();
 
         //Layout for snack bar errors and messages.
         coordinatorLayout = findViewById(R.id.snackbar_container);
@@ -84,8 +91,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
         ValidationService validationService = (ValidationService) ApplicationService.getInstance(ServiceType.ValidationService);
 
         // Initialise presenter and attach view.
-        loginPresenter = new LoginPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), validationService,
-                EniproDatabase.getInstance(this));
+        loginPresenter = new LoginPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), validationService, this);
         loginPresenter.attachView(this);
 
         // Attach view items to presenter
@@ -100,7 +106,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
             Log.e("ERROR", "Activity did not implement DataValidator");
         }
 
-        TextView txtSignUp = (TextView) findViewById(R.id.clickable_sign_up_text);
+        TextView txtSignUp = findViewById(R.id.clickable_sign_up_text);
         txtSignUp.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -112,12 +118,11 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
             new MaterialDialog.Builder(this)
                     .title(R.string.forgot_pass)
                     .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                    .input(R.string.input_content, R.string.empty, (materialDialog, charSequence) ->  {
+                    .input(R.string.input_content, R.string.empty, (materialDialog, charSequence) -> {
                         // Call presenter to send message to API
                         loginPresenter.sendFPRequest(charSequence.toString());
                     })
                     .show();
-
         });
 
 
@@ -143,7 +148,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
 
     @Override
     public void showMessage(String type, String message) {
-        switch (type){
+        switch (type) {
             case MESSAGE_SNACKBAR:
                 Snackbar snack = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
                 ((TextView) snack.getView().findViewById(android.support.design.R.id.snackbar_text))
@@ -164,7 +169,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
     @Override
     public void openApplication(User user) {
         Intent intent = HomeActivity.newIntent(this);
-        intent.putExtra(HomeActivity.EXTRA_DATA, user);
+        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -175,6 +180,8 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
         progressDialog = new MaterialDialog.Builder(this)
                 .content(R.string.wait)
                 .progress(true, 0)
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
                 .show();
     }
 
@@ -185,7 +192,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
 
     @Override
     public void setViewError(View view, String errorMessage) {
-        if(view == emailEditText || view == passEditText)
+        if (view == emailEditText || view == passEditText)
             ((EditText) view).setError(errorMessage);
     }
 

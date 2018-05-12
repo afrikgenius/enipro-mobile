@@ -24,9 +24,7 @@
                 android:id="@+id/user_post_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/image003"
-                app:border_color="@color/colorPrimary"
-                app:border_width="1dp" />
+                android:src="@drawable/image003" />
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/user_post_name"

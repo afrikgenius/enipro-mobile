@@ -5,12 +5,12 @@ import com.enipro.data.remote.EniproRestService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Injection {
 
-    private static final String BASE_URL = "https://enipro.xyz";
+    private static final String BASE_URL = "https://agbanagba.com";
 
     private static OkHttpClient okHttpClient;
     private static Retrofit retrofitInstance;
@@ -38,7 +38,7 @@ public class Injection {
                     .client(Injection.getOkHttpClient())
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
             retrofitInstance = retrofit.build();
         }
         return retrofitInstance;

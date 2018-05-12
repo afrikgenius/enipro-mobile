@@ -17,14 +17,11 @@ public class ValidationService extends ApplicationService {
     /** View on click listener for registering view on the validation service. */
     public static final String LISTENER_VIEW_ON_CLICK = "View.OnClickListener";
 
-
-    // Minimum length of password that a user can have
-    private static final int MIN_LENGTH_PASSWORD = 8;
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String PASSWORD_PATTERN =
-            "((?=.*\\d)(?=.*[a-zA-Z])(?=.*[!/\\-$%^&*()_+|~=`{}\\[\\]:\";\\'<>?,.@#\\\\/]).{8,20})";
+            "((?=.*\\d)(?=.*[a-zA-Z])(?=.*[!/\\-$%^&*()_+|~=`{}\\[\\]:\";\'<>?,.@#\\\\/]).{8,20})";
 
     // pattern object for compiling regex for email validation.
     private static Pattern email_pattern;

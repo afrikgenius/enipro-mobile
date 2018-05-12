@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-</LinearLayout>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/tags_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/separator">
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:id="@+id/add_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@android:color/transparent"
+            android:focusable="true"
+            android:gravity="start"
+            android:layout_toStartOf="@id/tags_clear"
+            android:hint="@string/add_tags"
+            android:imeOptions="flagNoExtractUi"
+            android:maxHeight="100dp"
+            android:overScrollMode="always"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp" />
+
+        <ImageButton
+            android:id="@+id/tags_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_clear_black" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/action_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tags_layout"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp">
+
+        <ImageButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_photo_camera" />
+
+        <ImageButton
+            android:id="@+id/video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/camera"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_video_camera" />
+
+
+        <ImageButton
+            android:id="@+id/tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/video"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_tags" />
+
+        <ImageButton
+            android:id="@+id/doc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/tags"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_attachment" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

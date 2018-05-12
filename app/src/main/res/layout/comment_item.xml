@@ -1,6 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:focusable="true"
+        card_view:cardElevation="50dp">
+
+        <RelativeLayout
+            android:id="@+id/child_relative_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
+
+            <RelativeLayout
+                android:id="@+id/content_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp">
+
+                <RelativeLayout
+                    android:id="@+id/post_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/comment_user_post_image"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/comment_user_post_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/comment_user_post_image"
+                        android:background="@android:color/transparent"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="@string/user_post_mock_first_name"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <!-- TODO Called headline, can be university, job title etc. -->
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/comment_user_post_headline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/comment_user_post_name"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/comment_user_post_image"
+                        android:layout_toStartOf="@id/more_options"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/user_post_headline"
+                        android:textColor="@color/material_grey_600"
+                        android:textSize="13sp" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/comment_user_post_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/comment_user_post_headline"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/comment_user_post_image"
+                        android:text="@string/user_post_mock_date"
+                        android:textColor="@color/material_grey_600"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/comment_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/post_header"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginStart="62dp"
+                    android:layout_marginTop="10dp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:clickable="true"
+                    android:ellipsize="end"
+                    android:focusable="true"
+                    android:gravity="start"
+                    android:text="@string/user_post_mock_content"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:id="@+id/comment_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@id/comment_content"
+                    android:layout_marginStart="62dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginTop="5dp"
+                    android:visibility="visible" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/comment_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_below="@id/comment_image"
+                    android:layout_marginStart="62dp"
+                    android:layout_marginTop="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/comment_error"
+                    android:textColor="@color/red" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/comment_post_footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/content_header"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="3dp">
+
+                <ImageButton
+                    android:id="@+id/comment_post_like_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="62dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/button_like"
+                    android:src="@drawable/ic_favorite_border" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/comment_post_likes_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/comment_post_like_button"
+                    android:textColor="@color/material_grey_600" />
+
+                <ImageButton
+                    android:id="@+id/comment_post_share_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/comment_post_likes_count"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/button_comment"
+                    android:src="@drawable/ic_share" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

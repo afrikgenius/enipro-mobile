@@ -6,11 +6,12 @@ public interface AbstractFeed {
 
     ObjectId get_id();
     String getUser();
-    int getLikes();
+    List<UserConnection> getLikes();
     boolean getModerated();
     FeedContent getContent();
     List<FeedComment> getComments();
     List<String> getTags();
+    PremiumDetails getPremiumDetails();
     Date getCreated_at();
     Date getUpdated_at();
 }

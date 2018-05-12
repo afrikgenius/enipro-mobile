@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="15dp">
-
+    android:layout_height="match_parent">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/first_name_layout"
@@ -61,38 +59,11 @@
             app:robotoTypeface="roboto_regular" />
     </android.support.design.widget.TextInputLayout>
 
-    <!-- Spinner view that shows list of country codes depending on the country of the user. -->
-    <Spinner
-        android:id="@+id/country_code_spinner"
-        style="@style/EditTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signUpEmail_Layout"
-        android:layout_marginTop="10dp" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/mobile_number_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/country_code_spinner"
-        android:layout_below="@id/signUpEmail_Layout">
-
-        <!-- Text box collecting the mobile number of the user. -->
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/mobile_number"
-            style="@style/EditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/mobile_number"
-            android:inputType="phone"
-            app:robotoTypeface="roboto_regular" />
-    </android.support.design.widget.TextInputLayout>
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/signUpPassword_Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mobile_number_layout"
+        android:layout_below="@id/signUpEmail_Layout"
         app:passwordToggleContentDescription="@string/pass"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/colorAccent">
@@ -109,7 +80,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <!-- Spinner view that shows list of user types -->
-    <Spinner
+    <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/user_type"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
@@ -125,6 +96,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/tandcs"
         android:textSize="15sp"
@@ -175,5 +147,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snackbar_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>

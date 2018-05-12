@@ -30,7 +30,4 @@ public interface FeedDao {
 
     @Delete
     void deleteFeed(Feed feed);
-
-//    @Query("SELECT * FROM feed_comments where _id = :feed_id")
-//    List<FeedComment> getFeedComments(String feed_id);
 }

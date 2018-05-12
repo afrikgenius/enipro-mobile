@@ -10,20 +10,31 @@
         android:id="@+id/add_profile_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/profile_image"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="45dp"
+        android:text="One last step"
+        android:textSize="30sp"
+        app:robotoTypeface="roboto_light" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_profile_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
         android:text="@string/add_profile_text"
-        android:textSize="20sp" />
+        app:robotoTypeface="roboto_medium" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/profile_image"
-        app:border_color="@color/colorPrimary"
-        app:border_width="1dp" />
+        android:src="@drawable/profile_image" />
 
     <com.devspark.robototextview.widget.RobotoButton
         android:id="@+id/skip"
@@ -39,12 +50,12 @@
         style="@style/ButtonTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_image"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
-        android:textColor="@color/colorPrimary"
         android:text="@string/btn_finish"
+        android:textColor="@color/colorPrimary"
         app:robotoTypeface="roboto_medium" />
 
 </RelativeLayout>

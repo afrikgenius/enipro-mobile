@@ -11,13 +11,21 @@ import android.support.annotation.VisibleForTesting;
 
 import com.enipro.data.remote.model.Feed;
 import com.enipro.data.remote.model.FeedContent;
+import com.enipro.data.remote.model.Message;
+import com.enipro.data.remote.model.PremiumDetails;
+import com.enipro.data.remote.model.Request;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.converter.DateConverter;
+import com.enipro.db.converter.DocumentConverter;
 import com.enipro.db.converter.FeedContentConverter;
 import com.enipro.db.converter.ListConverter;
 import com.enipro.db.converter.ObjectIdConverter;
+import com.enipro.db.converter.PremiumDetailsConverter;
+import com.enipro.db.converter.SessionScheduleConverter;
 import com.enipro.db.dao.FeedContentDao;
 import com.enipro.db.dao.FeedDao;
+import com.enipro.db.dao.MessageDao;
+import com.enipro.db.dao.RequestDao;
 import com.enipro.db.dao.UserDao;
 
 /**
@@ -25,8 +33,9 @@ import com.enipro.db.dao.UserDao;
  */
 
 
-@Database(entities = {Feed.class, User.class, FeedContent.class}, version = 1, exportSchema = false)  // TODO Remove exportSchema and add room.schemaLocation in build.gradle under room annotation processor.
-@TypeConverters({ObjectIdConverter.class, DateConverter.class, FeedContentConverter.class, ListConverter.class})
+@Database(entities = {Feed.class, User.class, FeedContent.class, Request.class}, version = 1, exportSchema = false)
+// TODO Remove exportSchema and add room.schemaLocation in build.gradle under room annotation processor.
+@TypeConverters({ObjectIdConverter.class, DateConverter.class, FeedContentConverter.class, ListConverter.class, SessionScheduleConverter.class, PremiumDetailsConverter.class, DocumentConverter.class})
 public abstract class EniproDatabase extends RoomDatabase {
 
     @VisibleForTesting
@@ -38,15 +47,19 @@ public abstract class EniproDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
 
+    public abstract RequestDao requestDao();
+
+    public abstract MessageDao messageDao();
+
     private static EniproDatabase sInstance;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
 
-    public static EniproDatabase getInstance(final Context context){
-        if(sInstance == null){
-            synchronized (EniproDatabase.class){
-                if(sInstance == null){
+    public static EniproDatabase getInstance(final Context context) {
+        if (sInstance == null) {
+            synchronized (EniproDatabase.class) {
+                if (sInstance == null) {
                     sInstance = Room.databaseBuilder(context.getApplicationContext(), EniproDatabase.class, DATABASE_NAME).build();
                     sInstance.updateDatabaseCreated(context.getApplicationContext());
                 }
@@ -57,19 +70,20 @@ public abstract class EniproDatabase extends RoomDatabase {
 
     /**
      * Checks whether database already exists.
+     *
      * @param context
      */
-    private void updateDatabaseCreated(final Context context){
-        if(context.getDatabasePath(DATABASE_NAME).exists())
+    private void updateDatabaseCreated(final Context context) {
+        if (context.getDatabasePath(DATABASE_NAME).exists())
             setDatabaseCreated();
     }
 
 
-    private void setDatabaseCreated(){
+    private void setDatabaseCreated() {
         mIsDatabaseCreated.postValue(true);
     }
 
-    public LiveData<Boolean> getDatabaseCreated(){
+    public LiveData<Boolean> getDatabaseCreated() {
         return mIsDatabaseCreated;
     }
 }

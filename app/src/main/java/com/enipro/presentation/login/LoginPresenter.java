@@ -2,6 +2,7 @@ package com.enipro.presentation.login;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +14,13 @@ import com.enipro.data.remote.model.Login;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
+import com.enipro.model.Constants;
 import com.enipro.model.DataValidator;
 import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.base.BasePresenter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,20 +40,23 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     private Map<String, View> views = new HashMap<>();
     private ValidationService validationService;
     EniproDatabase db;
+    private Context context;
 
 
-    public LoginPresenter(EniproRestService restService, Scheduler ioScheduler, io.reactivex.Scheduler mainScheduler, ValidationService validationService, EniproDatabase local_db) {
+    public LoginPresenter(EniproRestService restService, Scheduler ioScheduler, io.reactivex.Scheduler mainScheduler, ValidationService validationService, Context context) {
         super(restService, ioScheduler, mainScheduler);
         this.validationService = validationService;
-        this.db = local_db;
+        this.db = EniproDatabase.getInstance(context);
+        this.context = context;
     }
 
     /**
      * Attaches a view item to be used by the presenter.
+     *
      * @param itemName
      * @param view
      */
-    public void attachViewItems(String itemName, android.view.View view){
+    public void attachViewItems(String itemName, android.view.View view) {
         views.put(itemName, view);
     }
 
@@ -82,29 +88,37 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
             getView().showProgress();
             restService.login(login).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(@NonNull  Call<User> call, @NonNull Response<User> response) {
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     // Dismiss progress.
                     getView().dismissProgress();
-                    Log.d("Application",response.headers().toString());
-                    if(response.isSuccessful()){
-                        // Persist user information in mobile datastore.
-                        new AppExecutors().diskIO().execute(() -> {
-                            User activeUser = response.body();
-                            activeUser.setActive(true); // TODO Check what is going on here.
-                            Application.setActiveUser(activeUser); // Set the active user of the application.
-                            db.userDao().insertUser(activeUser); // Execute the operation on the diskIO thread.
-                        });
+                    Log.d("Application", response.headers().toString());
+                    if (response.isSuccessful()) {
+                        User applicationUser = response.body();
+                        applicationUser.setFirebaseToken(Utility.getTokenFromSharedPref(context));
+                        addDisposable(restService.updateUser(applicationUser, applicationUser.get_id().get_$oid())
+                                .subscribeOn(ioScheduler)
+                                .observeOn(mainScheduler)
+                                .subscribe(user -> {
+                                    // Persist user information in mobile datastore.
+                                    new AppExecutors().diskIO().execute(() -> {
+                                        applicationUser.setActive(true); // TODO Check what is going on here.
+                                        Application.setActiveUser(applicationUser); // Set the active user of the application.
+                                        db.userDao().insertUser(applicationUser); // Execute the operation on the diskIO thread.
+                                    });
 
-                        // Open application
-                        getView().openApplication(response.body());
+                                    // Login user information into Firebase Auth using Email/Password Authentication.
+                                    loginFirebaseAuth(emailAddress, password);
 
+                                    // Open application
+                                    getView().openApplication(applicationUser);
+                                }));
                     } else {
                         Log.d("Application", "404 Error Occurred: User not found");
                         JSONObject jsonObject;
-                        try{
+                        try {
                             jsonObject = new JSONObject(response.errorBody().string());
                             getView().showMessage(LoginContract.View.MESSAGE_DIALOG, jsonObject.getString("description"));
-                        } catch (IOException | JSONException io_json){
+                        } catch (IOException | JSONException io_json) {
                             Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
                         }
                     }
@@ -129,7 +143,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
         if (!Utility.isInternetConnected((Activity) getView()))
             getView().showMessage(R.string.no_internet);
-        else if(!emailValid || email.equalsIgnoreCase("")){
+        else if (!emailValid || email.equalsIgnoreCase("")) {
             getView().showMessage(LoginContract.View.MESSAGE_DIALOG, "Invalid Email Provided");
         } else {
             restService.forgotPassword(email).enqueue(new Callback<String>() {
@@ -144,7 +158,19 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 }
             });
         }
+    }
 
+    @Override
+    public void loginFirebaseAuth(String email, String password) {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
 
+                // Get the firebase UID and persist it
+                Application.getActiveUser().setFirebaseUID(task.getResult().getUser().getUid());
+                new AppExecutors().diskIO().execute(() -> db.userDao().updateUser(Application.getActiveUser()));
+            } else {
+                // TODO Put on a future thread to execute again later in the application.
+            }
+        });
     }
 }

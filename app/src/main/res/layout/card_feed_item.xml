@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center"
         android:focusable="true"
-        card_view:cardElevation="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        card_view:cardElevation="50dp">
 
         <RelativeLayout
-            android:id="@+id/child_relative_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_click"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/content_header"
@@ -33,15 +29,16 @@
                     android:id="@+id/post_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="12dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/user_post_image"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/image003"
-                        app:border_color="@color/colorPrimary"
-                        app:border_width="1dp" />
+                        android:src="@drawable/profile_image" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/user_post_name"
@@ -52,24 +49,21 @@
                         android:background="@android:color/transparent"
                         android:clickable="true"
                         android:focusable="true"
-                        android:textSize="14sp"
-                        android:text="@string/user_post_mock_first_name"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
 
-                    <!-- TODO Called headline, can be university, job title etc. -->
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/user_post_headline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/user_post_image"
                         android:layout_below="@id/user_post_name"
                         android:layout_marginStart="10dp"
-                        android:textSize="13sp"
+                        android:layout_toEndOf="@id/user_post_image"
                         android:layout_toStartOf="@id/more_options"
-                        android:maxLines="1"
                         android:ellipsize="end"
-                        android:text="@string/user_post_headline"
-                        android:textColor="@color/material_grey_600" />
+                        android:maxLines="1"
+                        android:textColor="@color/material_grey_600"
+                        android:textSize="13sp" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/user_post_date"
@@ -78,9 +72,20 @@
                         android:layout_below="@id/user_post_headline"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@id/user_post_image"
-                        android:text="@string/user_post_mock_date"
-                        android:textSize="13sp"
-                        android:textColor="@color/material_grey_600"/>
+                        android:textColor="@color/material_grey_600"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/premium_lock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/user_post_headline"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="-7dp"
+                        android:layout_toEndOf="@id/user_post_date"
+                        android:background="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_lock_active"
+                        android:visibility="gone" />
 
                     <ImageButton
                         android:id="@+id/more_options"
@@ -88,10 +93,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:background="@android:color/transparent"
-                        android:paddingBottom="10dp"
                         android:contentDescription="@string/button_more"
-                        android:src="@drawable/ic_more_vert"
-                        />
+                        android:paddingBottom="10dp"
+                        android:src="@drawable/ic_more_vert" />
 
                 </RelativeLayout>
 
@@ -100,18 +104,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/post_header"
-                    android:layout_marginTop="7dp">
+                    android:layout_marginTop="7dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|end"
+                        android:autoLink="web"
+                        android:background="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true"
                         android:ellipsize="end"
+                        android:focusable="true"
                         android:gravity="start"
-                        android:text="@string/user_post_mock_content"
+                        android:linksClickable="true"
                         android:textColor="@color/black" />
 
                 </RelativeLayout>
@@ -119,9 +128,90 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/media_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/content_header"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/post_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="350dp"
+                    android:minHeight="100dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <FrameLayout
+                    android:id="@+id/video_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_gravity="center_horizontal|center_vertical">
+
+                        <com.universalvideoview.UniversalVideoView
+                            android:id="@+id/post_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:focusable="true" />
+                    </RelativeLayout>
+
+                    <ImageButton
+                        android:id="@+id/play_pause_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/uvv_itv_player_play"
+                        android:visibility="gone" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/video_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/video_text_bg"
+                        android:padding="3dp"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/tags"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/media_layout"
+                android:layout_marginStart="12dp">
+
+                <ImageButton
+                    android:id="@+id/tag_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_tags" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/tags_post_recyclerview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/tag_imageview"
+                    android:orientation="horizontal" />
 
             </RelativeLayout>
 
@@ -129,11 +219,11 @@
                 android:id="@+id/post_footer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/content_header"
+                android:layout_below="@id/tags"
+                android:layout_marginBottom="3dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="3dp">
+                android:layout_marginTop="10dp">
 
                 <ImageButton
                     android:id="@+id/post_like_button"
@@ -143,42 +233,52 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/button_like"
                     android:src="@drawable/ic_favorite_border" />
-                
+
                 <com.devspark.robototextview.widget.RobotoTextView
                     android:id="@+id/post_likes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/post_like_button"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="9dp"
-                    android:textColor="@color/material_grey_600"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/post_like_button"
+                    android:textColor="@color/material_grey_600" />
 
                 <ImageButton
                     android:id="@+id/post_comment_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/post_likes_count"
-                    android:background="@android:color/transparent"
+                    android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/button_comment"
                     android:src="@drawable/ic_comment" />
 
                 <com.devspark.robototextview.widget.RobotoTextView
-                    android:id="@+id/post_comment_responses"
+                    android:id="@+id/post_comment_count"
                     android:layout_width="wrap_content"
-                    android:layout_toEndOf="@id/post_comment_button"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="9dp"
-                    android:textColor="@color/material_grey_600"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/post_comment_button"
+                    android:textColor="@color/material_grey_600" />
 
                 <ImageButton
                     android:id="@+id/post_share_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/post_comment_responses"
-                    android:background="@android:color/transparent"
+                    android:layout_marginEnd="9dp"
+                    android:layout_toEndOf="@id/post_comment_count"
+                    android:background="?attr/selectableItemBackground"
                     android:contentDescription="@string/button_comment"
                     android:src="@drawable/ic_share" />
+
+                <ImageButton
+                    android:id="@+id/post_doc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/post_share_button"
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_docs"
+                    android:visibility="gone" />
 
                 <ImageButton
                     android:id="@+id/post_save_button"
@@ -187,24 +287,14 @@
                     android:layout_alignParentEnd="true"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/button_comment"
-                    android:src="@drawable/ic_bookmark_border" />
+                    android:src="@drawable/ic_bookmark_nactive" />
 
-                <!--<com.devspark.robototextview.widget.RobotoTextView-->
-                    <!--android:id="@+id/post_like_count"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:layout_toEndOf="@id/post_like_button"-->
-                    <!--android:fontFamily="sans-serif"-->
-                    <!--android:text="@string/post_like_count"-->
-                    <!--android:textColor="@color/material_grey_800_"/>-->
 
             </RelativeLayout>
 
             <!--Draw a line across-->
             <View
+                android:id="@+id/line_view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_above="@id/post_footer"
