@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/white">
+
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/action_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/separator"
+        android:layout_marginStart="12dp">
+
+        <ImageButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_photo_camera" />
+
+        <ImageButton
+            android:id="@+id/gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/camera"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_gallery" />
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/at_reference"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginStart="12dp"-->
+            <!--android:layout_toEndOf="@id/gallery"-->
+            <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+            <!--android:src="@drawable/ic_at_symbol" />-->
+
+        <Button
+            android:id="@+id/send_comment"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="7dp"
+            android:clickable="false"
+            android:text="@string/post_text"
+            android:textColor="@color/material_grey_400_"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/comment_text_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_buttons">
+
+        <com.devspark.robototextview.widget.RobotoEditText
+            android:id="@+id/comment_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="12dp"
+            android:focusable="true"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:hint="@string/add_comment_hint"
+            android:imeOptions="flagNoExtractUi"
+            android:maxHeight="100dp"
+            android:overScrollMode="always"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/image_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_text_layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="12dp"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:scaleType="center"
+        android:src="@drawable/image001" />
+
+</RelativeLayout>

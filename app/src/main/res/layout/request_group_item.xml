@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/group_header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/circle_requests"
+        android:textSize="17sp"
+        app:robotoTextWeight="bold" />
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/group_header_name"
+        android:background="@color/material_grey_300_" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/request_group_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view"
+        android:layout_marginStart="5dp" />
+
+    <View
+        android:id="@+id/line_view_btop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/request_group_recycler"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/showmore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view_btop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/show_more"
+        android:textColor="@color/colorPrimary" />
+
+    <View
+        android:id="@+id/line_view_bbtop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/showmore"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/material_grey_300_" />
+
+
+</RelativeLayout>

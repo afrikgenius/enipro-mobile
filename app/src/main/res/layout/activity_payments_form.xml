@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/close"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="-15dp"
+                    android:src="@drawable/ic_clear_black" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/enter_card_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_toEndOf="@id/close"
+                    android:text="@string/enter_card_details"
+                    android:textSize="18sp" />
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/card_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/nonactive_round_edittext"
+            android:hint="@string/card_number"
+            android:inputType="number"
+            android:maxLength="19"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp" />
+
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/card_number_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_number"
+            android:layout_marginTop="10dp"
+            android:text="@string/card_number_error"
+            android:textColor="@color/error_red"
+            android:visibility="gone" />
+
+        <GridLayout
+            android:id="@+id/month_cvv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_number_error"
+            android:layout_marginTop="20dp"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="1">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/expiry_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="@drawable/nonactive_round_edittext"
+                android:drawableEnd="@drawable/ic_help_outline"
+                android:hint="@string/date"
+                android:inputType="number"
+                android:letterSpacing="0.05"
+                android:maxLength="5"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/cvv"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/nonactive_round_edittext"
+                android:drawableEnd="@drawable/ic_help_outline"
+                android:hint="@string/cvv"
+                android:inputType="number"
+                android:letterSpacing="0.05"
+                android:maxLength="3"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp" />
+
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/error_text_cvv_expdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/month_cvv"
+            android:layout_marginTop="10dp"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:rowCount="1">
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exp_date_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:text="@string/expiry_date_error"
+                android:textColor="@color/error_red"
+                android:visibility="gone" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/cvv_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:text="@string/cvv_error"
+                android:textColor="@color/error_red"
+                android:visibility="gone" />
+        </GridLayout>
+
+        <com.devspark.robototextview.widget.RobotoButton
+            android:id="@+id/pay"
+            style="@style/ButtonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/month_cvv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_teal"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/pay"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            app:robotoTextWeight="bold"
+            app:robotoTypeface="roboto_medium" />
+    </RelativeLayout>
+
+</RelativeLayout>

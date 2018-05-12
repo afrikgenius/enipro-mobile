@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:focusable="true"
+        card_view:cardElevation="50dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/exp_org_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exp_text"
+                android:layout_marginTop="7dp">
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/exp_organisation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/exp_org"
+                    android:textSize="17sp"
+                    app:robotoTextWeight="medium" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/exp_industry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toEndOf="@id/exp_organisation"
+                    android:text="@string/exp_industry"
+                    app:robotoTextStyle="italic" />
+            </RelativeLayout>
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exp_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exp_org_in"
+                android:text="@string/exp_role"
+                android:textColor="@color/material_grey_800_" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exp_year_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exp_role"
+                android:text="@string/exp_from"
+                android:textColor="@color/material_grey_800_" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exp_hyphen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exp_role"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/exp_year_from"
+                android:text="@string/hyphen"
+                android:textColor="@color/material_grey_800_" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/exp_year_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/exp_role"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/exp_hyphen"
+                android:text="@string/exp_to"
+                android:textColor="@color/material_grey_800_" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.requests.session_schedule.SessionScheduleActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/send_request"
+                    style="@style/Widget.AppCompat.ActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="7dp"
+                    android:clickable="false"
+                    android:text="@string/send"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/dayofweek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/daysofweek"
+        android:textSize="17sp" />
+
+    <RelativeLayout
+        android:id="@+id/monday_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dayofweek"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="17dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/monday_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/monday_chkbox"
+            android:text="@string/monday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/monday_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/tuesday_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/tuesday_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/tuesday_chkbox"
+            android:text="@string/tuesday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tuesday_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/wed_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view2"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/wed_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/wed_chkbox"
+            android:text="@string/wednesday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/wed_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/thurs_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view3"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/thurs_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/thurs_chkbox"
+            android:text="@string/thurssday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/thurs_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/friday_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view4"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/friday_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/friday_chkbox"
+            android:text="@string/friday"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/friday_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/sat_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view5"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/sat_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/sat_chkbox"
+            android:text="@string/saturday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line_view6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/sat_rltive"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/material_grey_300_" />
+
+    <RelativeLayout
+        android:id="@+id/sun_rltive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_view6"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="12dp">
+
+        <com.devspark.robototextview.widget.RobotoCheckBox
+            android:id="@+id/sun_chkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/sun_chkbox"
+            android:text="@string/sunday"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/time_placeholder_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sun_rltive"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/what_time"
+        android:textSize="17sp" />
+
+
+    <GridLayout
+        android:id="@+id/duration_edu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_placeholder_text"
+        android:layout_marginTop="12dp"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="1">
+
+        <EditText
+            android:id="@+id/from_time"
+            style="@style/EditTextBoxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:background="@drawable/edit_text_box"
+            android:focusable="false"
+            android:hint="@string/from"
+            android:paddingStart="10dp" />
+
+
+        <EditText
+            android:id="@+id/to_time"
+            style="@style/EditTextBoxStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:background="@drawable/edit_text_box"
+            android:focusable="false"
+            android:hint="@string/to"
+            android:paddingStart="10dp" />
+
+    </GridLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

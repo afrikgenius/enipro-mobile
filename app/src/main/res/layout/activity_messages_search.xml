@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_message_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.messages.MessagesSearch">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/search_toolbar" />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/alternate_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_search_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_below="@id/appbar"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
+
+    <include
+        android:id="@+id/no_chatuser_layout"
+        layout="@layout/no_chatuser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

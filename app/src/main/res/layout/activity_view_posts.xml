@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.profile.ViewPostsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/profile_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/posts_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar" />
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:id="@+id/posts_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/appbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        app:cpv_animAutostart="true"
+        app:cpv_animDuration="2000"
+        app:cpv_indeterminate="true"
+        app:cpv_thickness="3dp"
+        tools:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/no_saved_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/no_feed_data"
+            android:src="@drawable/ic_newsfeed"
+            android:layout_centerHorizontal="true"/>
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/no_feed_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:text="@string/no_saved_feed"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"
+            app:robotoTypeface="roboto_bold" />
+    </RelativeLayout>
+
+</RelativeLayout>
