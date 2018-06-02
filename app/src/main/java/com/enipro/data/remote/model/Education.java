@@ -43,31 +43,6 @@ public class Education {
         this.to = to;
     }
 
-
-//    public Education(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.school = in.readString();
-//        this.course = in.readString();
-//        this.degree = in.readString();
-//        this.from = in.readString();
-//        this.to = in.readString();
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(school);
-//        dest.writeString(course);
-//        dest.writeString(degree);
-//        dest.writeString(from);
-//        dest.writeString(to);
-//    }
-
     public ObjectId get_id() {
         return _id;
     }
@@ -115,18 +90,4 @@ public class Education {
     public void setTo(String to) {
         this.to = to;
     }
-
-//    public static final Parcelable.Creator CREATOR = new Parcelable.Creator<Education>() {
-//
-//        @Override
-//        public Education createFromParcel(Parcel parcel) {
-//            return new Education(parcel);
-//        }
-//
-//        @Override
-//        public Education[] newArray(int size) {
-//            return new Education[size];
-//        }
-//    };
-
 }

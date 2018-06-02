@@ -21,22 +21,6 @@ public class SavedFeed {
         this.feedId = feedId;
     }
 
-//    public SavedFeed(Parcel in) {
-//        feedId = in.readString();
-//        createdAt = in.readParcelable(getClass().getClassLoader());
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(feedId);
-//        dest.writeParcelable(createdAt, flags);
-//    }
-
     public String getFeedId() {
         return feedId;
     }
@@ -53,17 +37,4 @@ public class SavedFeed {
         this.createdAt = createdAt;
     }
 
-//    public static final Parcelable.Creator<SavedFeed> CREATOR = new Parcelable.Creator<SavedFeed>() {
-//
-//        @Override
-//        public SavedFeed createFromParcel(Parcel source) {
-//            return new SavedFeed(source);
-//        }
-//
-//
-//        @Override
-//        public SavedFeed[] newArray(int size) {
-//            return new SavedFeed[size];
-//        }
-//    };
 }

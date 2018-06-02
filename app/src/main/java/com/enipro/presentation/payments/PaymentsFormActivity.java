@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
 import com.enipro.model.Constants;
+import com.enipro.model.Enipro;
 
 import org.parceler.Parcels;
 
@@ -38,6 +43,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
     private String email, card_number, cvvStr;
     private int expiryMonth, expiryYear;
     private Feed paymentFeed; // The feed whose content is to be paid for.
+    boolean errorFlag = false; // Error flag to note an error in the card or transaction.
 
     @BindView(R.id.card_number)
     EditText cardNumber;
@@ -50,6 +56,12 @@ public class PaymentsFormActivity extends AppCompatActivity {
     Button payAmount;
     @BindView(R.id.close)
     ImageButton close;
+    @BindView(R.id.card_number_error)
+    TextView cardNumberError;
+    @BindView(R.id.cvv_error)
+    TextView cvvError;
+    @BindView(R.id.exp_date_error)
+    TextView expiryDateError;
 
     /**
      * Returns a new intent to open an instance of this activity.
@@ -67,9 +79,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payments_form);
         ButterKnife.bind(this);
 
-        // Get calling intent data
         paymentFeed = Parcels.unwrap(getIntent().getParcelableExtra(Constants.FEED_EXTRA));
-
         initUIControls(); // Initialise UI Controls to respond accordingly.
     }
 
@@ -78,10 +88,6 @@ public class PaymentsFormActivity extends AppCompatActivity {
      * Initialises UI Controls (edit text and buttons on the payments form).
      */
     void initUIControls() {
-
-        // Attach listeners to all edit text fields to perform appropriate operations when triggered.
-
-
         initCardNumberTextWatcher();
 
         // Set focus change listeners for the edit text.
@@ -89,7 +95,6 @@ public class PaymentsFormActivity extends AppCompatActivity {
         expiryDate.setOnFocusChangeListener(editTextFocusListener);
         cvv.setOnFocusChangeListener(editTextFocusListener);
 
-        // Text change listener for expiry date.
         expiryDate.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -123,6 +128,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
                 if (charSequence.length() == 5) {
                     String fullDate = charSequence.toString();
                     expiryYear = Integer.valueOf(fullDate.substring(fullDate.indexOf('/') + 1));
+                    cvv.requestFocus();
                 }
             }
 
@@ -132,8 +138,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
             }
         });
 
-        close.setOnClickListener(view -> finish()); // Close the activity and return to calling activity when close button is clicked.
-        /* Handles payment activation process and verification of credit card details. */
+        close.setOnClickListener(view -> finish());
         initPayAction();
 
     }
@@ -145,20 +150,35 @@ public class PaymentsFormActivity extends AppCompatActivity {
      */
     void initCardNumberTextWatcher() {
         cardNumber.addTextChangedListener(new TextWatcher() {
+            private static final char space = ' ';
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
 
-                // After every fourth character, insert a huge space.
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable s) {
+                // Remove spacing char
+                if (s.length() > 0 && (s.length() % 5) == 0) {
+                    final char c = s.charAt(s.length() - 1);
+                    if (space == c) {
+                        s.delete(s.length() - 1, s.length());
+                    }
+                }
 
+                // Insert char where needed.
+                if (s.length() > 0 && (s.length() % 5) == 0) {
+                    char c = s.charAt(s.length() - 1);
+                    // Only if its a digit where there should be a space we insert a space
+                    if (Character.isDigit(c) && TextUtils.split(s.toString(), String.valueOf(space)).length <= 3)
+                        s.insert(s.length() - 1, String.valueOf(space));
+                }
             }
         });
     }
@@ -176,12 +196,35 @@ public class PaymentsFormActivity extends AppCompatActivity {
      * and starts the payment process.
      */
     void initPayAction() {
-        // Get account
+        String payText = payAmount.getText().toString() + " " + paymentFeed.getPremiumDetails().getPayment_amount();
+        payAmount.setText(payText);
+        card_number = cardNumber.getText().toString();
+        cvvStr = cvv.getText().toString();
 
         payAmount.setOnClickListener(view -> {
+            // Check if there is content in the fields.
+            if (card_number.equals("")) {
+                cardNumber.setBackgroundResource(R.drawable.error_card_edittext);
+                cardNumberError.setVisibility(View.VISIBLE);
+                errorFlag = true;
+            } else
+                errorFlag = false;
 
-            // Check to see if all inputs are correct and filled.
+            if (cvvStr.equals("")) {
+                cvv.setBackgroundResource(R.drawable.error_card_edittext);
+                cvvError.setVisibility(View.VISIBLE);
+                errorFlag = true;
+            } else
+                errorFlag = false;
 
+            if (expiryMonth == 0 || expiryYear == 0) {
+                expiryDate.setBackgroundResource(R.drawable.error_card_edittext);
+                expiryDateError.setVisibility(View.VISIBLE);
+                errorFlag = true;
+            } else
+                errorFlag = false;
+
+            if (errorFlag) return;
 
             // Initialise payment process
             chargeCard();
@@ -190,7 +233,6 @@ public class PaymentsFormActivity extends AppCompatActivity {
     }
 
     private void chargeCard() {
-
         // Validate card information and initiate payment transaction
         Card card = new Card(card_number, expiryMonth, expiryYear, cvvStr);
         if (!card.isValid()) {
@@ -200,9 +242,13 @@ public class PaymentsFormActivity extends AppCompatActivity {
         Charge charge = new Charge();
         charge.setCard(card);
 
-        // TODO Get the amount to charge for from the post activity calling this activity.
+        // The amount is in kobo when charging with paystack.
         int payment_amount = paymentFeed.getPremiumDetails().getPayment_amount() / 1000;
         charge.setAmount(payment_amount);
+        charge.setEmail(Application.getActiveUser().getEmail());
+        charge.setSubaccount(paymentFeed.getPremiumDetails().getPayment_code());
+        charge.setBearer(Charge.Bearer.subaccount);
+
 
         PaystackSdk.chargeCard(this, charge, new Paystack.TransactionCallback() {
             @Override
@@ -211,6 +257,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
                 // Retrieve the transaction, and send its reference to your server
                 // for verification.
                 String paymentRef = transaction.getReference();
+                Log.d(Enipro.APPLICATION, "Transaction Ref - " + paymentRef);
             }
 
             @Override

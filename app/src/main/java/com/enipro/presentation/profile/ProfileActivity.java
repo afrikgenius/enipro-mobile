@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,7 +20,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
-import com.enipro.data.remote.model.UserConnection;
 import com.enipro.injection.Injection;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
@@ -118,7 +116,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         }
 
         // Get user information from intent
-        user = getIntent().getParcelableExtra(Constants.APPLICATION_USER);
+        user = Parcels.unwrap(getIntent().getParcelableExtra(Constants.APPLICATION_USER));
         profilePresenter = new ProfilePresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this);
         profilePresenter.attachView(this);
         init();
@@ -309,9 +307,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileContrac
         message_user.setOnClickListener(view -> {
 
             // Pass the user info to the message Activity
-            Intent messageIntent = MessageActivity.newIntent(this);
-            messageIntent.putExtra(Constants.MESSAGE_CHAT_RETURN_KEY, Parcels.wrap(user));
-            startActivity(messageIntent);
+            startActivity(MessageActivity.Companion.newIntent(this, user));
         });
 
         // Based on user type, remove view not needed

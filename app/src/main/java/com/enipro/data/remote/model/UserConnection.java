@@ -24,22 +24,6 @@ public class UserConnection {
         this.userId = userId;
     }
 
-//    public UserConnection(Parcel in) {
-//        userId = in.readString();
-//        createdAt = in.readParcelable(getClass().getClassLoader());
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(userId);
-//        dest.writeParcelable(createdAt, flags);
-//    }
-
     public String getUserId() {
         return userId;
     }
@@ -55,18 +39,5 @@ public class UserConnection {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-//    public static final Parcelable.Creator<UserConnection> CREATOR = new Parcelable.Creator<UserConnection>() {
-//
-//        @Override
-//        public UserConnection createFromParcel(Parcel source) {
-//            return new UserConnection(source);
-//        }
-//
-//
-//        @Override
-//        public UserConnection[] newArray(int size) {
-//            return new UserConnection[size];
-//        }
-//    };
+    
 }

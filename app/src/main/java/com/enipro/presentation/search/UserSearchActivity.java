@@ -22,6 +22,8 @@ import com.enipro.model.Constants;
 import com.enipro.presentation.profile.ProfileActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -150,7 +152,7 @@ public class UserSearchActivity extends AppCompatActivity implements SearchContr
     private void onSearchItemClicked(User user) {
         // Open the profile activity and remove current activity from back stack.
         Intent profileIntent = ProfileActivity.newIntent(this);
-        profileIntent.putExtra(Constants.APPLICATION_USER, user);
+        profileIntent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
         startActivity(profileIntent);
     }
 

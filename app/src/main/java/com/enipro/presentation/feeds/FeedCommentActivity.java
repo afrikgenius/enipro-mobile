@@ -47,6 +47,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import com.universalvideoview.UniversalVideoView;
 
+import org.parceler.Parcels;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +94,7 @@ public class FeedCommentActivity extends AppCompatActivity implements FeedContra
     ImageButton camera;
     @BindView(R.id.gallery)
     ImageButton gallery;
-//    @BindView(R.id.at_reference)
+    //    @BindView(R.id.at_reference)
 //    ImageButton _reference;
     @BindView(R.id.image_upload)
     ImageView image_upload;
@@ -148,7 +150,7 @@ public class FeedCommentActivity extends AppCompatActivity implements FeedContra
         presenter.attachView(this);
 
         // Collect feed data from feed fragment.
-        feedData = getIntent().getExtras().getParcelable(FeedContract.Presenter.FEED);
+        feedData = Parcels.unwrap(getIntent().getExtras().getParcelable(FeedContract.Presenter.FEED));
         post_date.setText(DateTimeStringProcessor.process(feedData.getUpdated_at().getUtilDate()));
         feed_content.setText(feedData.getContent().getText());
 
@@ -301,7 +303,7 @@ public class FeedCommentActivity extends AppCompatActivity implements FeedContra
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (count > 0) {
+                if (charSequence.length() > 0) {
                     sendComment.setTextColor(getResources().getColor(R.color.colorPrimary));
                     sendComment.setClickable(true);
                 } else {

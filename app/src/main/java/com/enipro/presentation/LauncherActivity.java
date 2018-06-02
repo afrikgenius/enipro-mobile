@@ -18,6 +18,8 @@ import com.enipro.presentation.login.LoginActivity;
 import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.signup.SignUpActivity;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -57,7 +59,7 @@ public class LauncherActivity extends AppCompatActivity {
 
             if(users.size() == 1) {
                 intent = HomeActivity.newIntent(this); // Launch Home activity
-                intent.putExtra(Constants.APPLICATION_USER, users.get(0)); // Pass the application user down to home activity.
+                intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(users.get(0))); // Pass the application user down to home activity.
             } else
                 intent = LoginActivity.newIntent(this);   // No user exists and launch sign up activity
 

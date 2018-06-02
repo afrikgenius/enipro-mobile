@@ -21,9 +21,9 @@
                 android:id="@+id/content_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="13dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp">
+                android:layout_marginBottom="13dp">
 
                 <RelativeLayout
                     android:id="@+id/post_header"
@@ -58,8 +58,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/user_post_name"
                         android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@id/user_post_image"
                         android:layout_toStartOf="@id/more_options"
+                        android:layout_toEndOf="@id/user_post_image"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/material_grey_600"
@@ -155,14 +155,14 @@
                         android:layout_height="300dp"
                         android:layout_gravity="center_horizontal|center_vertical">
 
-                        <com.universalvideoview.UniversalVideoView
+                        <com.google.android.exoplayer2.ui.PlayerView
                             android:id="@+id/post_video"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
                             android:layout_gravity="center"
                             android:clickable="true"
                             android:focusable="true" />
@@ -182,8 +182,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|start"
-                        android:layout_marginBottom="12dp"
                         android:layout_marginStart="12dp"
+                        android:layout_marginBottom="12dp"
                         android:background="@drawable/video_text_bg"
                         android:padding="3dp"
                         android:textColor="@color/white"
@@ -220,10 +220,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tags"
-                android:layout_marginBottom="3dp"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="3dp">
 
                 <ImageButton
                     android:id="@+id/post_like_button"
@@ -238,8 +238,8 @@
                     android:id="@+id/post_likes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="9dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="9dp"
                     android:layout_toEndOf="@id/post_like_button"
                     android:textColor="@color/material_grey_600" />
 
@@ -256,8 +256,8 @@
                     android:id="@+id/post_comment_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="9dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="9dp"
                     android:layout_toEndOf="@id/post_comment_button"
                     android:textColor="@color/material_grey_600" />
 
@@ -298,9 +298,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_above="@id/post_footer"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
                 android:background="@color/material_grey_300_" />
 
         </RelativeLayout>

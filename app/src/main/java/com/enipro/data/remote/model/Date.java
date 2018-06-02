@@ -13,21 +13,12 @@ public class Date {
 
     @SerializedName("$date")
     @Expose
-    private String $date;
+    public String $date;
 
     @ParcelConstructor
     public Date(String $date) {
         this.$date = $date;
     }
-
-//    public Date(Parcel in){
-//        this.$date = in.readString();
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString($date);
-//    }
 
     public String get_$date() {
         return $date;
@@ -47,21 +38,4 @@ public class Date {
         org.joda.time.format.DateTimeFormatter parser = ISODateTimeFormat.dateTimeParser();
         return parser.parseDateTime($date).toLocalDateTime();
     }
-
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    public static final Parcelable.Creator<Date> CREATOR = new Parcelable.Creator<Date>() {
-//        @Override
-//        public Date createFromParcel(Parcel source) {
-//            return new Date(source);
-//        }
-//
-//        @Override
-//        public Date[] newArray(int size) {
-//            return new Date[size];
-//        }
-//    };
 }

@@ -27,6 +27,8 @@ import com.enipro.presentation.home.HomeActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -70,7 +72,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.pull_hold);
 
         // Get user object passed from previous activity
-        User user = getIntent().getParcelableExtra(TAG);
+        User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
                 EniproDatabase.getInstance(this), this);
@@ -244,7 +246,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @Override
     public void openApplication(User user) {
         Intent intent = HomeActivity.newIntent(this);
-        intent.putExtra(Constants.APPLICATION_USER, user);
+        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

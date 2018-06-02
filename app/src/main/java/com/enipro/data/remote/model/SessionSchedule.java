@@ -30,24 +30,6 @@ public class SessionSchedule {
         this.sessionTiming = timing;
     }
 
-//    public SessionSchedule(Parcel in) {
-//        this.start_period = in.readString();
-//        this.end_period = in.readString();
-//        this.sessionTiming = in.readParcelable(SessionTiming.class.getClassLoader());
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(start_period);
-//        dest.writeString(end_period);
-//        dest.writeParcelable(sessionTiming, flags);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-
     public String getStart_period() {
         return start_period;
     }
@@ -71,19 +53,4 @@ public class SessionSchedule {
     public void setSessionTiming(SessionTiming sessionTiming) {
         this.sessionTiming = sessionTiming;
     }
-
-//    public static final Parcelable.Creator<SessionSchedule> CREATOR = new Parcelable.Creator<SessionSchedule>() {
-//
-//        @Override
-//        public SessionSchedule createFromParcel(Parcel source) {
-//            return new SessionSchedule(source);
-//        }
-//
-//        @Override
-//        public SessionSchedule[] newArray(int size) {
-//            return new SessionSchedule[size];
-//        }
-//    };
-
-
 }

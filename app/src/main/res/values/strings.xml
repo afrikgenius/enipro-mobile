@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
 
 
     <string name="hello_world">Hello World</string>
@@ -402,5 +402,5 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
 
     <string name="show_more">SHOW MORE</string>
 
-
+    <string name="request_accepted">Request Accepted</string>
 </resources>

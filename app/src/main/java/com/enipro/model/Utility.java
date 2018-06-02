@@ -48,7 +48,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +59,6 @@ import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.firebase.FirebaseNotificationBuilder;
-import com.enipro.presentation.messages.MessageActivity;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;

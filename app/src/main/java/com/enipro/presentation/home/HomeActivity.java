@@ -24,7 +24,6 @@ import com.enipro.presentation.messages.MessagesFragment;
 import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.requests.RequestsFragment;
 import com.enipro.presentation.search.UserSearchActivity;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 

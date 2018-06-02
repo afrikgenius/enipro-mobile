@@ -51,31 +51,6 @@ public class FeedContent {
     public FeedContent() {
     }
 
-//    public FeedContent(Parcel in) {
-//        this.content_id = in.readInt();
-//        this.text = in.readString();
-//        this.image = in.readString();
-//        this.video = in.readString();
-//        this.doc = in.readParcelable(getClass().getClassLoader());
-//        this.mediaType = in.readInt();
-//        this.docExists = in.readByte() != 0;
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(content_id);
-//        dest.writeString(text);
-//        dest.writeString(image);
-//        dest.writeString(video);
-//        dest.writeParcelable(doc, flags);
-//        dest.writeInt(mediaType);
-//        dest.writeByte((byte) (docExists ? 1 : 0));
-//    }
 
     public int getMediaType() {
         return this.mediaType;
@@ -141,20 +116,6 @@ public class FeedContent {
     public void setDocExists(boolean docExists) {
         this.docExists = docExists;
     }
-
-//    public static final Parcelable.Creator<FeedContent> CREATOR = new Parcelable.Creator<FeedContent>() {
-//
-//        @Override
-//        public FeedContent createFromParcel(Parcel source) {
-//            return new FeedContent(source);
-//        }
-//
-//
-//        @Override
-//        public FeedContent[] newArray(int size) {
-//            return new FeedContent[size];
-//        }
-//    };
 
     public class MediaType {
         public static final int IMAGE = 0x005;

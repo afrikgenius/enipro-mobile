@@ -66,36 +66,6 @@ public class Request {
         this.category = category;
     }
 
-//    public Request(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.sender = in.readString();
-//        this.type = in.readString();
-//        this.category = in.readString();
-//        this.status = in.readString();
-//        this.recipient = in.readString();
-//        this.created_at = in.readParcelable(getClass().getClassLoader());
-//        this.updated_at = in.readParcelable(getClass().getClassLoader());
-//        this.schedule = in.readParcelable(getClass().getClassLoader());
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(sender);
-//        dest.writeString(type);
-//        dest.writeString(category);
-//        dest.writeString(status);
-//        dest.writeString(recipient);
-//        dest.writeParcelable(created_at, flags);
-//        dest.writeParcelable(updated_at, flags);
-//        dest.writeParcelable(schedule, flags);
-//    }
-
     public ObjectId get_id() {
         return _id;
     }
@@ -167,17 +137,4 @@ public class Request {
     public void setSchedule(SessionSchedule schedule) {
         this.schedule = schedule;
     }
-
-//    public static final Parcelable.Creator<Request> CREATOR = new Parcelable.Creator<Request>() {
-//
-//        @Override
-//        public Request createFromParcel(Parcel source) {
-//            return new Request(source);
-//        }
-//
-//        @Override
-//        public Request[] newArray(int size) {
-//            return new Request[size];
-//        }
-//    };
 }

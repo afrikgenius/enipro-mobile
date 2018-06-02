@@ -160,11 +160,6 @@ public class Feed implements AbstractFeed {
     public Feed() {
     }
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-
     public Feed(AbstractFeed feed) {
         _id = feed.get_id();
         user = feed.getUser();
@@ -177,47 +172,4 @@ public class Feed implements AbstractFeed {
         created_at = feed.getCreated_at();
         updated_at = feed.getUpdated_at();
     }
-
-//    public Feed(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.user = in.readString();
-//        in.readList(this.likes, UserConnection.class.getClassLoader());
-//        this.moderated = in.readByte() != 0;
-//        this.content = in.readParcelable(getClass().getClassLoader());
-//        this.comments = new ArrayList<>();
-//        in.readList(this.comments, FeedComment.class.getClassLoader());
-//        this.tags = new ArrayList<>();
-//        in.readList(this.tags, List.class.getClassLoader());
-//        this.updated_at = in.readParcelable(getClass().getClassLoader());
-//        this.premiumDetails = in.readParcelable(getClass().getClassLoader());
-//        this.created_at = in.readParcelable(getClass().getClassLoader());
-//    }
-
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(user);
-//        dest.writeList(likes);
-//        dest.writeByte((byte) (moderated ? 1 : 0));
-//        dest.writeParcelable(content, flags);
-//        dest.writeList(comments);
-//        dest.writeList(tags);
-//        dest.writeParcelable(updated_at, flags);
-//        dest.writeParcelable(premiumDetails, flags);
-//        dest.writeParcelable(created_at, flags);
-//    }
-//
-//    public static final Parcelable.Creator<Feed> CREATOR = new Parcelable.Creator<Feed>() {
-//
-//        @Override
-//        public Feed createFromParcel(Parcel source) {
-//            return new Feed(source);
-//        }
-//
-//
-//        @Override
-//        public Feed[] newArray(int size) {
-//            return new Feed[size];
-//        }
-//    };
 }

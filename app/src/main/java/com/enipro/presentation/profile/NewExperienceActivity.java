@@ -19,6 +19,8 @@ import com.enipro.data.remote.model.Experience;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 
+import org.parceler.Parcels;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -82,7 +84,7 @@ public class NewExperienceActivity extends AppCompatActivity {
             Experience experience = validateData();
             if (experience != null) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra(Constants.EXPERIENCE_EXTRA, experience);
+                resultIntent.putExtra(Constants.EXPERIENCE_EXTRA, Parcels.wrap(experience));
                 setResult(Constants.ADD_EXPERIENCE, resultIntent);
                 finish();
             }

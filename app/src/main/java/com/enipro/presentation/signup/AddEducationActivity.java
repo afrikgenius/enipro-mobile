@@ -16,6 +16,8 @@ import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
 import com.twinkle94.monthyearpicker.picker.YearMonthPickerDialog;
 
+import org.parceler.Parcels;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,7 +64,7 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
         ButterKnife.bind(this);
 
         // Get user object passed from previous activity
-        User user = getIntent().getParcelableExtra(TAG);
+        User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
                 EniproDatabase.getInstance(this), this);
@@ -147,7 +149,7 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
     public void advanceProcess(User user) {
         // Open add photo activity passing the user object as a bundle
         Intent intent = AddInterestsActivity.newIntent(this);
-        intent.putExtra(AddInterestsActivity.TAG, user);
+        intent.putExtra(AddInterestsActivity.TAG, Parcels.wrap(user));
         startActivity(intent);
     }
 }

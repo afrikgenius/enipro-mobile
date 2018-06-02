@@ -39,31 +39,6 @@ public class FeedComment {
     public FeedComment() {
     }
 
-
-//    public FeedComment(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.user = in.readString();
-//        this.comment = in.readString();
-//        this.comment_image = in.readString();
-//        this.created_at = in.readParcelable(getClass().getClassLoader());
-//        this.updated_at = in.readParcelable(getClass().getClassLoader());
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(user);
-//        dest.writeString(comment);
-//        dest.writeString(comment_image);
-//        dest.writeParcelable(created_at, flags);
-//        dest.writeParcelable(updated_at, flags);
-//    }
-
     public void set_id(ObjectId _id) {
         this._id = _id;
     }
@@ -121,18 +96,4 @@ public class FeedComment {
     public String getImageName() {
         return getUser() + new java.util.Random().nextLong() + new java.util.Date();
     }
-
-//    public static final Parcelable.Creator<FeedComment> CREATOR = new Parcelable.Creator<FeedComment>() {
-//
-//        @Override
-//        public FeedComment createFromParcel(Parcel source) {
-//            return new FeedComment(source);
-//        }
-//
-//
-//        @Override
-//        public FeedComment[] newArray(int size) {
-//            return new FeedComment[size];
-//        }
-//    };
 }

@@ -30,27 +30,8 @@ public class Document {
         this.extension = extension;
     }
 
-    public Document(){}
-
-//    public Document(Parcel in) {
-//        this.name = in.readString();
-//        this.url = in.readString();
-//        this.size = in.readInt();
-//        this.extension = in.readString();
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int i) {
-//        dest.writeString(name);
-//        dest.writeString(url);
-//        dest.writeLong(size);
-//        dest.writeString(extension);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
+    public Document() {
+    }
 
     public String getName() {
         return name;
@@ -83,18 +64,5 @@ public class Document {
     public void setExtension(String extension) {
         this.extension = extension;
     }
-
-//    public static final Parcelable.Creator<Document> CREATOR = new Parcelable.Creator<Document>() {
-//
-//        @Override
-//        public Document createFromParcel(Parcel source) {
-//            return new Document(source);
-//        }
-//
-//        @Override
-//        public Document[] newArray(int size) {
-//            return new Document[size];
-//        }
-//    };
 
 }

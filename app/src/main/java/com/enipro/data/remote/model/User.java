@@ -172,71 +172,6 @@ public class User implements AbstractUser, IUser {
         experiences = user.getExperiences();
     }
 
-//
-//    public User(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.firstName = in.readString();
-//        this.lastName = in.readString();
-//        this.password = in.readString();
-//        this.email = in.readString();
-//        this.active = in.readByte() != 0;
-//        this.userType = in.readString();
-//        this.headline = in.readString();
-//        this.country = in.readString();
-//        this.mobile = in.readString();
-//        this.bio = in.readString();
-//        this.avatar = in.readString();
-//        this.avatar_cover = in.readString();
-//        this.firebaseToken = in.readString();
-//        this.firebaseUID = in.readString();
-//        this.created_at = in.readParcelable(getClass().getClassLoader());
-//        this.updated_at = in.readParcelable(getClass().getClassLoader());
-//        this.achievements = in.readString();
-//        in.readList(this.circle, UserConnection.class.getClassLoader());
-//        in.readList(this.network, UserConnection.class.getClassLoader());
-//        in.readList(this.chats, UserConnection.class.getClassLoader());
-//        in.readList(this.savedFeeds, SavedFeed.class.getClassLoader());
-//        this.interests = new ArrayList<>();
-//        in.readList(this.interests, List.class.getClassLoader());
-//        in.readList(this.education, Education.class.getClassLoader());
-//        in.readList(this.experiences, Experience.class.getClassLoader());
-//
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(firstName);
-//        dest.writeString(lastName);
-//        dest.writeString(password);
-//        dest.writeString(email);
-//        dest.writeByte((byte) (active ? 1 : 0));
-//        dest.writeString(userType);
-//        dest.writeString(headline);
-//        dest.writeString(country);
-//        dest.writeString(mobile);
-//        dest.writeString(bio);
-//        dest.writeString(avatar);
-//        dest.writeString(avatar_cover);
-//        dest.writeString(firebaseToken);
-//        dest.writeString(firebaseUID);
-//        dest.writeParcelable(created_at, flags);
-//        dest.writeParcelable(updated_at, flags);
-//        dest.writeString(achievements);
-//        dest.writeList(circle);
-//        dest.writeList(network);
-//        dest.writeList(chats);
-//        dest.writeList(savedFeeds);
-//        dest.writeList(interests);
-//        dest.writeList(education);
-//        dest.writeList(experiences);
-//    }
-
     @Override
     public String getId() {
         return this._id.get_$oid();
@@ -473,17 +408,4 @@ public class User implements AbstractUser, IUser {
     public void setExperiences(List<Experience> experiences) {
         this.experiences = experiences;
     }
-
-//    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-//
-//        @Override
-//        public User createFromParcel(Parcel source) {
-//            return new User(source);
-//        }
-//
-//        @Override
-//        public User[] newArray(int size) {
-//            return new User[size];
-//        }
-//    };
 }

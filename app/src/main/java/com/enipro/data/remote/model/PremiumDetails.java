@@ -1,8 +1,5 @@
 package com.enipro.data.remote.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -35,27 +32,6 @@ public class PremiumDetails {
         this.bank = bank;
         this.payment_amount = amount;
     }
-
-//    public PremiumDetails(Parcel in) {
-//        this.payment_amount = in.readInt();
-//        this.accountNumber = in.readString();
-//        this.bank = in.readString();
-//        this.payment_code = in.readString();
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(payment_amount);
-//        dest.writeString(accountNumber);
-//        dest.writeString(bank);
-//        dest.writeString(payment_code);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-
 
     public String getAccountNumber() {
         return accountNumber;
@@ -90,16 +66,4 @@ public class PremiumDetails {
         this.payment_code = payment_code;
     }
 
-//    public static final Parcelable.Creator<PremiumDetails> CREATOR = new Parcelable.Creator<PremiumDetails>() {
-//
-//        @Override
-//        public PremiumDetails createFromParcel(Parcel source) {
-//            return new PremiumDetails(source);
-//        }
-//
-//        @Override
-//        public PremiumDetails[] newArray(int size) {
-//            return new PremiumDetails[size];
-//        }
-//    };
 }

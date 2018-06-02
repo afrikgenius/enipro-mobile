@@ -36,25 +36,6 @@ public class SessionTiming {
         this.time_to = to;
     }
 
-
-//    public SessionTiming(Parcel in) {
-//        this.time_from = in.readString();
-//        this.time_to = in.readString();
-//        in.readList(this.days, List.class.getClassLoader());
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(time_from);
-//        dest.writeString(time_to);
-//        dest.writeList(days);
-//    }
-//
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-
     public String getFrom() {
         return time_from;
     }
@@ -78,17 +59,5 @@ public class SessionTiming {
     public void setTo(String to) {
         this.time_to = to;
     }
-
-//    public static final Parcelable.Creator<SessionTiming> CREATOR = new Parcelable.Creator<SessionTiming>() {
-//
-//        @Override
-//        public SessionTiming createFromParcel(Parcel source) {
-//            return new SessionTiming(source);
-//        }
-//
-//        @Override
-//        public SessionTiming[] newArray(int size) {
-//            return new SessionTiming[size];
-//        }
-//    };
+    
 }

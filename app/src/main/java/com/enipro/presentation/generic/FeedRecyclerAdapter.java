@@ -11,6 +11,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,9 @@ import com.enipro.presentation.feeds.VideoActivity;
 import com.enipro.presentation.payments.PaymentsFormActivity;
 import com.enipro.presentation.post.PostActivity;
 import com.enipro.presentation.profile.ProfileActivity;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.ui.PlayerView;
 import com.squareup.picasso.Picasso;
 import com.universalvideoview.UniversalVideoView;
 
@@ -65,7 +69,6 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
     FeedContract.Presenter presenter;
     private Context context;
 
-    private MediaPlayer mediaPlayer;
 
     public FeedRecyclerAdapter(Context context, List<Feed> feedData, FeedContract.Presenter presenter, boolean allSaved) {
         this.feeds = feedData;
@@ -132,6 +135,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         holder.textContent.setOnClickListener(v -> onViewClickListener(feedItem));
         holder.moreOptions.setOnClickListener(v -> moreOptionsClickListener(feedItem, position));
         holder.saveButton.setOnClickListener(v -> onSaveClickListener(holder, feedItem));
+        holder.shareButton.setOnClickListener(v -> onShareClickListener(feedItem));
 
 
         // Else show nothing
@@ -155,21 +159,27 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         } else if (feedItem.getContent().getVideo() != null) {
             holder.textContent.setMaxLines(Constants.FEED_CONTENT_MAX_LINES_IMAGE);
             // Remove view from card
-            holder.videoLayout.setVisibility(View.VISIBLE);
-            holder.post_video.setVideoURI(Uri.parse(feedItem.getContent().getVideo()));
-            holder.post_video.setOnPreparedListener(mediaPlayer -> {
-                this.mediaPlayer = mediaPlayer;
-                holder.playButton.setVisibility(View.VISIBLE);
-                holder.post_video.seekTo(Constants.VIDEO_SEEK_TO); // Advance the video to a point to show a thumbnail.
-                holder.video_length.setVisibility(View.VISIBLE);
-
-                int duration = holder.post_video.getDuration();
-                int hours = duration / 3600;
-                int minutes = (duration / 60) - (hours * 60);
-                int seconds = duration - (hours * 3600) - (minutes * 60);
-                String formatted = String.format("%02d:%02d", minutes, seconds);
-                holder.video_length.setText(formatted);
-            });
+//            holder.videoLayout.setVisibility(View.VISIBLE);
+//            holder.post_video.setVideoURI(Uri.parse(feedItem.getContent().getVideo()));
+//            holder.post_video.setOnPreparedListener(mediaPlayer -> {
+//                this.mediaPlayer = mediaPlayer;
+//                holder.playButton.setVisibility(View.VISIBLE);
+//                holder.post_video.seekTo(Constants.VIDEO_SEEK_TO); // Advance the video to a point to show a thumbnail.
+//                holder.video_length.setVisibility(View.VISIBLE);
+//
+//                int duration = holder.post_video.getDuration();
+//                int hours = duration / 3600;
+//                int minutes = (duration / 60) - (hours * 60);
+//                int seconds = duration - (hours * 3600) - (minutes * 60);
+//                String formatted = String.format("%02d:%02d", minutes, seconds);
+//                holder.video_length.setText(formatted);
+//            });
+//
+//
+//            // TODO This is a temporary solution here. This full adapter class should be refractored and well structured.
+//
+//            // Create an exoplayer
+//            ExoPlayer player = ExoPlayerFactory.newSimpleInstance()
         }
 
         // TODO Move into video check above.
@@ -204,6 +214,19 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         context.startActivity(intent);
     }
 
+    /**
+     * Sends an action within an intent to deliver the feed item content to another application.
+     */
+    void onShareClickListener(Feed feed) {
+        // Create an intent with a SEND Action
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain"); // Change Mime type to handle enipro posts.
+
+        // Grab feed item information and put in intent.
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, feed.getContent().getText());
+        context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_text)));
+    }
+
 
     /**
      * Listener operation that get executed when the doc button is clicked.
@@ -231,7 +254,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
                 Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
             }
         } else {
-            // TODO Show option to pay for content.
+            // TODO Show option to pay for content. A dialog showing information like document name and price of content.
             // TODO Check if the user has paid for this item. Get current user then
             // TODO
 
@@ -299,7 +322,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
     void onHeaderClickListener(User user) {
         // Open an instance of Profile Activity with user passed as a parceable
         Intent intent = ProfileActivity.newIntent(context);
-        intent.putExtra(Constants.APPLICATION_USER, user);
+        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
         context.startActivity(intent);
     }
 
@@ -354,30 +377,6 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         notifyDataSetChanged();
     }
 
-    /**
-     * Called to save the state of the adapter in the feed fragment.
-     *
-     * @return the list of feed items representing the adapter data.
-     */
-    ArrayList<Feed> onSaveInstanceState() {
-        int size = getItemCount();
-        ArrayList<Feed> items = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            items.add(feeds.get(i));
-        }
-        return items;
-    }
-
-    /**
-     * Called to restore the state of the adapter.
-     *
-     * @param feed_items adapter data to use in restoration of adapter.
-     */
-    void onRestoreInstanceState(List<Feed> feed_items) {
-        feeds = feed_items;
-        // Notify a change in data.
-
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -399,13 +398,13 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         CircleImageView userPostImage;
         RecyclerView tags_recyclerview;
         ImageView post_image;
-        UniversalVideoView post_video;
+        PlayerView post_video;
         FrameLayout videoLayout;
         ImageButton playButton;
         RobotoTextView video_length;
 
-        private Context context;
 
+        private Context context;
         private boolean likeState = false; // The state of the like button (liked == true and !liked == false)
         boolean savedState = false; // The state of the save button (saved == true and !saved = false)
 
@@ -431,7 +430,6 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
 
             // Share Button
             shareButton = view.findViewById(R.id.post_share_button);
-            shareButton.setOnClickListener(v -> onShareClickListener());
 
             // Save Button
             saveButton = view.findViewById(R.id.post_save_button);
@@ -473,21 +471,6 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
             }
             likeState = !likeState; // Invert like state.
             // TODO Call presenter to persist likes.
-        }
-
-        // TODO Implement properly.
-
-        /**
-         * Sends an action within an intent to deliver the feed item content to another application.
-         */
-        void onShareClickListener() {
-            // Create an intent with a SEND Action
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain"); // Change Mime type to handle enipro posts.
-
-            // Grab feed item information and put in intent.
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, textContent.getText().toString());
-            context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_text)));
         }
     }
 }

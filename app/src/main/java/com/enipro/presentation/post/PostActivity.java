@@ -437,7 +437,7 @@ public class PostActivity extends AppCompatActivity implements PostContract.View
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (count > 0) {
+                if (charSequence.length() > 0) {
                     tags_clear.setVisibility(View.VISIBLE);
                 } else {
                     tags_clear.setVisibility(View.GONE);

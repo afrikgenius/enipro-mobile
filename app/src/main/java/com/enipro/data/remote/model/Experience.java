@@ -42,31 +42,6 @@ public class Experience {
         this.to = to;
     }
 
-
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    public Experience(Parcel in) {
-//        this._id = in.readParcelable(getClass().getClassLoader());
-//        this.industry = in.readString();
-//        this.organisation = in.readString();
-//        this.role = in.readString();
-//        this.from = in.readString();
-//        this.to = in.readString();
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeParcelable(_id, flags);
-//        dest.writeString(industry);
-//        dest.writeString(organisation);
-//        dest.writeString(role);
-//        dest.writeString(from);
-//        dest.writeString(to);
-//    }
-
     public ObjectId get_id() {
         return _id;
     }
@@ -114,17 +89,4 @@ public class Experience {
     public void setTo(String to) {
         this.to = to;
     }
-
-//    public static final Parcelable.Creator CREATOR = new Parcelable.Creator<Experience>() {
-//
-//        @Override
-//        public Experience createFromParcel(Parcel parcel) {
-//            return new Experience(parcel);
-//        }
-//
-//        @Override
-//        public Experience[] newArray(int size) {
-//            return new Experience[size];
-//        }
-//    };
 }

@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.enipro.Application;
@@ -27,6 +26,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.greenrobot.eventbus.EventBus;
+import org.parceler.Parcels;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -104,7 +104,7 @@ public class EniproMessagingService extends FirebaseMessagingService implements 
                     case Constants.MENTORING_REQUEST_REC:
                         presenter.getUser(username, user -> {
                             Intent profileIntent = new Intent(this, ProfileActivity.class);
-                            profileIntent.putExtra(Constants.APPLICATION_USER, user);
+                            profileIntent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
                             Utility.showNotification(this, profileIntent, title, message, username, uid, fcmToken);
 
                             // TODO Since mentoring request has been accepted, a mentoring schedule must have been specified by mentor.
@@ -171,7 +171,7 @@ public class EniproMessagingService extends FirebaseMessagingService implements 
 
         // Intent that opens the message activity when notification is clicked.
         Intent intent = new Intent(this, MessageActivity.class);
-        intent.putExtra(Constants.MESSAGE_CHAT_RETURN_KEY, user);
+        intent.putExtra(Constants.MESSAGE_CHAT_RETURN_KEY, Parcels.wrap(user));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
