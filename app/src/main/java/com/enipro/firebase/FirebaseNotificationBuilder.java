@@ -2,7 +2,6 @@ package com.enipro.firebase;
 
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.model.Constants;
 
@@ -104,13 +103,10 @@ public class FirebaseNotificationBuilder {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e(TAG, "onGetAllUsersFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.e(TAG, "onResponse: " + response.body().string());
-
                 // Check status code of response for 200 OK and notify UI that message has been sent.
             }
         });

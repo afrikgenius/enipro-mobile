@@ -14,18 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
-import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.ApplicationService;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.enipro.model.ServiceType;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.home.HomeActivity;
-import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.signup.SignUpActivity;
 
 import butterknife.BindView;
@@ -103,7 +99,7 @@ public class LoginActivity extends FragmentActivity implements LoginContract.Vie
             validationService.register(getPresenter(), findViewById(R.id.btnLoginInLogin),
                     validationService.LISTENER_VIEW_ON_CLICK, _extractor);
         } catch (Exception e) {
-            Log.e("ERROR", "Activity did not implement DataValidator");
+//            Log.e("ERROR", "Activity did not implement DataValidator");
         }
 
         TextView txtSignUp = findViewById(R.id.clickable_sign_up_text);

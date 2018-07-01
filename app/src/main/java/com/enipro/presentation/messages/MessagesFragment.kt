@@ -1,6 +1,7 @@
 package com.enipro.presentation.messages
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.enipro.R
 import com.enipro.data.remote.model.Dialog
 import com.enipro.data.remote.model.Message
@@ -16,7 +18,6 @@ import com.enipro.data.remote.model.User
 import com.enipro.injection.Injection
 import com.enipro.model.Constants
 import com.enipro.model.Utility
-import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,7 +53,7 @@ class MessagesFragment : Fragment(), MessagesContract.View, DialogsListAdapter.O
         presenter!!.loadPreviousMessages()
 
         imageLoader = ImageLoader { imageView: ImageView?, url: String? ->
-            Picasso.with(activity).load(url).into(imageView)
+            Glide.with(context as Context).load(url).into(imageView as ImageView)
         }
 
 
@@ -93,12 +94,12 @@ class MessagesFragment : Fragment(), MessagesContract.View, DialogsListAdapter.O
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun onMessageDataReceived(user: User?, message: Message?) {
-        val exists = dialogsAdapter!!.updateDialogWithMessage(user!!.id, message)
+    override fun onMessageDataReceived(user: User, message: Message?) {
+        val exists = dialogsAdapter!!.updateDialogWithMessage(user.id, message)
         if (exists) {
             val users = ArrayList<User>()
             users.add(user)
-            val dialog = Dialog(user.id, user.name, user.avatar, users, message, 0)
+            val dialog = Dialog(user.id, user.name, user.avatar as String, users, message, 0)
             dialogsAdapter!!.addItem(0, dialog)
         }
     }

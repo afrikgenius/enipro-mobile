@@ -1,7 +1,5 @@
 package com.enipro.presentation.post;
 
-import android.graphics.Bitmap;
-
 import com.enipro.data.remote.model.Feed;
 import com.enipro.presentation.base.MvpPresenter;
 import com.enipro.presentation.base.MvpView;

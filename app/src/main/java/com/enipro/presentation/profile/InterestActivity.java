@@ -9,22 +9,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 
-import com.devspark.robototextview.widget.RobotoButton;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.injection.Injection;
-import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
 import com.enipro.presentation.generic.TagRecyclerAdapter;
-import com.enipro.presentation.signup.AddInterestsActivity;
-import com.enipro.presentation.signup.SignupPresenter;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +30,7 @@ public class InterestActivity extends AppCompatActivity implements ProfileContra
     @BindView(R.id.int_tags_recycler)
     RecyclerView mTagsRecycler;
     @BindView(R.id.save_interests)
-    RobotoButton save_interests;
+    Button save_interests;
     @BindView(R.id.interests)
     EditText interests;
 

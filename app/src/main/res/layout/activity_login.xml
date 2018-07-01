@@ -16,9 +16,9 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="textEmailAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -38,39 +38,39 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/pass"
-            android:inputType="textPassword"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="textPassword" />
 
     </android.support.design.widget.TextInputLayout>
 
     <!-- Directs the user to a page for password retrieval -->
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/text"
         android:layout_below="@+id/editTxtPasswordLogin"
+        android:layout_alignEnd="@+id/text"
         android:layout_marginTop="17dp"
+        android:fontFamily="@string/font_roboto_medium"
         android:text="@string/forgot_password"
-        android:textSize="15sp"
-        app:robotoTypeface="roboto_light" />
+        android:textSize="15sp" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/forgot_password"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@string/font_roboto_medium"
         android:gravity="center"
         android:text="@string/tandc"
-        android:textSize="15sp"
-        app:robotoTypeface="roboto_light" />
+        android:textSize="15sp" />
 
     <!-- Login button -->
-    <com.devspark.robototextview.widget.RobotoButton
+    <Button
         android:id="@+id/btnLoginInLogin"
         style="@style/ButtonTextStyle"
         android:layout_width="match_parent"
@@ -78,27 +78,27 @@
         android:layout_below="@+id/text"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/button_teal"
-        android:text="@string/login_btn_text"
-        app:robotoTypeface="roboto_medium" />
+        android:fontFamily="@string/font_roboto_medium"
+        android:text="@string/login_btn_text" />
 
     <!-- Text view directing the user to sign up for an account if they don't have one. -->
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnLoginInLogin"
         android:layout_marginTop="18dp"
         android:layout_toStartOf="@+id/forgot_password"
+        android:fontFamily="@string/font_roboto_medium"
         android:gravity="center"
         android:text="@string/member"
-        android:textSize="15sp"
-        app:robotoTypeface="roboto_light" />
+        android:textSize="15sp" />
 
     <!-- Text view directing the user to sign up for an account if they don't have one. -->
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/clickable_sign_up_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,9 +106,9 @@
         android:layout_alignBottom="@+id/member"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/member"
+        android:fontFamily="@string/font_roboto_medium"
         android:text="@string/signup_text"
-        android:textSize="15sp"
-        app:robotoTypeface="roboto_light" />
+        android:textSize="15sp" />
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snackbar_container"

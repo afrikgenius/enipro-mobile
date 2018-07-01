@@ -13,7 +13,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.model.LocalCallback;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

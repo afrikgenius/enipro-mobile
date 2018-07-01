@@ -11,11 +11,10 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.devspark.robototextview.widget.RobotoButton;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
@@ -34,7 +33,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.internal.Util;
 
 public class AddPhotoActivity extends AppCompatActivity implements SignupContract.View {
 
@@ -44,9 +42,9 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @BindView(R.id.profile_image)
     CircleImageView profile_image;
     @BindView(R.id.finish)
-    RobotoButton btnFinish;
+    Button btnFinish;
     @BindView(R.id.skip)
-    RobotoButton btnSkip;
+    Button btnSkip;
 
     private MaterialDialog progressDialog;
 
@@ -174,25 +172,25 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
             // Check if the permission was accepted or denied.
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG, "Camera permission has now been granted.");
+//                Log.i(TAG, "Camera permission has now been granted.");
                 // Launch Camera to take a picture
                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, Utility.CAMERA_REQUEST_CODE);//zero can be replaced with any action codes
             } else {
-                Log.i(TAG, "Camera permission was not granted ");
+//                Log.i(TAG, "Camera permission was not granted ");
                 // Show snackbar.
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show();
             }
 
         } else if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(TAG, "External Storage permission has now been granted");
+//                Log.i(TAG, "External Storage permission has now been granted");
                 // Open gallery
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, Utility.GALLERY_REQUEST_CODE);
             } else {
-                Log.i(TAG, "External storage permission was not granted ");
+//                Log.i(TAG, "External storage permission was not granted ");
                 // Show snackbar.
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show();
 

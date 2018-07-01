@@ -17,9 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/first_name"
-            android:inputType="text"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="text" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -36,9 +36,9 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/last_name"
-            android:inputType="text"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -54,9 +54,10 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="textEmailAddress" />
+
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -74,9 +75,9 @@
             style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            app:robotoTypeface="roboto_regular" />
+            android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Spinner view that shows list of user types -->
@@ -88,33 +89,33 @@
         android:layout_below="@id/signUpPassword_Layout"
         android:layout_marginTop="10dp" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/tandc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/user_type"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:layout_centerHorizontal="true"
+        android:fontFamily="@string/font_roboto_regular"
         android:gravity="center"
         android:text="@string/tandcs"
-        android:textSize="15sp"
-        app:robotoTypeface="roboto_light" />
+        android:textSize="15sp" />
 
     <!-- Sign up button.-->
-    <com.devspark.robototextview.widget.RobotoButton
+    <Button
         android:id="@+id/btnSignUpInSignUp"
         style="@style/ButtonTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tandc"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/button_teal"
-        android:text="@string/sign_up_btn_text"
-        app:robotoTypeface="roboto_medium" />
+        android:fontFamily="@string/font_roboto_medium"
+        android:text="@string/sign_up_btn_text" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -124,24 +125,24 @@
         android:layout_marginTop="20dp">
 
         <!-- Text view directing the user to sign up for an account if they don't have one. -->
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/already_a_user_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@string/font_roboto_regular"
             android:text="@string/already_a_user"
-            android:textSize="15sp"
-            app:robotoTypeface="roboto_light" />
+            android:textSize="15sp" />
 
         <!-- A clickable text view that takes the user to -->
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/clickable_sign_in_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_toEndOf="@id/already_a_user_text"
+            android:fontFamily="@string/font_roboto_regular"
             android:text="@string/sign_in"
-            android:textSize="15sp"
-            app:robotoTypeface="roboto_light" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <android.support.design.widget.CoordinatorLayout

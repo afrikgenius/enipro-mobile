@@ -1,7 +1,6 @@
 package com.enipro.presentation.messages;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
@@ -9,9 +8,6 @@ import com.enipro.data.remote.model.ChatUser;
 import com.enipro.data.remote.model.Message;
 import com.enipro.data.remote.model.User;
 import com.enipro.data.remote.model.UserConnection;
-import com.enipro.db.EniproDatabase;
-import com.enipro.firebase.FirebaseNotificationBuilder;
-import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
 import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
@@ -22,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
@@ -62,15 +57,11 @@ public class MessageViewPresenter extends BasePresenter<MessagesContract.Message
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(Application.TAG, "DataChanged in SendMessageToFirebaseUser");
                         if (dataSnapshot.hasChild(room_type_1)) {
-                            Log.e(Application.TAG, "sendMessageToFirebaseUser: " + room_type_1 + " exists");
                             databaseReference.child(Constants.ARG_CHAT_ROOMS).child(room_type_1).push().setValue(chat);
                         } else if (dataSnapshot.hasChild(room_type_2)) {
-                            Log.e(Application.TAG, "sendMessageToFirebaseUser: " + room_type_2 + " exists");
                             databaseReference.child(Constants.ARG_CHAT_ROOMS).child(room_type_2).push().setValue(chat);
                         } else {
-                            Log.e(Application.TAG, "sendMessageToFirebaseUser: success");
                             databaseReference.child(Constants.ARG_CHAT_ROOMS).child(room_type_1).push().setValue(chat);
                             getMessageFromFirebaseUser(chat.getSenderUid(), chat.getReceiverUid());
 
@@ -115,21 +106,17 @@ public class MessageViewPresenter extends BasePresenter<MessagesContract.Message
         databaseReference.child(Constants.ARG_CHAT_ROOMS).getRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(Application.TAG, "DataChanged in GetMessageFromFirebaseUser");
                 if (dataSnapshot.hasChild(room_type_1)) {
-                    Log.e(Application.TAG, "getMessageFromFirebaseUser: " + room_type_1 + " exists");
                     FirebaseDatabase.getInstance()
                             .getReference()
                             .child(Constants.ARG_CHAT_ROOMS)
                             .child(room_type_1).addChildEventListener(new FirebaseChildEventListener());
                 } else if (dataSnapshot.hasChild(room_type_2)) {
-                    Log.e(Application.TAG, "getMessageFromFirebaseUser: " + room_type_2 + " exists");
                     FirebaseDatabase.getInstance()
                             .getReference()
                             .child(Constants.ARG_CHAT_ROOMS)
                             .child(room_type_2).addChildEventListener(new FirebaseChildEventListener());
                 } else {
-                    Log.e(Application.TAG, "getMessageFromFirebaseUser: no such room available");
                 }
             }
 

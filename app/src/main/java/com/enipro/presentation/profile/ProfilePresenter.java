@@ -3,7 +3,6 @@ package com.enipro.presentation.profile;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
@@ -13,7 +12,6 @@ import com.enipro.data.remote.model.UserConnection;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
 import com.google.firebase.crash.FirebaseCrash;
@@ -76,7 +74,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
         addDisposable(restService.createRequest(request)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> getView().onMentoringRequestSent(), throwable -> getView().onError(throwable), () -> Log.d(Application.TAG, "onComplete called")));
+                .subscribe(request1 -> getView().onMentoringRequestSent(), throwable -> getView().onError(throwable), () -> {
+                }));
     }
 
     @Override
@@ -118,7 +117,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
         addDisposable(restService.createRequest(request)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> getView().onAddCircleRequestValidated(), throwable -> getView().onError(throwable), () -> Log.d(Application.TAG, "onComplete called")));
+                .subscribe(request1 -> getView().onAddCircleRequestValidated(), throwable -> getView().onError(throwable), () -> {}));
 
 
     }
@@ -131,7 +130,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
         addDisposable(restService.createRequest(request)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> getView().onAddNetworkRequestValidated(), throwable -> getView().onError(throwable), () -> Log.d(Application.TAG, "onComplete called")));
+                .subscribe(request1 -> getView().onAddNetworkRequestValidated(), throwable -> getView().onError(throwable), () -> {}));
 
     }
 
@@ -199,10 +198,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(response.errorBody().string());
-                        Log.d("Application", jsonObject.getString("errors"));
                         FirebaseCrash.log(jsonObject.getString("errors"));
                     } catch (IOException | JSONException io_json) {
-                        Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                     }
                 }
             }

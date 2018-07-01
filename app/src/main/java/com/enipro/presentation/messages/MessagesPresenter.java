@@ -2,34 +2,23 @@ package com.enipro.presentation.messages;
 
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
-import com.enipro.data.remote.model.ChatUser;
 import com.enipro.data.remote.model.Message;
 import com.enipro.data.remote.model.User;
-import com.enipro.data.remote.model.UserConnection;
-import com.enipro.firebase.FirebaseNotificationBuilder;
 import com.enipro.model.Constants;
-import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Scheduler;
-import io.reactivex.internal.util.AppendOnlyLinkedArrayList;
 
 public class MessagesPresenter extends BasePresenter<MessagesContract.View> implements MessagesContract.Presenter {
 
@@ -43,7 +32,6 @@ public class MessagesPresenter extends BasePresenter<MessagesContract.View> impl
      */
     @Override
     public void loadPreviousMessages() {
-        Log.d(Application.TAG, "Load Previous Messages Called.");
         // TODO Since the messages are always saved, they should be retrieved for each user else
         // TODO gotten from firebase fresh.
         // TODO This should be preferably gotten from Application active user.
@@ -74,12 +62,10 @@ public class MessagesPresenter extends BasePresenter<MessagesContract.View> impl
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.hasChild(room_type_1)) {
-                        Log.e(Application.TAG, "sendMessageToFirebaseUser: " + room_type_1 + " exists");
                         // Grab last message
                         databaseReference.child(Constants.ARG_CHAT_ROOMS).child(room_type_1).orderByKey().limitToLast(1)
                                 .addChildEventListener(new LastMessageValueEvent(user));
                     } else if (dataSnapshot.hasChild(room_type_2)) {
-                        Log.e(Application.TAG, "sendMessageToFirebaseUser: " + room_type_2 + " exists");
                         databaseReference.child(Constants.ARG_CHAT_ROOMS).child(room_type_2).orderByKey().limitToLast(1)
                                 .addChildEventListener(new LastMessageValueEvent(user));
                     }

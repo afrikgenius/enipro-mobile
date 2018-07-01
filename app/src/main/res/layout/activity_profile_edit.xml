@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:layout_height="match_parent"
     tools:context=".presentation.profile.ProfileActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -30,13 +30,13 @@
                     style="@style/Widget.AppCompat.ActionButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="7dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="7dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:text="@string/save2"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
 
             </RelativeLayout>
 
@@ -48,8 +48,8 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/appbar">
+        android:layout_below="@+id/appbar"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/solid_circle"
-                android:src="@drawable/ic_mode_edit" />
+                android:src="@drawable/ic_edit" />
 
 
             <RelativeLayout
@@ -93,7 +93,7 @@
                     android:layout_alignTop="@id/profile_edit_imageview"
                     android:adjustViewBounds="true"
                     android:background="@drawable/solid_circle"
-                    android:src="@drawable/ic_mode_edit" />
+                    android:src="@drawable/ic_edit" />
             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,8 +107,8 @@
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
                     android:hint="@string/first_name" />
 
             </android.support.design.widget.TextInputLayout>
@@ -125,8 +125,8 @@
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
                     android:hint="@string/last_name" />
 
             </android.support.design.widget.TextInputLayout>
@@ -143,14 +143,14 @@
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
                     android:hint="@string/profile_headline" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/bio_layout"
+                android:id="@+id/bio_edit_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/headline_layout"
@@ -161,10 +161,10 @@
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:hint="@string/bio_edit"
-                    app:robotoTypeface="roboto_regular" />
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@string/font_roboto_regular"
+                    android:hint="@string/bio_edit" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -180,10 +180,10 @@
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:hint="@string/achievement_edit"
-                    app:robotoTypeface="roboto_regular" />
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@string/font_roboto_regular"
+                    android:hint="@string/achievement_edit" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -216,11 +216,11 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/edit_education_recyclerview"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/edu_text"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp" />
 
             </RelativeLayout>
 
@@ -244,19 +244,19 @@
                     android:id="@+id/add_experience"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_add"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
-                    android:layout_alignParentEnd="true"/>
+                    android:background="?attr/selectableItemBackground"
+                    android:src="@drawable/ic_add" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/edit_experience_recyclerview"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/exp_text"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="12dp" />
             </RelativeLayout>
 
 

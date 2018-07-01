@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -30,9 +29,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="-15dp"
-                    android:src="@drawable/ic_clear_black" />
+                    android:src="@drawable/ic_close_dark" />
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/enter_card_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,7 +97,7 @@
                 android:layout_columnWeight="1"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/nonactive_round_edittext"
-                android:drawableEnd="@drawable/ic_help_outline"
+                android:drawableEnd="@drawable/ic_help"
                 android:hint="@string/date"
                 android:inputType="number"
                 android:letterSpacing="0.05"
@@ -115,7 +114,7 @@
                 android:layout_columnWeight="1"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/nonactive_round_edittext"
-                android:drawableEnd="@drawable/ic_help_outline"
+                android:drawableEnd="@drawable/ic_help"
                 android:hint="@string/cvv"
                 android:inputType="number"
                 android:letterSpacing="0.05"
@@ -160,7 +159,7 @@
                 android:visibility="gone" />
         </GridLayout>
 
-        <com.devspark.robototextview.widget.RobotoButton
+        <Button
             android:id="@+id/pay"
             style="@style/ButtonTextStyle"
             android:layout_width="match_parent"
@@ -169,13 +168,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@drawable/button_teal"
+            android:fontFamily="@string/font_roboto_medium"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/pay"
             android:textAllCaps="false"
-            android:textSize="17sp"
-            app:robotoTextWeight="bold"
-            app:robotoTypeface="roboto_medium" />
+            android:textSize="17sp" />
     </RelativeLayout>
 
 </RelativeLayout>

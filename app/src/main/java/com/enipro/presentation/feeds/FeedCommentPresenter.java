@@ -4,7 +4,6 @@ package com.enipro.presentation.feeds;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
@@ -12,7 +11,6 @@ import com.enipro.data.remote.model.FeedComment;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
 import com.google.firebase.storage.StorageMetadata;
@@ -61,7 +59,7 @@ public class FeedCommentPresenter extends BasePresenter<FeedContract.CommentView
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(response.errorBody().string());
-                        Log.d("Application", jsonObject.getString("errors"));
+//                        Log.d("Application", jsonObject.getString("errors"));
                     } catch (IOException | JSONException io_json) {
 //                      TODO Fix casting to activity for FeedFragment      Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
                     }
@@ -120,9 +118,9 @@ public class FeedCommentPresenter extends BasePresenter<FeedContract.CommentView
                             JSONObject jsonObject;
                             try {
                                 jsonObject = new JSONObject(response.errorBody().string());
-                                Log.d("Application", jsonObject.getString("errors"));
+//                                Log.d("Application", jsonObject.getString("errors"));
                             } catch (IOException | JSONException io_json) {
-                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
+//                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                             }
                         }
                     }

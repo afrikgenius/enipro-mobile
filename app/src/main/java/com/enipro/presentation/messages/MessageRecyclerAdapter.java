@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.devspark.robototextview.widget.RobotoTextView;
 import com.enipro.R;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
     private Context context;
     private MessagesContract.Presenter presenter;
 
-    MessageRecyclerAdapter(Context context, List<Object> messages, MessagesContract.Presenter presenter){
+    MessageRecyclerAdapter(Context context, List<Object> messages, MessagesContract.Presenter presenter) {
         this.context = context;
         this.messages = messages;
         this.presenter = presenter;
@@ -51,9 +51,9 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView chat_user_image;
-        RobotoTextView chat_user_name;
-        RobotoTextView chat_last_message;
-        RobotoTextView chat_last_time;
+        TextView chat_user_name;
+        TextView chat_last_message;
+        TextView chat_last_time;
 
         ViewHolder(View view, Context context) {
             super(view);

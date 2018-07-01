@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
@@ -16,7 +15,6 @@ import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
 import com.enipro.presentation.base.BasePresenter;
@@ -24,11 +22,9 @@ import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import org.apache.commons.io.FilenameUtils;
-
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,7 +52,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     @Override
     public void removeFeed(Feed feed) {
         checkViewAttached();
-        addDisposable(restService.deleteFeedItem(Application.getActiveUser().get_id().get_$oid(), feed.get_id().get_$oid())
+        addDisposable(restService.deleteFeedItem(Application.getActiveUser().getId(), feed.get_id().get_$oid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe());
@@ -68,7 +64,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
         getView().showPostNotification();
 
         // Check if a media item exists(image or video) and persist in firebase.
-        if (feedData.getContent().getMediaType() == FeedContent.MediaType.IMAGE) {
+        if (feedData.getContent().getMediaType() == FeedContent.MediaType.INSTANCE.getIMAGE()) {
             // Persist image in firebase.
             StorageReference storageReference = FirebaseStorage
                     .getInstance()
@@ -88,7 +84,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
                 else
                     sendPostToAPI(feedData);
             });
-        } else if (feedData.getContent().getMediaType() == FeedContent.MediaType.VIDEO) {
+        } else if (feedData.getContent().getMediaType() == FeedContent.MediaType.INSTANCE.getVIDEO()) {
             // Persist video in firebase
             StorageReference storageReference = FirebaseStorage
                     .getInstance()
@@ -97,7 +93,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
             Uri imageURI = null;
             if (Application.getFeedMediaIdentifier().equals(Application.VIDEO_IDENTIFIER_FEEDS))
                 imageURI = Uri.fromFile(new File(Application.getTempVideoPath()));
-            Log.d(Application.TAG, imageURI.toString());
+//            Log.d(Application.TAG, imageURI.toString());
             Utility.uploadVideoFirebase(storageReference, imageURI, (downloadURL) -> {
                 feedData.getContent().setVideo(downloadURL);
 //                sendPostToAPI(feedData);
@@ -112,7 +108,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
             });
         } else {
-            Log.d(Application.TAG, "No media file, checking for doc");
+//            Log.d(Application.TAG, "No media file, checking for doc");
             // Checks if a document exists and upload the doc to firebase and send post.
             if (feedData.getContent().isDocExists()) {
                 uploadDocFirebase(feedData);
@@ -131,7 +127,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     private void uploadDocFirebase(Feed feedData) {
         File file = Application.getDocumentPostFile();
         Uri fileUri = Uri.fromFile(file);
-        Log.d(Application.TAG, file.getPath());
+//        Log.d(Application.TAG, file.getPath());
         // Send doc to firebase and persist the download URL
         StorageReference storageReference = FirebaseStorage
                 .getInstance()
@@ -146,7 +142,6 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
             });
         } catch (FileNotFoundException fnfe) {
             FirebaseCrash.log(fnfe.getMessage());
-            Log.d(Application.TAG, fnfe.getMessage());
         }
     }
 
@@ -212,7 +207,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
                                 jsonObject = new JSONObject(response.errorBody().string());
 //                                Log.d("Application", jsonObject.getString("errors"));
                             } catch (IOException | JSONException io_json) {
-                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
+//                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                             }
                         }
                     }
@@ -298,8 +293,8 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
                     Application.setActiveUser(user);
                 }, throwable -> {
                     String errorBody = ((HttpException) throwable).response().errorBody().string();
-                    Log.d(Application.TAG, errorBody);
-                    Log.d(Application.TAG, throwable.getMessage());
+//                    Log.d(Application.TAG, errorBody);
+//                    Log.d(Application.TAG, throwable.getMessage());
                 }, () -> {
                 }));
     }
@@ -315,8 +310,8 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
                     Application.setActiveUser(user);
                 }, throwable -> {
                     String errorBody = ((HttpException) throwable).response().errorBody().string();
-                    Log.d(Application.TAG, errorBody);
-                    Log.d(Application.TAG, throwable.getMessage());
+//                    Log.d(Application.TAG, errorBody);
+//                    Log.d(Application.TAG, throwable.getMessage());
                 }, () -> {
                 }));
     }

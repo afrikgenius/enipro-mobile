@@ -58,10 +58,11 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private static final String MESSAGES_FRAGMENT = "com.enipro.presentation.home.HomeActivity.MESSAGES_FRAGMENT";
 
     /**
+     * 1
      * Drawables used for tab icons in the activity.
      */
-    static int[] INACTIVE_TAB_ICONS = {R.drawable.ic_tab_home_inactive, R.drawable.ic_tab_notification_inactive, R.drawable.ic_tab_message_inactive};
-    static int[] ACTIVE_TAB_ICONS = {R.drawable.ic_tab_home_active, R.drawable.ic_tab_notification_active, R.drawable.ic_tab_message_active};
+    static int[] INACTIVE_TAB_ICONS = {R.drawable.ic_home_dark, R.drawable.ic_tab_notification_inactive, R.drawable.ic_tab_message_inactive};
+    static int[] ACTIVE_TAB_ICONS = {R.drawable.ic_home, R.drawable.ic_tab_notification_active, R.drawable.ic_tab_message_active};
 
     /**
      * Position of the first and active tab when the application is opened.
@@ -163,11 +164,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         RequestOptions options = new RequestOptions().placeholder(R.drawable.profile_image);
         Glide.with(this).load(activeUser.getAvatar()).apply(options).into(home_profile_image);
 
-        home_profile_image.setOnClickListener(v -> {
-            Intent profileIntent = ProfileActivity.newIntent(this);
-            profileIntent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(Application.getActiveUser()));
-            startActivity(profileIntent);
-        });
+        home_profile_image.setOnClickListener(v -> startActivity(ProfileActivity.Companion.newIntent(this, Application.getActiveUser())));
     }
 
     @Override

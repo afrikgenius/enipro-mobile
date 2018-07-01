@@ -1,11 +1,9 @@
 package com.enipro.firebase;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
 import com.google.firebase.crash.FirebaseCrash;
@@ -45,10 +43,8 @@ public class MessagingPresenter extends BasePresenter<MessagingContract.View> im
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(response.errorBody().string());
-                        Log.d("Application", jsonObject.getString("errors"));
                         FirebaseCrash.log(jsonObject.getString("errors"));
                     } catch (IOException | JSONException io_json) {
-                        Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                     }
                 }
             }

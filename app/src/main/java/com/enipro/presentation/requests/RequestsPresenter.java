@@ -3,7 +3,6 @@ package com.enipro.presentation.requests;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
@@ -12,7 +11,6 @@ import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
 
@@ -24,7 +22,6 @@ import java.io.IOException;
 import io.reactivex.Scheduler;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class RequestsPresenter extends BasePresenter<RequestsContract.View> implements RequestsContract.Presenter {
@@ -49,7 +46,6 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
                     new AppExecutors().diskIO().execute(() -> db.requestDao().insertRequest(request1));
                     getView().onRequestAccepted();
                 }, throwable -> {
-                    Log.d(Application.TAG, ((HttpException) throwable).response().errorBody().string());
                 }));
     }
 
@@ -62,9 +58,7 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
         addDisposable(restService.updateRequest(req, request.get_id().get_$oid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> {
-                    getView().onRequestDeclined();
-                }));
+                .subscribe(request1 -> getView().onRequestDeclined()));
     }
 
     @Override
@@ -72,10 +66,7 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
         checkViewAttached();
         String user_type = Application.getActiveUser().getUserType().toUpperCase();
 
-
         // Get all requests that have the user as recipient
-
-
         if (user_type.equals(Constants.STUDENT)) {
             addDisposable(restService.getRequestSender(user_id)
                     .subscribeOn(ioScheduler)
@@ -83,7 +74,6 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
                     .subscribe(requests -> {
                         // TODO Before passing result along to activity
                         // TODO Be a sweetheart and save it in Local storage.
-                        Log.d(Application.TAG, "Data collection size:" + requests.size());
                         getView().onRequestsCollected(requests);
                     }, throwable -> getView().onRequestsError(), () -> {
                     }));
@@ -94,7 +84,6 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
                     .subscribe(requests -> {
                         // TODO Before passing result along to activity
                         // TODO Be a sweetheart and save it in Local storage.
-                        Log.d(Application.TAG, "Data collection size:" + requests.size());
                         getView().onRequestsCollected(requests);
                     }, throwable -> getView().onRequestsError(), () -> {
                     }));
@@ -128,7 +117,6 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
                                 jsonObject = new JSONObject(response.errorBody().string());
 //                                Log.d("Application", jsonObject.getString("errors"));
                             } catch (IOException | JSONException io_json) {
-                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                             }
                         }
                     }

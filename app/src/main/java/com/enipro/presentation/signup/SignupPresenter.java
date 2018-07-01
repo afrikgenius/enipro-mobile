@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,7 +17,6 @@ import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
 import com.enipro.model.DataValidator;
-import com.enipro.model.Enipro;
 import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
 import com.enipro.model.ValidationService;
@@ -98,7 +96,7 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
             }
 
             // Create a user object and persist data in the database of the API
-            User user = new User(first_name, last_name, email, true, password, userType);
+            User user = new User(first_name, last_name, email, password, userType);
             getView().advanceProcess(user); // Advance the sign up process to next item.
         }
     }
@@ -120,11 +118,11 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
                                 .addOnCompleteListener(task1 -> {
                                     // Send the user information to Enipro when task is passed.
                                     if (task1.isSuccessful()) {
-                                        Log.d(Application.TAG, "Added user to firebase database");
                                         persistEniproAPI(user);
                                     }
                                 })
-                                .addOnFailureListener(e -> Log.d(Application.TAG, "Error Occurred:" + e.getMessage()));
+                                .addOnFailureListener(e -> {
+                                });
                     } else {
                         // TODO Task is not successful. Do Something
                     }
@@ -214,14 +212,11 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
                     // Open application
                     getView().openApplication(response.body());
                 } else {
-                    Log.d("Application", "404 Error Occurred.");
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(response.errorBody().string());
-                        Log.d(Application.TAG, jsonObject.getString("errors"));
                         getView().showMessage(SignupContract.View.MESSAGE_DIALOG, jsonObject.getString("errors"));
                     } catch (IOException | JSONException io_json) {
-                        Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
                     }
                 }
             }
@@ -229,9 +224,6 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable throwable) {
                 getView().dismissProgress(); // Dismiss progress dialog.
-                Log.d("Application", call.request().body().toString());
-                Log.d("Application", call.request().headers().toString());
-                Log.d("Application", throwable.getMessage());
                 getView().showMessage(SignupContract.View.MESSAGE_DIALOG, "An application error occurred. Please try again.");
             }
         });

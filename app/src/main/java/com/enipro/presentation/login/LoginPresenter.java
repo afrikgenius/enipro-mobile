@@ -4,7 +4,6 @@ package com.enipro.presentation.login;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 
 import com.enipro.Application;
@@ -14,9 +13,7 @@ import com.enipro.data.remote.model.Login;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
-import com.enipro.model.Constants;
 import com.enipro.model.DataValidator;
-import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.base.BasePresenter;
@@ -29,10 +26,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.Scheduler;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import io.reactivex.Scheduler;
 
 public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter, DataValidator {
 
@@ -91,7 +88,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     // Dismiss progress.
                     getView().dismissProgress();
-                    Log.d("Application", response.headers().toString());
                     if (response.isSuccessful()) {
                         User applicationUser = response.body();
                         applicationUser.setFirebaseToken(Utility.getTokenFromSharedPref(context));
@@ -113,13 +109,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                                     getView().openApplication(applicationUser);
                                 }));
                     } else {
-                        Log.d("Application", "404 Error Occurred: User not found");
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(response.errorBody().string());
                             getView().showMessage(LoginContract.View.MESSAGE_DIALOG, jsonObject.getString("description"));
                         } catch (IOException | JSONException io_json) {
-                            Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
+//                            Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
                         }
                     }
                 }
@@ -127,9 +122,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 @Override
                 public void onFailure(Call<User> call, Throwable throwable) {
                     getView().dismissProgress();
-                    Log.d("Application", call.request().body().toString());
-                    Log.d("Application", call.request().headers().toString());
-                    Log.d("Application", throwable.getMessage());
                     getView().showMessage(LoginContract.View.MESSAGE_DIALOG, "An application error occurred. Please try again.");
                 }
             });

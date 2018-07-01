@@ -12,17 +12,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.injection.Injection;
-import com.enipro.model.Constants;
 import com.enipro.presentation.profile.ProfileActivity;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -150,10 +146,7 @@ public class UserSearchActivity extends AppCompatActivity implements SearchContr
     }
 
     private void onSearchItemClicked(User user) {
-        // Open the profile activity and remove current activity from back stack.
-        Intent profileIntent = ProfileActivity.newIntent(this);
-        profileIntent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
-        startActivity(profileIntent);
+        startActivity(ProfileActivity.Companion.newIntent(this, user));
     }
 
 }

@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|center_vertical">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/no_chatuser_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@string/font_roboto_regular"
         android:text="@string/no_chatuser"
-        android:textSize="20sp"
-        app:robotoTypeface="roboto_bold" />
+        android:textSize="20sp" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/no_chatuser_instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/no_chatuser_data"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
-        android:paddingEnd="30dp"
+        android:fontFamily="@string/font_roboto_regular"
         android:paddingStart="30dp"
-        android:text="@string/no_chat_inst_prof1"
-        app:robotoTypeface="roboto_light" />
+        android:paddingEnd="30dp"
+        android:text="@string/no_chat_inst_prof1" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/no_chatuser_instructions2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/no_chatuser_instructions"
         android:layout_centerHorizontal="true"
-        android:paddingEnd="30dp"
+        android:fontFamily="@string/font_roboto_regular"
         android:paddingStart="30dp"
-        android:text="@string/no_chat_inst_prof2"
-        app:robotoTypeface="roboto_light" />
+        android:paddingEnd="30dp"
+        android:text="@string/no_chat_inst_prof2" />
 </RelativeLayout>

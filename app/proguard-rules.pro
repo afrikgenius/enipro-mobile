@@ -19,3 +19,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep interface javax.annotation.Nullable
+-dontwarn com.squareup.picasso.**
+-dontwarn javax.annotation.**

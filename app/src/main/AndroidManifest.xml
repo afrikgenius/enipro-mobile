@@ -29,10 +29,6 @@
             android:name=".presentation.login.LoginActivity"
             android:noHistory="true" />
         <activity
-            android:name=".presentation.post.PostActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".presentation.profile.ProfileActivity" />
-        <activity
             android:name=".presentation.search.UserSearchActivity"
             android:noHistory="true" />
         <activity
@@ -61,25 +57,21 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".presentation.feeds.FeedCommentActivity"
-            android:label="@string/feed_comment_label"
-            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".presentation.signup.AddPhotoActivity" />
         <activity android:name=".presentation.messages.MessagesSearch" />
         <activity android:name=".presentation.messages.MessageActivity" />
-        <activity android:name=".presentation.base.PhotoActivity" />
         <activity android:name=".presentation.profile.InterestActivity" />
         <activity android:name=".presentation.profile.ViewPostsActivity" />
         <activity android:name=".presentation.signup.AddInterestsActivity" />
-        <activity android:name=".presentation.signup.VerifyMobileActivity" />
-        <activity android:name=".presentation.signup.VerifyEmailActivity" />
         <activity android:name=".presentation.signup.AddEducationActivity" />
         <activity android:name=".presentation.signup.AddExperienceActivity" />
         <activity android:name=".presentation.profile.BioActivity" />
-        <activity android:name=".presentation.feeds.VideoActivity" />
+        <activity android:name=".presentation.profile.ProfileActivity" />
         <activity android:name=".presentation.profile.NewEducationActivity" />
         <activity android:name=".presentation.profile.NewExperienceActivity" />
+        <activity android:name=".presentation.generic.industry.IndustryActivity" />
+        <activity android:name=".presentation.feeds.FeedCommentActivity" />
+        <activity android:name=".presentation.post.PostActivity"/>
 
         <receiver android:name=".services.SessionScheduleService" />
 

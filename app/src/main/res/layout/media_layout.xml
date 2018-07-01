@@ -9,7 +9,6 @@
         android:layout_width="500dp"
         android:layout_height="500dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/image003"
         android:visibility="gone" />
 
     <FrameLayout
@@ -18,28 +17,23 @@
         android:layout_height="wrap_content"
         android:visibility="gone">
 
-        <com.universalvideoview.UniversalVideoView
+        <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:uvv_fitXY="false" />
-
-        <com.universalvideoview.UniversalMediaController
-            android:id="@+id/media_controller"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:uvv_scalable="false" />
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
 
     <ImageButton
         android:id="@+id/media_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:background="@color/dark_gray"
-        android:src="@drawable/ic_clear_white" />
+        android:src="@drawable/ic_close_dark" />
 
 
 </RelativeLayout>

@@ -40,7 +40,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -157,20 +156,13 @@ public class Utility {
      */
     public static boolean checkPermission(final Context context, String permission, int requestCode, CharSequence rationaleText) {
         if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(context.getClass().getCanonicalName(), "Permission not granted. Requesting permission.");
+//            Log.i(context.getClass().getCanonicalName(), "Permission not granted. Requesting permission.");
             requestPermission(context, permission, requestCode, rationaleText); // Requests the permission specified since the permission has not been granted.
         } else {
-            Log.i(context.getClass().getCanonicalName(), permission + " has already been granted. There is no need to request for it.");
+//            Log.i(context.getClass().getCanonicalName(), permission + " has already been granted. There is no need to request for it.");
             return true;
         }
         return false;
-    }
-
-    Button closeButton(Context context) {
-        Button closeButton = new Button(context);
-        closeButton.setBackgroundResource(R.drawable.ic_clear_black);
-
-        return null;
     }
 
     /**
@@ -260,17 +252,7 @@ public class Utility {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
     }
-
-
-    /**
-     * @param context
-     * @param intent
-     * @param title
-     * @param message
-     * @param receiver
-     * @param receiverUid
-     * @param firebaseToken
-     */
+    
     public static void showNotification(final Context context, final Intent intent, String title, String message, String receiver, String receiverUid, String firebaseToken) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
@@ -626,17 +608,17 @@ public class Utility {
      * @param rationaleText the rationale text to be displayed when permission is denied.
      */
     private static void requestPermission(final Context context, String permission, int requestCode, CharSequence rationaleText) {
-        Log.i(context.getClass().getCanonicalName(), permission + " has not been granted. Requesting permission..");
+//        Log.i(context.getClass().getCanonicalName(), permission + " has not been granted. Requesting permission..");
         if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permission)) {
             // Show UI to explain why the permission is needed.
-            Log.i(context.getClass().getCanonicalName(), "Providing additional info as to why the permission is needed");
+//            Log.i(context.getClass().getCanonicalName(), "Providing additional info as to why the permission is needed");
             View rootView = ((Activity) context).getWindow().getDecorView().getRootView();
             Snackbar.make(rootView, rationaleText, Snackbar.LENGTH_INDEFINITE)
                     .setAction(R.string.ok, v -> ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode))
                     .show();
         } else {
             // Request permission
-            Log.i(context.getClass().getCanonicalName(), "Requesting Permission.");
+//            Log.i(context.getClass().getCanonicalName(), "Requesting Permission.");
             ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
         }
     }

@@ -57,7 +57,7 @@ public class FeedContract {
         void updateFeedData(List<FeedComment> comments);
     }
 
-    interface CommentPresenter extends MvpPresenter<FeedContract.CommentView> {
+    public interface CommentPresenter extends MvpPresenter<FeedContract.CommentView> {
 
         /**
          * Returns the information of a user with the user id in a callback passed into the function.

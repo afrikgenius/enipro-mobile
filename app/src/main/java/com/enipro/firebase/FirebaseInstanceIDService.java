@@ -3,13 +3,11 @@ package com.enipro.firebase;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -24,10 +22,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
      */
     @Override
     public void onTokenRefresh() {
-
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(Enipro.APPLICATION, "Refreshed token:" + refreshedToken);
-
         sendRegistrationToServer(refreshedToken);
     }
 

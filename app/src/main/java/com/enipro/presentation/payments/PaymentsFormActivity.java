@@ -2,12 +2,11 @@ package com.enipro.presentation.payments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +17,6 @@ import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 
 import org.parceler.Parcels;
 
@@ -257,7 +255,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
                 // Retrieve the transaction, and send its reference to your server
                 // for verification.
                 String paymentRef = transaction.getReference();
-                Log.d(Enipro.APPLICATION, "Transaction Ref - " + paymentRef);
+//                Log.d(Enipro.APPLICATION, "Transaction Ref - " + paymentRef);
             }
 
             @Override

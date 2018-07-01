@@ -7,20 +7,21 @@ import android.net.Uri;
 import android.support.multidex.MultiDexApplication;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
-import com.squareup.picasso.Picasso;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.io.File;
+import java.util.Locale;
 
 import co.paystack.android.PaystackSdk;
 
@@ -63,7 +64,6 @@ public class Application extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         JodaTimeAndroid.init(this);
-        Fresco.initialize(this);
 
         // Initialise payments api
         PaystackSdk.initialize(getApplicationContext());
@@ -81,12 +81,12 @@ public class Application extends MultiDexApplication {
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
             @Override
             public void set(ImageView imageView, Uri uri, Drawable placeholder, String tag) {
-                Picasso.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+                Glide.with(imageView.getContext()).load(uri).apply(new RequestOptions().placeholder(placeholder)).into(imageView);
             }
 
             @Override
             public void cancel(ImageView imageView) {
-                Picasso.with(imageView.getContext()).cancelRequest(imageView);
+                Glide.with(imageView.getContext()).clear(imageView);
             }
 
             @Override
@@ -108,6 +108,12 @@ public class Application extends MultiDexApplication {
                 return super.placeholder(ctx, tag);
             }
         });
+    }
+
+    public static Locale getLocale() {
+
+        // TODO Implement correctly to return locale of user.
+        return Locale.ENGLISH;
     }
 
     public static boolean isMessageActivityOpen() {
@@ -191,7 +197,6 @@ public class Application extends MultiDexApplication {
     }
 
     /**
-     *
      * Returns an instance of enipro database to access data in local storage in the application.
      *
      * @return

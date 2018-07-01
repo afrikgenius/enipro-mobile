@@ -6,17 +6,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.test.ApplicationTestCase;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,14 +35,9 @@ import com.enipro.data.remote.model.User;
 import com.enipro.injection.Injection;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
-import com.enipro.presentation.generic.EduRecyclerAdapter;
-import com.enipro.presentation.generic.ExpRecyclerAdapter;
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -181,7 +174,7 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                 bio_layout.setVisibility(View.GONE);
                 initEduRecycler();
                 userEducation = new ArrayList<>();
-                for(Education education: user.getEducation())
+                for (Education education : user.getEducation())
                     userEducation.add(education);
                 Collections.copy(userEducation, user.getEducation());
                 break;
@@ -190,9 +183,9 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                 initExpRecycler();
                 userEducation = new ArrayList<>();
                 userExperience = new ArrayList<>();
-                for(Education education: user.getEducation())
+                for (Education education : user.getEducation())
                     userEducation.add(education);
-                for(Experience experience: user.getExperiences())
+                for (Experience experience : user.getExperiences())
                     userExperience.add(experience);
                 Collections.copy(userEducation, user.getEducation());
                 Collections.copy(userExperience, user.getExperiences());
@@ -226,7 +219,6 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
         if (user != null) { // Null can be returned due to an error in validate data.
             showLoading();
             if (profile_image_bitmap != null) {
-                Log.d(Application.TAG, "Profile Bitmap is not null");
                 // Upload profile image to firebase and get download URL if profile image
                 StorageReference storageReference = FirebaseStorage
                         .getInstance()
@@ -235,7 +227,6 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                 Utility.uploadImageFirebase(storageReference, profile_image_bitmap, downloadURL -> {
                     user.setAvatar(downloadURL);
                     if (cover_image_bitmap != null) {
-                        Log.d(Application.TAG, "Covver ahas been loaded.");
                         // Upload cover image to firebase and get download URL
                         Utility.uploadImageFirebase(storageReference, cover_image_bitmap, url -> {
                             user.setAvatar_cover(url);
@@ -365,25 +356,25 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
         if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
             // Check if the permission was accepted or denied.
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(Application.TAG, "Camera permission has now been granted.");
+//                Log.i(Application.TAG, "Camera permission has now been granted.");
                 // Launch Camera to take a picture
                 Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, Utility.CAMERA_REQUEST_CODE);//zero can be replaced with any action codes
             } else {
-                Log.i(Application.TAG, "Camera permission was not granted ");
+//                Log.i(Application.TAG, "Camera permission was not granted ");
                 // Show snackbar.
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show();
             }
 
         } else if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(Application.TAG, "External Storage permission has now been granted");
+//                Log.i(Application.TAG, "External Storage permission has now been granted");
                 // Open gallery
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, Utility.GALLERY_REQUEST_CODE);
             } else {
-                Log.i(Application.TAG, "External storage permission was not granted ");
+//                Log.i(Application.TAG, "External storage permission was not granted ");
                 // Show snackbar.
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show();
             }
@@ -431,7 +422,6 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                 if (education != null) {
                     edu_adapter.addItem(education.getSchool());
                     userEducation.add(education);
-                    Log.d(Application.TAG, "Size: " + userEducation.size());
                 }
                 break;
             case Constants.ADD_EXPERIENCE:

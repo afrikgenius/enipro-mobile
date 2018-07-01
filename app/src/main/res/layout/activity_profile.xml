@@ -44,8 +44,8 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/appbar">
+        android:layout_below="@+id/appbar"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -98,20 +98,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/progfile_image_layout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="6dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="6dp"
                 android:gravity="center">
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/user_post_mock_name"
                     android:textSize="20sp"
-                    app:robotoTypeface="roboto_light" />
+                    android:fontFamily="@string/font_roboto_medium" />
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/profile_headline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -128,16 +128,17 @@
                     android:layout_below="@id/profile_headline"
                     android:layout_centerHorizontal="true">
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <!-- TODO Make this italic-->
+                    <TextView
                         android:id="@+id/user_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_type"
                         android:textColor="@color/material_grey_800"
                         android:textSize="15sp"
-                        app:robotoTypeface="roboto_light_italic" />
+                        android:fontFamily="@string/font_roboto_medium"/>
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -147,27 +148,6 @@
                         android:textColor="@color/material_grey_800_" />
                 </RelativeLayout>
 
-                <!--<RelativeLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:layout_below="@id/country_user_type"-->
-                <!--android:layout_centerHorizontal="true">-->
-
-                <!--<com.devspark.robototextview.widget.RobotoTextView-->
-                <!--android:id="@+id/connection_number"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="200" />-->
-
-                <!--<com.devspark.robototextview.widget.RobotoTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginStart="6dp"-->
-                <!--android:layout_toEndOf="@id/connection_number"-->
-                <!--android:text="in Circle" />-->
-                <!--</RelativeLayout>-->
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -176,24 +156,24 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_header"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginTop="6dp">
+                android:layout_marginBottom="6dp">
 
-                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                    android:id="@+id/add_action"
+                <Button
+                    android:id="@+id/action_btn"
                     style="@style/ButtonTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/message_user"
                     android:background="@drawable/button_bg"
-                    android:minHeight="0dp"
                     android:minWidth="0dp"
-                    android:paddingBottom="9dp"
-                    android:paddingEnd="13dp"
+                    android:minHeight="0dp"
                     android:paddingStart="13dp"
                     android:paddingTop="9dp"
-                    app:robotoTypeface="roboto_medium" />
+                    android:paddingEnd="13dp"
+                    android:paddingBottom="9dp"
+                    android:fontFamily="@string/font_roboto_medium" />
 
                 <ImageButton
                     android:id="@+id/message_user"
@@ -217,12 +197,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/action_layout"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="6dp"
-                android:layout_marginEnd="40dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="6dp">
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="6dp">
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/bio_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,9 +222,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/bio_layout"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -266,16 +246,15 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_light_bulb" />
 
-                        <com.devspark.robototextview.widget.RobotoTextView
+                        <TextView
                             android:id="@+id/interests_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/ic_interests"
                             android:text="@string/mock_interests"
-                            android:textSize="16sp"
-                            app:robotoTextWeight="medium" />
+                            android:textSize="16sp" />
 
-                        <com.devspark.robototextview.widget.RobotoTextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/interests_text"
@@ -292,9 +271,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_above="@id/saved_layout"
-                        android:layout_marginEnd="12dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginEnd="12dp"
                         android:background="@color/material_grey_300_" />
 
                     <RelativeLayout
@@ -314,16 +293,16 @@
                             android:layout_marginEnd="12dp"
                             android:src="@drawable/ic_bookmark" />
 
-                        <com.devspark.robototextview.widget.RobotoTextView
+                        <TextView
                             android:id="@+id/saved_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/ic_saved"
                             android:text="@string/mock_saved"
                             android:textSize="16sp"
-                            app:robotoTextWeight="medium" />
+                            />
 
-                        <com.devspark.robototextview.widget.RobotoTextView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/saved_text"
@@ -343,26 +322,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/interest_post_card"
-                android:layout_marginBottom="6dp"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="6dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_marginEnd="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/edu_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/education_text"
-                        android:textSize="16sp"
-                        app:robotoTextWeight="medium" />
+                        android:textSize="16sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/education_recyclerview"
@@ -382,26 +360,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/education_card"
-                android:layout_marginBottom="6dp"
-                android:layout_marginEnd="12dp"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="6dp">
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="6dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:layout_marginEnd="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/exp_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/exp_text"
-                        android:textSize="16sp"
-                        app:robotoTextWeight="medium" />
+                        android:textSize="16sp" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/experience_recyclerview"

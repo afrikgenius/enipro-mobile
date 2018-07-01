@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/group_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,8 +12,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:text="@string/circle_requests"
-        android:textSize="17sp"
-        app:robotoTextWeight="bold" />
+        android:textSize="17sp" />
 
     <View
         android:id="@+id/line_view"
@@ -38,7 +37,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/material_grey_300_" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/showmore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

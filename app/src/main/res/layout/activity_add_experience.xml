@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.signup.AddExperienceActivity">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/top_text_exp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/exp_top_text"
         android:textSize="30sp"
-        app:robotoTypeface="roboto_light" />
+        android:fontFamily="@string/font_roboto_medium" />
 
 
     <EditText
@@ -95,7 +95,7 @@
         android:layout_marginTop="15dp"
         android:text="@string/current_work" />
 
-    <com.devspark.robototextview.widget.RobotoButton
+    <Button
         android:id="@+id/continue_exp"
         style="@style/ButtonTextStyle"
         android:layout_width="wrap_content"
@@ -106,5 +106,5 @@
         android:background="@android:color/transparent"
         android:text="@string/btn_continue"
         android:textColor="@color/colorPrimary"
-        app:robotoTypeface="roboto_medium" />
+        android:fontFamily="@string/font_roboto_medium" />
 </RelativeLayout>

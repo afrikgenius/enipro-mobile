@@ -2,13 +2,11 @@ package com.enipro.presentation.messages;
 
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.data.remote.model.UserType;
-import com.enipro.model.Enipro;
 import com.enipro.presentation.base.BasePresenter;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +31,7 @@ public class MessageSearchPresenter extends BasePresenter<MessagesContract.Searc
     public void loadConnectedUsers() {
         checkViewAttached();
         User user = Application.getActiveUser();
-        if(user.getUserType().equalsIgnoreCase(UserType.PROFESSIONAL)){
-            Log.d(Enipro.APPLICATION, "Professional");
+        if (user.getUserType().equalsIgnoreCase(UserType.INSTANCE.getPROFESSIONAL())) {
             restService.getNetworkUsers(user.get_id().get_$oid()).enqueue(new Callback<List<User>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<User>> call, @NotNull Response<List<User>> response) {
@@ -44,42 +41,32 @@ public class MessageSearchPresenter extends BasePresenter<MessagesContract.Searc
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(response.errorBody().string());
-                            Log.d("Application", jsonObject.getString("errors"));
                         } catch (IOException | JSONException io_json) {
-                            Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<List<User>> call,@NonNull Throwable throwable) {
-                    Log.d("Application", call.request().body().toString());
-                    Log.d("Application", call.request().headers().toString());
-                    Log.d("Application", throwable.getMessage());
+                public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable throwable) {
                 }
             });
-        } else if(user.getUserType().equalsIgnoreCase(UserType.STUDENT)){ //
+        } else if (user.getUserType().equalsIgnoreCase(UserType.INSTANCE.getSTUDENT())) { //
             restService.getCircleUsers(user.get_id().get_$oid()).enqueue(new Callback<List<User>>() {
                 @Override
-                public void onResponse(@NotNull Call<List<User>> call,@NotNull Response<List<User>> response) {
+                public void onResponse(@NotNull Call<List<User>> call, @NotNull Response<List<User>> response) {
                     if (response.isSuccessful()) {
                         getView().onConnectedUsersLoaded(response.body()); // Passing the result in a local callback.
                     } else {
                         JSONObject jsonObject;
                         try {
                             jsonObject = new JSONObject(response.errorBody().string());
-                            Log.d("Application", jsonObject.getString("errors"));
                         } catch (IOException | JSONException io_json) {
-                            Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<List<User>> call,@NonNull Throwable throwable) {
-                    Log.d("Application", call.request().body().toString());
-                    Log.d("Application", call.request().headers().toString());
-                    Log.d("Application", throwable.getMessage());
+                public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable throwable) {
                 }
             });
         }

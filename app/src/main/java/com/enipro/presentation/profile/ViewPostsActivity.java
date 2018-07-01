@@ -83,8 +83,8 @@ public class ViewPostsActivity extends AppCompatActivity implements FeedContract
 
 
     @Override
-    public void onSavedFeedsRetrieved(List<Feed> feeds){
-        if(feeds.size() == 0)
+    public void onSavedFeedsRetrieved(List<Feed> feeds) {
+        if (feeds.size() == 0)
             no_saved_item.setVisibility(View.VISIBLE);
         else
             feedRecyclerAdapter.setItems(feeds);

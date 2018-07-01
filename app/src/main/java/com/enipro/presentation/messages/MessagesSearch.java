@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.devspark.robototextview.widget.RobotoTextView;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
@@ -153,12 +153,12 @@ public class MessagesSearch extends AppCompatActivity implements MessagesContrac
     public void onConnectedUsersLoaded(List<User> users) {
         if (users.size() == 0) {
             findViewById(R.id.no_chatuser_layout).setVisibility(View.VISIBLE);
-            if (Application.getActiveUser().getUserType().equalsIgnoreCase(UserType.STUDENT)) {
-                ((RobotoTextView) findViewById(R.id.no_chatuser_instructions)).setText(R.string.no_chat_inst_stu1);
-                ((RobotoTextView) findViewById(R.id.no_chatuser_instructions2)).setText(R.string.no_chat_inst_stu2);
-            } else if (Application.getActiveUser().getUserType().equalsIgnoreCase(UserType.PROFESSIONAL)) {
-                ((RobotoTextView) findViewById(R.id.no_chatuser_instructions)).setText(R.string.no_chat_inst_prof1);
-                ((RobotoTextView) findViewById(R.id.no_chatuser_instructions2)).setText(R.string.no_chat_inst_prof2);
+            if (Application.getActiveUser().getUserType().equalsIgnoreCase(UserType.INSTANCE.getSTUDENT())) {
+                ((TextView) findViewById(R.id.no_chatuser_instructions)).setText(R.string.no_chat_inst_stu1);
+                ((TextView) findViewById(R.id.no_chatuser_instructions2)).setText(R.string.no_chat_inst_stu2);
+            } else if (Application.getActiveUser().getUserType().equalsIgnoreCase(UserType.INSTANCE.getPROFESSIONAL())) {
+                ((TextView) findViewById(R.id.no_chatuser_instructions)).setText(R.string.no_chat_inst_prof1);
+                ((TextView) findViewById(R.id.no_chatuser_instructions2)).setText(R.string.no_chat_inst_prof2);
             }
         } else {
             usersAdapter.setItems(users);

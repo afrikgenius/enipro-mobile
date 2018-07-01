@@ -1,8 +1,6 @@
 package com.enipro.model;
 
 
-import java.util.Calendar;
-
 public class Constants {
 
     public static final int OPEN_EXTERNAL_STORAGE = 1;

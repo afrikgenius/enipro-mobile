@@ -74,7 +74,6 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
     <string name="mock_uni">University of Lagos</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- List of country codes accepted by the application and shown in the sign up activity spinner view. -->
@@ -403,4 +402,156 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
     <string name="show_more">SHOW MORE</string>
 
     <string name="request_accepted">Request Accepted</string>
+
+
+    <string-array name="industries">
+        <item>Accounting</item>
+        <item>Airlines/Aviation</item>
+        <item>Alternative Dispute Resolution</item>
+        <item>Alternative Medicine</item>
+        <item>Animation</item>
+        <item>Apparel &#38; Fashion</item>
+        <item>Architecture &#38; Planning</item>
+        <item>Arts &#38; Crafts</item>
+        <item>Automotive</item>
+        <item>Aviation &#38; Aerospace</item>
+        <item>Banking</item>
+        <item>Biotechnology</item>
+        <item>Broadcast Media</item>
+        <item>Building Materials</item>
+        <item>Business Supplies &#38; Equipment</item>
+        <item>Capital Markets</item>
+        <item>Chemicals</item>
+        <item>Civic &#38; Social Organization</item>
+        <item>Civil Engineering</item>
+        <item>Commercial Real Estate</item>
+        <item>Computer &#38; Network Security</item>
+        <item>Computer Games</item>
+        <item>Computer Hardware</item>
+        <item>Computer Networking</item>
+        <item>Computer Software</item>
+        <item>Construction</item>
+        <item>Consumer Electronics</item>
+        <item>Consumer Goods</item>
+        <item>Consumer Services</item>
+        <item>Cosmetics</item>
+        <item>Dairy</item>
+        <item>Defense &#38; Space</item>
+        <item>Design</item>
+        <item>Education Management</item>
+        <item>E-learning</item>
+        <item>Electrical &#38; Electronic Manufacturing</item>
+        <item>Entertainment</item>
+        <item>Environmental Services</item>
+        <item>Events Services</item>
+        <item>Executive Office</item>
+        <item>Facilities Services</item>
+        <item>Farming</item>
+        <item>Financial Services</item>
+        <item>Fine Art</item>
+        <item>Fishery</item>
+        <item>Food &#38; Beverages</item>
+        <item>Food Production</item>
+        <item>Fundraising</item>
+        <item>Furniture</item>
+        <item>Gambling &#38; Casinos</item>
+        <item>Glass, Ceramics &#38; Concrete</item>
+        <item>Government Administration</item>
+        <item>Government Relations</item>
+        <item>Graphic Design</item>
+        <item>Health, Wellness &#38; Fitness</item>
+        <item>Higher Education</item>
+        <item>Hospital &#38; Health Care</item>
+        <item>Hospitality</item>
+        <item>Human Resources</item>
+        <item>Import &#38; Export</item>
+        <item>Individual &#38; Family Services</item>
+        <item>Industrial Automation</item>
+        <item>Information Services</item>
+        <item>Information Technology &#38; Services</item>
+        <item>Insurance</item>
+        <item>International Affairs</item>
+        <item>International Trade &#38; Development</item>
+        <item>Internet</item>
+        <item>Investment Banking/Venture</item>
+        <item>Investment Management</item>
+        <item>Judiciary</item>
+        <item>Law Enforcement</item>
+        <item>Law Practice</item>
+        <item>Legal Services</item>
+        <item>Legislative Office</item>
+        <item>Leisure &#38; Travel</item>
+        <item>Libraries</item>
+        <item>Logistics &#38; Supply Chain</item>
+        <item>Luxury Goods &#38; Jewelry</item>
+        <item>Machinery</item>
+        <item>Management Consulting</item>
+        <item>Maritime</item>
+        <item>Marketing &#38; Advertising</item>
+        <item>Market Research</item>
+        <item>Mechanical or Industrial Engineering</item>
+        <item>Media Production</item>
+        <item>Medical Device</item>
+        <item>Medical Practice</item>
+        <item>Mental Health Care</item>
+        <item>Military</item>
+        <item>Mining &#38; Metals</item>
+        <item>Motion Pictures &#38; Film</item>
+        <item>Museums &#38; Institutions</item>
+        <item>Music</item>
+        <item>Nanotechnology</item>
+        <item>Newspapers</item>
+        <item>Nonprofit Organization Management</item>
+        <item>Oil &#38; Energy</item>
+        <item>Online Publishing</item>
+        <item>Outsourcing/Offshoring</item>
+        <item>Package/Freight Delivery</item>
+        <item>Packaging &#38; Containers</item>
+        <item>Paper &#38; Forest Products</item>
+        <item>Performing Arts</item>
+        <item>Pharmaceuticals</item>
+        <item>Philanthropy</item>
+        <item>Photography</item>
+        <item>Plastics</item>
+        <item>Political Organization</item>
+        <item>Primary/Secondary Education</item>
+        <item>Printing</item>
+        <item>Professional Training</item>
+        <item>Program Development</item>
+        <item>Public Policy</item>
+        <item>Public Relations</item>
+        <item>Public Safety</item>
+        <item>Publishing</item>
+        <item>Railroad Manufacture</item>
+        <item>Ranching</item>
+        <item>Real Estate</item>
+        <item>Recreational</item>
+        <item>Facilities &#38; Services</item>
+        <item>Religious Institutions</item>
+        <item>Renewables &#38; Environment</item>
+        <item>Research</item>
+        <item>Restaurants</item>
+        <item>Retail</item>
+        <item>Security &#38; Investigations</item>
+        <item>Semiconductors</item>
+        <item>Shipbuilding</item>
+        <item>Sporting Goods</item>
+        <item>Sports</item>
+        <item>Staffing &#38; Recruiting</item>
+        <item>Supermarkets</item>
+        <item>Telecommunications</item>
+        <item>Textiles</item>
+        <item>Think Tanks</item>
+        <item>Tobacco</item>
+        <item>Translation &#38; Localization</item>
+        <item>Transportation/Trucking/Railroad</item>
+        <item>Utilities</item>
+        <item>Venture Capital</item>
+        <item>Veterinary</item>
+        <item>Warehousing</item>
+        <item>Wholesale</item>
+        <item>Wine &#38; Spirits</item>
+        <item>Wireless</item>
+        <item>Writing &#38; Editing</item>
+    </string-array>
 </resources>

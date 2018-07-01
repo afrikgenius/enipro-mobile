@@ -48,14 +48,7 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
     Button continue_int;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-
-
-    /**
-     * Returns a new intent to open an instance of this activity.
-     *
-     * @param context the context to use
-     * @return intent.
-     */
+    
     public static Intent newIntent(Context context) {
         return new Intent(context, AddInterestsActivity.class);
     }

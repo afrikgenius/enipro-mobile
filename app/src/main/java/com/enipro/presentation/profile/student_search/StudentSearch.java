@@ -14,15 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.enipro.R;
-import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
-import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.profile.ProfileContract;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
-import java.net.PortUnreachableException;
 import java.util.List;
 
 import butterknife.BindView;

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/desc_int"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@string/font_roboto_medium"
         android:gravity="center"
-        android:text="@string/interests_desc"
-        app:robotoTypeface="roboto_medium" />
+        android:text="@string/interests_desc" />
 
 
     <EditText
@@ -22,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/desc_int"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="12dp"
         android:hint="@string/mock_interests"
         android:textSize="15sp" />
 
@@ -33,12 +32,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/interests"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp" />
 
 
-    <com.devspark.robototextview.widget.RobotoButton
+    <Button
         android:id="@+id/save_interests"
         style="@style/ButtonTextStyle"
         android:layout_width="wrap_content"
@@ -47,9 +46,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
+        android:fontFamily="@string/font_roboto_medium"
         android:text="@string/save"
-        android:textColor="@color/colorPrimary"
-        app:robotoTypeface="roboto_medium" />
+        android:textColor="@color/colorPrimary" />
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"

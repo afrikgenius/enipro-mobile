@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
             android:layout_marginStart="-15dp"
-            android:src="@drawable/ic_clear" />
+            android:src="@drawable/ic_close" />
 
         <ImageButton
             android:id="@+id/premium"

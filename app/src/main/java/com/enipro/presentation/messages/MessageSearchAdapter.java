@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.model.LocalCallback;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -63,7 +64,11 @@ public class MessageSearchAdapter extends RecyclerView.Adapter<MessageSearchAdap
             // Initiate a chat with the user if non exists else open chat with user
             itemLocalCallback.respond(user);
         });
-        Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.profile_image).into(holder.imageViewAvatar);
+        Glide.with(context)
+                .load(user.getAvatar())
+                .apply(new RequestOptions().placeholder(R.drawable.profile_image))
+                .into(holder.imageViewAvatar);
+
     }
 
     void setItems(List<User> userList) {

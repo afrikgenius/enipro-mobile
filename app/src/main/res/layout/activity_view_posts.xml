@@ -45,25 +45,25 @@
         android:id="@+id/no_saved_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/no_feed_data"
-            android:src="@drawable/ic_newsfeed"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_newsfeed" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/no_feed_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:text="@string/no_saved_feed"
-            android:textSize="20sp"
             android:layout_centerHorizontal="true"
-            app:robotoTypeface="roboto_bold" />
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:fontFamily="@string/font_roboto_regular"
+            android:text="@string/no_saved_feed"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </RelativeLayout>

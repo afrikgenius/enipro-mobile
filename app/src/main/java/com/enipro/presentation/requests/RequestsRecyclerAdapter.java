@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.devspark.robototextview.widget.RobotoTextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.Request;
 import com.enipro.model.Constants;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,8 +84,9 @@ public class RequestsRecyclerAdapter extends RecyclerView.Adapter<RequestsRecycl
                         String user_name = user.getFirstName() + " " + user.getLastName();
                         holder.req_user_name.setText(user_name);
                         holder.req_user_headline.setText(user.getHeadline());
-                        Picasso.with(context).load(user.getAvatar())
-                                .placeholder(R.drawable.profile_image)
+                        Glide.with(context)
+                                .load(user.getAvatar())
+                                .apply(new RequestOptions().placeholder(R.drawable.profile_image))
                                 .into(holder.req_user_image);
                     });
                 });
@@ -100,8 +102,9 @@ public class RequestsRecyclerAdapter extends RecyclerView.Adapter<RequestsRecycl
                         String user_name = user.getFirstName() + " " + user.getLastName();
                         holder.req_user_name.setText(user_name);
                         holder.req_user_headline.setText(user.getHeadline());
-                        Picasso.with(context).load(user.getAvatar())
-                                .placeholder(R.drawable.profile_image)
+                        Glide.with(context)
+                                .load(user.getAvatar())
+                                .apply(new RequestOptions().placeholder(R.drawable.profile_image))
                                 .into(holder.req_user_image);
                         holder.accept_request.setOnClickListener(view -> interactor.processAcceptance(request, user, position));
                     });
@@ -134,9 +137,9 @@ public class RequestsRecyclerAdapter extends RecyclerView.Adapter<RequestsRecycl
     class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView req_user_image;
-        RobotoTextView req_user_name;
-        RobotoTextView req_user_headline;
-        RobotoTextView sent_indicator;
+        TextView req_user_name;
+        TextView req_user_headline;
+        TextView sent_indicator;
         ImageButton accept_request;
         ImageButton decline_request;
 

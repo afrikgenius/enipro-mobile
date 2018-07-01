@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.RemoteInput;
-import android.util.Log;
 
 import com.enipro.Application;
 import com.enipro.R;
@@ -16,7 +15,6 @@ import com.enipro.data.remote.model.User;
 import com.enipro.events.NotificationEvent;
 import com.enipro.injection.Injection;
 import com.enipro.model.Constants;
-import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
 import com.enipro.presentation.messages.MessageActivity;
 import com.enipro.presentation.profile.ProfileActivity;
@@ -50,16 +48,8 @@ public class EniproMessagingService extends FirebaseMessagingService implements 
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(Enipro.APPLICATION, "From: " + remoteMessage.getFrom());
-
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(Enipro.APPLICATION, "Message data payload: " + remoteMessage.getData());
-            Log.d(Enipro.APPLICATION, "Message From:" + remoteMessage.getFrom());
-
             // Check the remote message "from" field to know topic the message is for.
             if (remoteMessage.getFrom().equals(Application.FirebaseTopics.TOPICS_PREFIX + Application.FirebaseTopics.FEED_TOPIC)) {
                 // TODO Send it to feed fragment to update UI
@@ -72,7 +62,6 @@ public class EniproMessagingService extends FirebaseMessagingService implements 
                 String fcmToken = remoteMessage.getData().get(Constants.FCM_TOKEN);
                 String unique_id = remoteMessage.getData().get(Constants.UNIQUE_IDENTIFIER);
 
-                Log.d(Application.TAG, "The unique id is " + username);
                 NotificationCompat.Builder notificationBuilder;
                 // Based on the unique id, we can know the type of notification it is and provide appropriate actions.
                 switch (unique_id) {
@@ -156,7 +145,7 @@ public class EniproMessagingService extends FirebaseMessagingService implements 
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
-            Log.d(Enipro.APPLICATION, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+//            Log.d(Enipro.APPLICATION, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

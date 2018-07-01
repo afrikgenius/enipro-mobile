@@ -2,29 +2,26 @@ package com.enipro.presentation.requests.session_schedule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.devspark.robototextview.widget.RobotoCheckBox;
 import com.enipro.R;
-import com.enipro.data.remote.model.Date;
 import com.enipro.data.remote.model.SessionSchedule;
 import com.enipro.data.remote.model.SessionTiming;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
-import com.enipro.presentation.profile.ProfileActivity;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,19 +43,19 @@ public class SessionScheduleActivity extends AppCompatActivity {
     EditText to_time;
 
     @BindView(R.id.monday_chkbox)
-    RobotoCheckBox monday_checkbox;
+    CheckBox monday_checkbox;
     @BindView(R.id.tuesday_chkbox)
-    RobotoCheckBox tuesday_checkbox;
+    CheckBox tuesday_checkbox;
     @BindView(R.id.wed_chkbox)
-    RobotoCheckBox wednesday_checkbox;
+    CheckBox wednesday_checkbox;
     @BindView(R.id.thurs_chkbox)
-    RobotoCheckBox thursday_checkbox;
+    CheckBox thursday_checkbox;
     @BindView(R.id.friday_chkbox)
-    RobotoCheckBox friday_checkbox;
+    CheckBox friday_checkbox;
     @BindView(R.id.sat_chkbox)
-    RobotoCheckBox saturday_checkbox;
+    CheckBox saturday_checkbox;
     @BindView(R.id.sun_chkbox)
-    RobotoCheckBox sunday_checkbox;
+    CheckBox sunday_checkbox;
 
     @BindView(R.id.send_request)
     Button send;

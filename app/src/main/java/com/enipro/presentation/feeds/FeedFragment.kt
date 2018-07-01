@@ -44,9 +44,8 @@ class FeedFragment : Fragment(), FeedContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         feed_fab.setOnClickListener {
-            startActivityForResult(PostActivity.newIntent(activity), FeedContract.Presenter.POST_FEED_REQUEST)
+            startActivityForResult(PostActivity.newIntent(context), FeedContract.Presenter.POST_FEED_REQUEST)
         }
-
 
         // TODO Incorporate a view model into the design at this stage
         swiperefresh_feeds.setOnRefreshListener {

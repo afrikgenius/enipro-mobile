@@ -7,11 +7,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -102,7 +99,6 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
             validationService.register(getPresenter(), findViewById(R.id.btnSignUpInSignUp),
                     ValidationService.LISTENER_VIEW_ON_CLICK, _extractor);
         } catch (Exception e) {
-            Log.e("ERROR", "Activity did not implement DataValidator");
         }
 
         // Clickable button for signing in redirects the user to the login activity.

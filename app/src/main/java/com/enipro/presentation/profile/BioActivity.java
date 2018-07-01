@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-import com.devspark.robototextview.widget.RobotoTextView;
 import com.enipro.Application;
 import com.enipro.R;
 
@@ -18,7 +18,7 @@ public class BioActivity extends AppCompatActivity {
 
 
     @BindView(R.id.bio)
-    RobotoTextView bio;
+    TextView bio;
 
     /**
      * Returns a new intent to open an instance of this activity.

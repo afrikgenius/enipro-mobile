@@ -1,7 +1,6 @@
 package com.enipro.presentation.signup;
 
 
-import android.content.Context;
 import android.widget.ImageView;
 
 import com.enipro.data.remote.model.User;

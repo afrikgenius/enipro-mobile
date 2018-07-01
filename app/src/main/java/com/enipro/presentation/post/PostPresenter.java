@@ -1,7 +1,6 @@
 package com.enipro.presentation.post;
 
 import com.enipro.data.remote.EniproRestService;
-import com.enipro.data.remote.model.Feed;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.base.BasePresenter;
 

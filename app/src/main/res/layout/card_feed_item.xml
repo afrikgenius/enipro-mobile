@@ -95,7 +95,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/button_more"
                         android:paddingBottom="10dp"
-                        android:src="@drawable/ic_more_vert" />
+                        android:src="@drawable/ic_more" />
 
                 </RelativeLayout>
 
@@ -167,15 +167,6 @@
                             android:clickable="true"
                             android:focusable="true" />
                     </RelativeLayout>
-
-                    <ImageButton
-                        android:id="@+id/play_pause_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|center_vertical"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/uvv_itv_player_play"
-                        android:visibility="gone" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/video_length"
@@ -287,7 +278,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/button_comment"
-                    android:src="@drawable/ic_bookmark_nactive" />
+                    android:src="@drawable/ic_bookmark_outline" />
 
 
             </RelativeLayout>

@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Injection {
 
-    private static final String BASE_URL = "https://agbanagba.com";
+    private static final String BASE_URL = "https://enipro.org";
 
     private static OkHttpClient okHttpClient;
     private static Retrofit retrofitInstance;

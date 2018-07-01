@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.signup.AddEducationActivity">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/top_text_edu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,9 +13,9 @@
         android:layout_marginTop="40dp"
         android:text="@string/edu_top_text"
         android:textSize="30sp"
-        app:robotoTypeface="roboto_light" />
+        android:fontFamily="@string/font_roboto_regular" />
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/desc_edu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +26,7 @@
         android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/edu_desc"
-        app:robotoTypeface="roboto_medium" />
+        android:fontFamily="@string/font_roboto_medium" />
 
 
     <EditText
@@ -88,7 +87,7 @@
 
     </GridLayout>
 
-    <com.devspark.robototextview.widget.RobotoButton
+    <Button
         android:id="@+id/continue_edu"
         style="@style/ButtonTextStyle"
         android:layout_width="wrap_content"
@@ -99,6 +98,6 @@
         android:background="@android:color/transparent"
         android:text="@string/btn_continue"
         android:textColor="@color/colorPrimary"
-        app:robotoTypeface="roboto_medium" />
+        android:fontFamily="@string/font_roboto_medium" />
 
 </RelativeLayout>

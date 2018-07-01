@@ -13,7 +13,6 @@ import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.afollestad.materialdialogs.MaterialDialog
@@ -71,6 +70,7 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
 
     companion object {
 
+        @JvmField
         val TOTAL_MESSAGES_COUNT = 100
 
         fun newIntent(context: Context, user: User?): Intent {
@@ -85,8 +85,8 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
 
         setSupportActionBar(chat_message_toolbar)
         if (supportActionBar != null) {
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setDisplayShowHomeEnabled(true)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.setDisplayShowHomeEnabled(true)
         }
 
         // Initialise the view model to hold data for the activity class.
@@ -101,7 +101,7 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         presenter!!.attachView(this)
 
         // TODO This should also be in the view model
-        presenter!!.getChatUserFromFirebase(user!!.getFirebaseUID(), { user -> chatUser = user })
+        presenter!!.getChatUserFromFirebase(user?.firebaseUID) { user -> chatUser = user }
 
         // Image loader is null in order to omit messages with avatars
         messagesAdapter = MessagesListAdapter(Application.getActiveUser().id, null)
@@ -114,7 +114,7 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         input.setAttachmentsListener(this)
 
         // TODO This should also be in the view model
-        presenter!!.getMessageFromFirebaseUser(Application.getActiveUser().getFirebaseUID(), user!!.getFirebaseUID())
+        presenter!!.getMessageFromFirebaseUser(Application.getActiveUser().firebaseUID, user?.firebaseUID)
     }
 
     override fun onStart() {
@@ -206,25 +206,25 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
             // Check if the permission was accepted or denied.
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(Application.TAG, "Camera permission has now been granted.")
+//                Log.i(Application.TAG, "Camera permission has now been granted.")
                 // Launch Camera to take a picture
                 val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePicture, Utility.CAMERA_REQUEST_CODE)//zero can be replaced with any action codes
             } else {
-                Log.i(Application.TAG, "Camera permission was not granted ")
+//                Log.i(Application.TAG, "Camera permission was not granted ")
                 // Show snackbar.
                 Snackbar.make(window.decorView.rootView, R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show()
             }
 
         } else if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.i(Application.TAG, "External Storage permission has now been granted")
+//                Log.i(Application.TAG, "External Storage permission has now been granted")
                 // Open gallery
                 val pickPhoto = Intent(Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(pickPhoto, Utility.GALLERY_REQUEST_CODE)
             } else {
-                Log.i(Application.TAG, "External storage permission was not granted ")
+//                Log.i(Application.TAG, "External storage permission was not granted ")
                 // Show snackbar.
                 Snackbar.make(window.decorView.rootView, R.string.permission_not_granted, Snackbar.LENGTH_SHORT).show()
 
@@ -245,12 +245,12 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
     override fun onAddAttachments() {
         MaterialDialog.Builder(this)
                 .items(R.array.attachement_items)
-                .itemsCallback({ _, _, position, _ ->
+                .itemsCallback { _, _, position, _ ->
                     when (position) {
                         0 -> launchGallery()
                         1 -> selectAttachement()
                     }
-                }).show()
+                }.show()
     }
 
     private fun launchGallery() {
@@ -292,11 +292,11 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
                 val createdAt = SimpleDateFormat("MMM d, EEE 'at' h:mm a", Locale.getDefault())
                         .format(message!!.createdAt)
 
-                var text: String? = message.getText()
+                var text: String? = message.text
                 if (text == null) text = "[attachment]"
 
                 return String.format(Locale.getDefault(), "%s: %s (%s)",
-                        message.user.name, text, createdAt)
+                        message.user?.name, text, createdAt)
             }
         }
     }
@@ -304,11 +304,11 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
     override fun onSubmit(input: CharSequence?): Boolean {
         val appUser = Application.getActiveUser()
         // Send message to firebase and add message to UI
-        val message = Message(null, appUser.email, user!!.email, appUser.firebaseUID, user!!.firebaseUID, input.toString())
-        message.user = appUser
+        val message = Message(null, appUser.email, user!!.email, appUser.firebaseUID, user?.firebaseUID, input.toString())
+        message.setUser(appUser)
 
         // TODO This should obviously be taken care of in the view model
-        presenter!!.sendMessageToFirebaseUser(this, message, appUser.firebaseToken, appUser, user!!.firebaseToken, user)
+        presenter?.sendMessageToFirebaseUser(this, message, appUser.firebaseToken, appUser, user!!.firebaseToken, user)
         return true
     }
 
@@ -347,22 +347,18 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
 
     override fun onMessageError() {
         // Show snackbar and remove message from message list adapter
-
     }
 
     override fun onChatCreateError() {
-
     }
 
     override fun onChatCreateSuccess(connection: UserConnection) {
         // Save the connection data into the database
         val appUser = Application.getActiveUser()
-        val chats = appUser.getChats()
+        val chats = appUser.chats
         chats.add(connection)
-        appUser.setChats(chats)
+        appUser.chats = chats
         Application.setActiveUser(appUser)
         AppExecutors().diskIO().execute { EniproDatabase.getInstance(this).userDao().updateUser(Application.getActiveUser()) }
     }
-
-
 }

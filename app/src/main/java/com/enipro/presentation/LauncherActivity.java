@@ -3,11 +3,8 @@ package com.enipro.presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.AppLaunchChecker;
 import android.support.v7.app.AppCompatActivity;
 
-import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
@@ -15,13 +12,10 @@ import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
 import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
-import com.enipro.presentation.profile.ProfileActivity;
-import com.enipro.presentation.signup.SignUpActivity;
 
 import org.parceler.Parcels;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 

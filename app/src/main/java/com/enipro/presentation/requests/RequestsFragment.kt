@@ -1,14 +1,13 @@
 package com.enipro.presentation.requests
 
 import android.app.Activity
-import android.support.v4.app.Fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +54,7 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater!!.inflate(R.layout.fragment_requests, container, false)
+        return inflater.inflate(R.layout.fragment_requests, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,7 +88,7 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
                     // Get session schedule object from intent
                     val schedule = data!!.getParcelableExtra<Parcelable>(Constants.SESSION_SCHEDULE_DATA)
                     val request = requestPackage!!.request
-                    request!!.setSchedule(Parcels.unwrap(schedule))
+                    request!!.schedule = Parcels.unwrap(schedule)
                     // Perform acceptance of request
                     presenter!!.acceptRequest(request)
                 }
@@ -113,7 +112,6 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
 
     @Subscribe
     fun onNotificationEvent(notificationEvent: NotificationEvent?) {
-        Log.d(Application.TAG, "Notification Event Called.")
         // Should only be called in a case where there is no data in the adapter
 //        if (messagesAdapter == null || messagesAdapter.getItemCount() == 0)
 //            presenter.getMessageFromFirebaseUser(applicationUser.getFirebaseUID(), notificationEvent.getUid());
@@ -134,10 +132,10 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
     override fun onRequestAccepted() {
         adapter!!.removeItem(requestPackage!!.position)
         val snackbar = Snackbar.make(coordinatorLayout, R.string.request_accepted, Snackbar.LENGTH_LONG)
-                .setAction(Constants.MESSAGE, {
+                .setAction(Constants.MESSAGE) {
                     val intent = MessageActivity.newIntent(activity!!.applicationContext, requestPackage!!.user)
                     startActivity(intent)
-                })
+                }
         val tv = snackbar.view.findViewById<TextView>(android.support.design.R.id.snackbar_text)
         tv.setTextColor(Color.WHITE)
         snackbar.show()
@@ -146,10 +144,10 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
         FirebaseNotificationBuilder.initialize()
                 .title(Application.getActiveUser().name)
                 .message("accepted your mentoring request.")
-                .username(Application.getActiveUser().get_id().`_$oid`)
-                .uid(Application.getActiveUser().getFirebaseUID())
-                .firebaseToken(Application.getActiveUser().getFirebaseToken())
-                .receiverFirebaseToken(requestPackage!!.user!!.getFirebaseToken())
+                .username(Application.getActiveUser().id)
+                .uid(Application.getActiveUser().firebaseUID)
+                .firebaseToken(Application.getActiveUser().firebaseToken)
+                .receiverFirebaseToken(requestPackage!!.user!!.firebaseToken)
                 .uniqueIdentifier(Constants.MENTORING_REQUEST_REC)
                 .send()
     }
