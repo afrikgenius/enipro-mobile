@@ -43,7 +43,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     public LoginPresenter(EniproRestService restService, Scheduler ioScheduler, io.reactivex.Scheduler mainScheduler, ValidationService validationService, Context context) {
         super(restService, ioScheduler, mainScheduler);
         this.validationService = validationService;
-        this.db = EniproDatabase.getInstance(context);
+        this.db = EniproDatabase.Companion.getInstance(context);
         this.context = context;
     }
 

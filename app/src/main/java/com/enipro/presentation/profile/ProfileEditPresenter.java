@@ -20,7 +20,7 @@ public class ProfileEditPresenter extends BasePresenter<ProfileContract.EditView
 
     ProfileEditPresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
-        dbInstance = EniproDatabase.getInstance(context);
+        dbInstance = EniproDatabase.Companion.getInstance(context);
     }
 
     @Override

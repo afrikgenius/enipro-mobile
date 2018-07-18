@@ -14,20 +14,16 @@ import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
-import com.twinkle94.monthyearpicker.picker.YearMonthPickerDialog;
 
 import org.parceler.Parcels;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.internal.Util;
 
 public class AddEducationActivity extends AppCompatActivity implements SignupContract.View {
 
@@ -47,12 +43,6 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
     EditText university;
 
 
-    /**
-     * Returns a new intent to open an instance of this activity.
-     *
-     * @param context the context to use
-     * @return intent.
-     */
     public static Intent newIntent(Context context) {
         return new Intent(context, AddEducationActivity.class);
     }
@@ -67,7 +57,7 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
         User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
-                EniproDatabase.getInstance(this), this);
+                EniproDatabase.Companion.getInstance(this), this);
         presenter.attachView(this);
 
         continue_edu.setOnClickListener(view -> {
@@ -147,7 +137,6 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
 
     @Override
     public void advanceProcess(User user) {
-        // Open add photo activity passing the user object as a bundle
         Intent intent = AddInterestsActivity.newIntent(this);
         intent.putExtra(AddInterestsActivity.TAG, Parcels.wrap(user));
         startActivity(intent);

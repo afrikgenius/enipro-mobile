@@ -33,7 +33,6 @@ import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
 import com.enipro.presentation.feeds.FeedCommentActivity;
 import com.enipro.presentation.feeds.FeedContract;
-import com.enipro.presentation.payments.PaymentsFormActivity;
 import com.enipro.presentation.post.PostActivity;
 import com.enipro.presentation.profile.ProfileActivity;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -48,6 +47,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+import co.paystack.android.ui.CardActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -238,9 +238,12 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
             // TODO Check if the user has paid for this item. Get current user then
             // TODO
 
-            Intent paymentIntent = PaymentsFormActivity.newIntent(context);
-            paymentIntent.putExtra(Constants.FEED_EXTRA, Parcels.wrap(feedItem));
-            context.startActivity(paymentIntent);
+//            Intent paymentIntent = PaymentsFormActivity.newIntent(context);
+//            paymentIntent.putExtra(Constants.FEED_EXTRA, Parcels.wrap(feedItem));
+
+            // TODO If this is better, make use of this instead
+            Intent intent = new Intent(context, CardActivity.class);
+            context.startActivity(intent);
 
         }
     }

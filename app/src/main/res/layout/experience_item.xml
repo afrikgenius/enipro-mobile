@@ -24,7 +24,7 @@
                 android:layout_below="@id/exp_text"
                 android:layout_marginTop="7dp">
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/exp_organisation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
                     android:textSize="17sp"
                     app:robotoTextWeight="medium" />
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/exp_industry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     app:robotoTextStyle="italic" />
             </RelativeLayout>
 
-            <com.devspark.robototextview.widget.RobotoTextView
+            <TextView
                 android:id="@+id/exp_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:text="@string/exp_role"
                 android:textColor="@color/material_grey_800_" />
 
-            <com.devspark.robototextview.widget.RobotoTextView
+            <TextView
                 android:id="@+id/exp_year_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:text="@string/exp_from"
                 android:textColor="@color/material_grey_800_" />
 
-            <com.devspark.robototextview.widget.RobotoTextView
+            <TextView
                 android:id="@+id/exp_hyphen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:text="@string/hyphen"
                 android:textColor="@color/material_grey_800_" />
 
-            <com.devspark.robototextview.widget.RobotoTextView
+            <TextView
                 android:id="@+id/exp_year_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

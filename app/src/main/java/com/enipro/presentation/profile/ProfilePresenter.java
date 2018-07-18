@@ -4,6 +4,7 @@ package com.enipro.presentation.profile;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.Request;
@@ -14,7 +15,6 @@ import com.enipro.injection.AppExecutors;
 import com.enipro.model.Constants;
 import com.enipro.model.LocalCallback;
 import com.enipro.presentation.base.BasePresenter;
-import com.google.firebase.crash.FirebaseCrash;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
 
     ProfilePresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
-        dbInstance = EniproDatabase.getInstance(context);
+        dbInstance = EniproDatabase.Companion.getInstance(context);
     }
 
     @Override
@@ -117,7 +117,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
         addDisposable(restService.createRequest(request)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> getView().onAddCircleRequestValidated(), throwable -> getView().onError(throwable), () -> {}));
+                .subscribe(request1 -> getView().onAddCircleRequestValidated(), throwable -> getView().onError(throwable), () -> {
+                }));
 
 
     }
@@ -130,7 +131,8 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
         addDisposable(restService.createRequest(request)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(request1 -> getView().onAddNetworkRequestValidated(), throwable -> getView().onError(throwable), () -> {}));
+                .subscribe(request1 -> getView().onAddNetworkRequestValidated(), throwable -> getView().onError(throwable), () -> {
+                }));
 
     }
 
@@ -198,7 +200,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
                     JSONObject jsonObject;
                     try {
                         jsonObject = new JSONObject(response.errorBody().string());
-                        FirebaseCrash.log(jsonObject.getString("errors"));
+                        Crashlytics.log(jsonObject.getString("errors"));
                     } catch (IOException | JSONException io_json) {
                     }
                 }

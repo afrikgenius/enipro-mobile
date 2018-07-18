@@ -73,7 +73,7 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
         User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
-                EniproDatabase.getInstance(this), this);
+                EniproDatabase.Companion.getInstance(this), this);
         presenter.attachView(this);
 
         // On click on image to upload a profile photo.
@@ -100,16 +100,10 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
             presenter.persistUser(user);
         });
 
-        // Persist image in firebase and user data with a call to the API when the finish button is clicked.
         btnFinish.setOnClickListener(v -> {
-            // Persist image saved in firebase before sending it to the API
-            // Set up storage reference
             mStorageRef = FirebaseStorage.getInstance().getReference();
-            // navigate to profile_avatar reference
             mStorageRef = mStorageRef.child(Constants.FIREBASE_PROFILE_REF + user.getFirstName() + user.getLastName() + user.getEmail() + ".jpg");
             presenter.persistAvatarFirebase(user, profile_image, mStorageRef, (firebasePersistedUser) -> {
-                // Sending the avatar to firebase storage is done on a separate thread and persisting user with
-                // a call to the API should be done when the avatar is successfully sent to firebase storage.
                 firebasePersistedUser.setAvatar_cover(Constants.DEFAULT_PROFILE_COVER_URL);
                 presenter.persistUser(firebasePersistedUser);
             });
@@ -119,8 +113,6 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-
-        // If there is a firebase storage upload in progress, save the reference so it can be queried later.
         if (mStorageRef != null)
             outState.putString(Constants.FIREBASE_UPLOAD_REF, mStorageRef.toString());
     }
@@ -129,8 +121,6 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
-
-        // Get the reference of an upload if there is any in progress
         final String stringReference = savedInstanceState.getString(Constants.FIREBASE_UPLOAD_REF);
         if (stringReference == null) return;
 
@@ -243,8 +233,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
 
     @Override
     public void openApplication(User user) {
-        Intent intent = HomeActivity.newIntent(this);
-        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
+        Intent intent = HomeActivity.newIntent(this, user);
+//        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

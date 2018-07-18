@@ -13,7 +13,6 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.enipro.R;
 import com.enipro.data.remote.model.Education;
-import com.enipro.data.remote.model.User;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 

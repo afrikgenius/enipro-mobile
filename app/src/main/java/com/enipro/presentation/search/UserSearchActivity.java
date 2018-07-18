@@ -43,13 +43,6 @@ public class UserSearchActivity extends AppCompatActivity implements SearchContr
     private SearchContract.Presenter messagePresenter;
     private SearchAdapter usersAdapter;
 
-
-    /**
-     * Returns a new intent to open an instance of this activity.
-     *
-     * @param context the context to use
-     * @return intent.
-     */
     public static Intent newIntent(Context context) {
         return new Intent(context, UserSearchActivity.class);
     }
@@ -70,8 +63,7 @@ public class UserSearchActivity extends AppCompatActivity implements SearchContr
         messagePresenter = new SearchPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread());
         messagePresenter.attachView(this);
 
-        onSearchContentChanged(); // Set text changed listener to search edit text.
-        // Empty the content of the search edit text when the clear button is clicked.
+        onSearchContentChanged();
         search_clear.setOnClickListener(v -> search.setText(""));
 
         // Recycler view and adapter for news feed items

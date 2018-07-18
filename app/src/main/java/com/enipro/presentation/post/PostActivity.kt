@@ -21,6 +21,7 @@ import android.widget.EditText
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.crashlytics.android.Crashlytics
 import com.enipro.Application
 import com.enipro.R
 import com.enipro.data.remote.model.Feed
@@ -29,7 +30,6 @@ import com.enipro.data.remote.model.PremiumDetails
 import com.enipro.injection.Injection
 import com.enipro.model.*
 import com.enipro.presentation.generic.TagRecyclerAdapter
-import com.google.firebase.crash.FirebaseCrash
 import com.jaredrummler.materialspinner.MaterialSpinner
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -214,7 +214,7 @@ class PostActivity : AppCompatActivity(), PostContract.View {
                 // Store a reference to original bitmap to send to Firebase
                 imageUploadBitmap = imageBitmap.copy(Bitmap.Config.ARGB_8888, false)
             } catch (fnfe: FileNotFoundException) {
-                FirebaseCrash.log(fnfe.message)
+                Crashlytics.log(fnfe.message)
             }
             Glide.with(this)
                     .load(feed.content?.video)
@@ -517,7 +517,7 @@ class PostActivity : AppCompatActivity(), PostContract.View {
                         // Store a reference to original bitmap to send to Firebase
                         imageUploadBitmap = imageBitmap.copy(Bitmap.Config.ARGB_8888, false)
                     } catch (fnfe: FileNotFoundException) {
-                        FirebaseCrash.log(fnfe.message)
+                        Crashlytics.log(fnfe.message)
                     }
 
                     modifyMediaViews(true, IMAGE)

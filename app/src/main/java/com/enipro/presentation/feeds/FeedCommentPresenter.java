@@ -35,7 +35,7 @@ public class FeedCommentPresenter extends BasePresenter<FeedContract.CommentView
 
     FeedCommentPresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
-        dbInstance = EniproDatabase.getInstance(context);
+        dbInstance = EniproDatabase.Companion.getInstance(context);
     }
 
 

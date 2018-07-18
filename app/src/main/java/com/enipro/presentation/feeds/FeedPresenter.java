@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
 import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.Document;
@@ -18,7 +19,6 @@ import com.enipro.model.Constants;
 import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
 import com.enipro.presentation.base.BasePresenter;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -46,7 +46,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
     public FeedPresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
-        dbInstance = EniproDatabase.getInstance(context);
+        dbInstance = EniproDatabase.Companion.getInstance(context);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
                 sendPostToAPI(feedData);
             });
         } catch (FileNotFoundException fnfe) {
-            FirebaseCrash.log(fnfe.getMessage());
+            Crashlytics.log(fnfe.getMessage());
         }
     }
 

@@ -52,7 +52,7 @@
         android:layout_below="@+id/editTxtPasswordLogin"
         android:layout_alignEnd="@+id/text"
         android:layout_marginTop="17dp"
-        android:fontFamily="@string/font_roboto_medium"
+        android:fontFamily="@string/font_roboto_regular"
         android:text="@string/forgot_password"
         android:textSize="15sp" />
 
@@ -64,7 +64,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:fontFamily="@string/font_roboto_medium"
+        android:fontFamily="@string/font_roboto_regular"
         android:gravity="center"
         android:text="@string/tandc"
         android:textSize="15sp" />
@@ -92,7 +92,7 @@
         android:layout_below="@+id/btnLoginInLogin"
         android:layout_marginTop="18dp"
         android:layout_toStartOf="@+id/forgot_password"
-        android:fontFamily="@string/font_roboto_medium"
+        android:fontFamily="@string/font_roboto_regular"
         android:gravity="center"
         android:text="@string/member"
         android:textSize="15sp" />
@@ -106,12 +106,12 @@
         android:layout_alignBottom="@+id/member"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/member"
-        android:fontFamily="@string/font_roboto_medium"
+        android:fontFamily="@string/font_roboto_regular"
         android:text="@string/signup_text"
         android:textSize="15sp" />
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/snackbar_container"
+        android:id="@+id/login_coordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

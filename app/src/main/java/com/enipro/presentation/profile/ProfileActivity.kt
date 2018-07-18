@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.enipro.Application
 import com.enipro.R
+import com.enipro.data.remote.model.Education
+import com.enipro.data.remote.model.Experience
 import com.enipro.data.remote.model.User
 import com.enipro.injection.Injection
 import com.enipro.model.Constants
@@ -35,7 +37,6 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     private var progressDialog: MaterialDialog? = null
     private var interactor: ProfileInteractor? = null
 
-    // Only initialize these adapters if there is an education or experience data
     private var educationAdapter: EducationAdapter? = null
     private var experienceAdapter: ExperienceAdapter? = null
 
@@ -138,21 +139,21 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         profile_headline.text = user!!.headline
         country.text = user!!.country
         user_type.text = user!!.userType
-        Glide.with(this).load(user!!.avatar).apply(RequestOptions().placeholder(R.drawable.profile_image)).into(profile_imageview)
-        Glide.with(this).load(user!!.avatar_cover).apply(RequestOptions().placeholder(R.drawable.bg_image)).into(cover_photo)
+        Glide.with(this).load(user?.avatar).apply(RequestOptions().placeholder(R.drawable.profile_image)).into(profile_imageview)
+        Glide.with(this).load(user?.avatar_cover).apply(RequestOptions().placeholder(R.drawable.bg_image)).into(cover_photo)
 
         // Education and Experience adapters should not be created if there is no
         //  education or experience in users profile
         // TODO Check if this works
-        if (user!!.education.isNotEmpty()) {
-            educationAdapter = EducationAdapter(user!!.education)
+        if (user?.education!!.isNotEmpty()) {
+            educationAdapter = EducationAdapter(user?.education as MutableList<Education>)
             education_recyclerview.adapter = educationAdapter
         } else
             education_recyclerview.visibility = View.GONE
 
         // Check for experiences and remove recycler view if there is no experience
-        if (user!!.experiences.isNotEmpty()) {
-            experienceAdapter = ExperienceAdapter(user!!.experiences)
+        if (user!!.experiences!!.isNotEmpty()) {
+            experienceAdapter = ExperienceAdapter(user?.experiences as MutableList<Experience>)
             experience_recyclerview.adapter = experienceAdapter
         } else
             experience_recyclerview.visibility = View.GONE
@@ -223,16 +224,16 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
                             .show()
                 }
                 Constants.CONNECTION_ADD_NETWORK -> {
-                    presenter!!.requestAddNetwork(Application.getActiveUser().id, user!!.id)
+                    presenter!!.requestAddNetwork(Application.getActiveUser().id, user?.id)
                 }
                 Constants.CONNECTION_IN_NETWORK -> {
                     MaterialDialog.Builder(this)
                             .title(R.string.remove)
-                            .content("Remove " + user!!.name + " from network")
+                            .content("Remove " + user?.name + " from network")
                             .positiveText(R.string.yes)
                             .negativeText(R.string.no)
                             .onPositive { _, _ ->
-                                presenter!!.removeNetwork(user!!.id)
+                                presenter!!.removeNetwork(user?.id)
                             }
                             .show()
                 }

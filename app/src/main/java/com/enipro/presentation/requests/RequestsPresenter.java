@@ -30,7 +30,7 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
 
     RequestsPresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
-        db = EniproDatabase.getInstance(context);
+        db = EniproDatabase.Companion.getInstance(context);
     }
 
 

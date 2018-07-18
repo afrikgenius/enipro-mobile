@@ -1,8 +1,6 @@
 package com.enipro.presentation.search;
 
 
-import android.widget.SearchView;
-
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.presentation.base.BasePresenter;

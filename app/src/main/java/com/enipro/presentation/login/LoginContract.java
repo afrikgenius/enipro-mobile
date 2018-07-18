@@ -24,12 +24,6 @@ public class LoginContract {
 
         void showMessage(String type, String message);
 
-        /**
-         * Returns the presenter the view is attached to.
-         * @return presenter.
-         */
-        Presenter getPresenter();
-
         void showProgress();
 
         void dismissProgress();

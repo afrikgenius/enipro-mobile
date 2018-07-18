@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.enipro.R;
-import com.enipro.data.remote.model.Education;
 import com.enipro.data.remote.model.Experience;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
@@ -48,13 +47,6 @@ public class AddExperienceActivity extends AppCompatActivity implements SignupCo
     @BindView(R.id.checkBox)
     CheckBox checkBox;
 
-
-    /**
-     * Returns a new intent to open an instance of this activity.
-     *
-     * @param context the context to use
-     * @return intent.
-     */
     public static Intent newIntent(Context context) {
         return new Intent(context, AddExperienceActivity.class);
     }
@@ -70,7 +62,7 @@ public class AddExperienceActivity extends AppCompatActivity implements SignupCo
         User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
-                EniproDatabase.getInstance(this), this);
+                EniproDatabase.Companion.getInstance(this), this);
         presenter.attachView(this);
 
         continue_exp.setOnClickListener(view -> {
@@ -161,7 +153,6 @@ public class AddExperienceActivity extends AppCompatActivity implements SignupCo
 
     @Override
     public void advanceProcess(User user) {
-        // Open add photo activity passing the user object as a bundle
         Intent intent = AddInterestsActivity.newIntent(this);
         intent.putExtra(AddInterestsActivity.TAG, Parcels.wrap(user));
         startActivity(intent);

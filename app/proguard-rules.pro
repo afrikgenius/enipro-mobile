@@ -23,3 +23,9 @@
 -keep interface javax.annotation.Nullable
 -dontwarn com.squareup.picasso.**
 -dontwarn javax.annotation.**
+
+# Parceler Library
+-keep interface org.parceler.Parcel
+-keep @org.parceler.Parcel class * { *; }
+-keep class **$$Parcelable { *; }
+-keep class com.enipro.data.remote.model.User$$Parcelable

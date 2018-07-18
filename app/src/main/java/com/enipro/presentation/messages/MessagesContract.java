@@ -13,9 +13,6 @@ import com.enipro.presentation.base.MvpView;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Single;
-
 public class MessagesContract {
 
     interface View extends MvpView {

@@ -56,12 +56,6 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
     @BindView(R.id.signUpPassword_Layout)
     TextInputLayout passTextInputLayout;
 
-    /**
-     * Returns a new intent to open an instance of this activity.
-     *
-     * @param context the context to use
-     * @return intent.
-     */
     public static Intent newIntent(Context context) {
         return new Intent(context, SignUpActivity.class);
     }
@@ -87,7 +81,7 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
         ValidationService validationService = (ValidationService) ApplicationService.getInstance(ServiceType.ValidationService);
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), validationService,
-                EniproDatabase.getInstance(this), this);
+                EniproDatabase.Companion.getInstance(this), this);
         presenter.attachView(this);
 
         // Attach view items to presenter
@@ -216,8 +210,8 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     @Override
     public void openApplication(User user) {
-        Intent intent = HomeActivity.newIntent(this);
-        intent.putExtra(HomeActivity.EXTRA_DATA, Parcels.wrap(user));
+        Intent intent = HomeActivity.newIntent(this, user);
+//        intent.putExtra(HomeActivity.EXTRA_DATA, Parcels.wrap(user));
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
@@ -225,7 +219,6 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     @Override
     public void advanceProcess(User user) {
-        // Open add photo activity passing the user object as a bundle
         String user_type = getSpinnerData(SPINNER_USER_TYPE).toUpperCase();
         // TODO Sort the spinner type generating error when student not clicked.
         Intent intent = null;
@@ -241,8 +234,6 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     @Override
     protected void onPause() {
-        // When the activity is paused (i.e it is no longer visible), the activity leaves the screen by a slide
-        // through the bottom of the screen.
         overridePendingTransition(R.anim.pull_hold, R.anim.slide_out_bottom);
         super.onPause();
     }

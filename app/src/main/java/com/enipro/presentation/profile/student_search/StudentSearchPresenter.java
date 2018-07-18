@@ -4,7 +4,6 @@ import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.presentation.base.BasePresenter;
 import com.enipro.presentation.profile.ProfileContract;
-import com.enipro.presentation.search.SearchContract;
 
 import java.io.IOException;
 import java.util.List;

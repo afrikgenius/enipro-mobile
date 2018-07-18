@@ -9,11 +9,8 @@ import com.enipro.R;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
-import com.enipro.model.Constants;
 import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,11 +23,6 @@ public class LauncherActivity extends AppCompatActivity {
     private Runnable mRunnable;
 
 
-    /**
-     * Returns a new intent to open an instance of this activity.
-     * @param context the context to use
-     * @return intent.
-     */
     public static Intent newIntent(Context context) {
         return new Intent(context, LauncherActivity.class);
     }
@@ -40,25 +32,21 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        // Make activity have a fade out transition to another activity.
         overridePendingTransition(0, R.anim.fade_out);
+        EniproDatabase db = EniproDatabase.Companion.getInstance(this);
 
-        // Check Local Storage for any user. If user found, open home else open sign up.
-        EniproDatabase db = EniproDatabase.getInstance(this);
-
-        // Run operation in a different thread than the UI thread.
         mRunnable = () -> {
             Intent intent;
             List<User> users = db.userDao().getUsers();
 
-            if(users.size() == 1) {
-                intent = HomeActivity.newIntent(this); // Launch Home activity
-                intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(users.get(0))); // Pass the application user down to home activity.
+            if (users.size() == 1) {
+                intent = HomeActivity.newIntent(this, users.get(0)); // Launch Home activity
+//                intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(users.get(0))); // Pass the application user down to home activity.
             } else
-                intent = LoginActivity.newIntent(this);   // No user exists and launch sign up activity
+                intent = LoginActivity.Companion.newIntent(this);   // No user exists and launch sign up activity
 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent); // Start activity in the intent
+            startActivity(intent);
         };
 
         diskIOExecutor = AppExecutors.scheduledExecutorService();

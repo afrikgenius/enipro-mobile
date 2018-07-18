@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/achievements_layout">
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/edu_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -231,7 +231,7 @@
                 android:layout_below="@id/edu_layout"
                 android:layout_marginBottom="40dp">
 
-                <com.devspark.robototextview.widget.RobotoTextView
+                <TextView
                     android:id="@+id/exp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

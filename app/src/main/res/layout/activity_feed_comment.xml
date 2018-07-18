@@ -202,7 +202,7 @@
                         android:focusable="true"
                         android:src="@drawable/ic_favorite_border" />
 
-                    <com.devspark.robototextview.widget.RobotoTextView
+                    <TextView
                         android:id="@+id/post_likes_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

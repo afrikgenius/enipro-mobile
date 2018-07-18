@@ -76,8 +76,10 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
      * @return intent.
      */
     @NonNull
-    public static Intent newIntent(Context context) {
-        return new Intent(context, HomeActivity.class);
+    public static Intent newIntent(Context context, User user) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
+        return intent;
     }
 
     @Override

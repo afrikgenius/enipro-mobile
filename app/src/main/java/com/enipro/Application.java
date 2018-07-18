@@ -74,7 +74,7 @@ public class Application extends MultiDexApplication {
         // Register notification channels in the application for devices running Android 8.0
 
 
-        database = EniproDatabase.getInstance(this);
+        database = EniproDatabase.Companion.getInstance(this);
         new AppExecutors().diskIO().execute(() -> activeUser = database.userDao().getActiveUser(true));
 
         //initialize and create the image loader logic

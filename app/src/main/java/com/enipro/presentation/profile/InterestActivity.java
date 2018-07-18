@@ -79,7 +79,7 @@ public class InterestActivity extends AppCompatActivity implements ProfileContra
                 Application.getActiveUser().setInterests(tagRecyclerAdapter.getItems());
                 // Send update to server and persist information in local storage and finish activity
                 new AppExecutors().diskIO().execute(() -> {
-                    EniproDatabase.getInstance(this).userDao().updateUser(Application.getActiveUser());
+                    EniproDatabase.Companion.getInstance(this).userDao().updateUser(Application.getActiveUser());
                 });
                 // TODO Come back to this
 //                presenter.updateUser(Application.getActiveUser());

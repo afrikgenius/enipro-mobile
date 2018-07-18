@@ -173,35 +173,6 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
             super.onBackPressed()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            Utility.GALLERY_REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK) {
-//                    Bitmap imageBitmap = null;
-//                    try {
-//                        imageBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(data.getData()));
-//                        // Store a reference to original bitmap to send to Firebase
-//                    } catch (FileNotFoundException fnfe) {
-//                        FirebaseCrash.log(fnfe.getMessage());
-//                    }
-//                    StorageReference storageReference = FirebaseStorage
-//                            .getInstance()
-//                            .getReference()
-//                            .child(Constants.FIREBASE_CHATS_IMAGES_LOCATION + applicationUser.getFirebaseUID() + "/" + Utility.getRandomIdentifier() + ".jpg");
-//                    Message message = new Message(null, applicationUser.getEmail(), user.getEmail(), applicationUser.getFirebaseUID(), user.getFirebaseUID(), null);
-////                    message.setImage(new Message.Image(downloadURL));
-//                    message.setUser(applicationUser);
-//                    Utility.uploadImageFirebase(storageReference, imageBitmap, (downloadURL) -> {
-//                        presenter.sendMessageToFirebaseUser(this, message, applicationUser.getFirebaseToken(), applicationUser, user.getFirebaseToken(), user);
-//                    });
-                }
-            }
-            Utility.DOC_REQUEST_CODE -> {
-            }
-        }
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA) {
             // Check if the permission was accepted or denied.
@@ -359,6 +330,6 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         chats.add(connection)
         appUser.chats = chats
         Application.setActiveUser(appUser)
-        AppExecutors().diskIO().execute { EniproDatabase.getInstance(this).userDao().updateUser(Application.getActiveUser()) }
+        AppExecutors().diskIO().execute { EniproDatabase.getInstance(this)?.userDao()?.updateUser(Application.getActiveUser()) }
     }
 }

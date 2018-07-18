@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.crashlytics.android.Crashlytics;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.Education;
@@ -35,7 +36,6 @@ import com.enipro.data.remote.model.User;
 import com.enipro.injection.Injection;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
-import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -412,7 +412,7 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                             cover_image_bitmap = imageBitmap.copy(Bitmap.Config.ARGB_8888, false);
                         }
                     } catch (FileNotFoundException fnfe) {
-                        FirebaseCrash.log(fnfe.getMessage());
+                        Crashlytics.log(fnfe.getMessage());
                     }
                 }
                 break;

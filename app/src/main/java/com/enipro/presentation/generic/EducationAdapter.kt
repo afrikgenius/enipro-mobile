@@ -21,7 +21,7 @@ class EducationAdapter(private var educationList: MutableList<Education>) : Recy
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val education = educationList[position]
-        holder!!.school.text = education.school
+        holder.school.text = education.school
         val degreeCourse = education.degree + ", " + education.course
         holder.course.text = degreeCourse
         holder.from.text = education.from

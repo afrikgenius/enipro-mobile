@@ -63,7 +63,7 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
         User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
-                EniproDatabase.getInstance(this), this);
+                EniproDatabase.Companion.getInstance(this), this);
         presenter.attachView(this);
 
         // Recycler view and adapter for tags

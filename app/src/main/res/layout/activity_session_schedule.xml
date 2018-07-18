@@ -46,7 +46,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/dayofweek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,12 +64,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="17dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/monday_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,9 +85,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/monday_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -98,12 +98,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/tuesday_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,9 +119,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/tuesday_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -132,12 +132,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/wed_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,9 +153,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/wed_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -166,12 +166,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/thurs_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -187,9 +187,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/thurs_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -200,12 +200,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/friday_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -222,9 +222,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/friday_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -235,12 +235,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/sat_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -256,9 +256,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/sat_rltive"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="12dp"
         android:background="@color/material_grey_300_" />
 
     <RelativeLayout
@@ -269,12 +269,12 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="12dp">
 
-        <com.devspark.robototextview.widget.RobotoCheckBox
+        <CheckBox
             android:id="@+id/sun_chkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.devspark.robototextview.widget.RobotoTextView
+        <TextView
             android:id="@+id/sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -286,7 +286,7 @@
     </RelativeLayout>
 
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <TextView
         android:id="@+id/time_placeholder_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

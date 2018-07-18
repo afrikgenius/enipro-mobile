@@ -311,6 +311,7 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
     <string name="video_limit">Video must be less than 8 mins</string>
 
     <string name="request_text">Requests</string>
+    <string name="ok">OK</string>
 
     <string name="card_number">0000 0000 0000 0000</string>
     <string name="cvv">CVV</string>
