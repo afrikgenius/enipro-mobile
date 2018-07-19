@@ -38,7 +38,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_feed_comment.*
 import kotlinx.android.synthetic.main.comment_footer.*
-import org.parceler.Parcels
 import java.io.FileNotFoundException
 
 class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
@@ -68,7 +67,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
         presenter = FeedCommentPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this)
         presenter!!.attachView(this)
 
-        feed = Parcels.unwrap(intent.extras.getParcelable(FeedContract.Presenter.FEED))
+        feed = intent.extras.getParcelable(FeedContract.Presenter.FEED)
         user_post_date.text = DateTimeStringProcessor.process(feed?.updated_at?.utilDate)
         content.text = feed?.content?.text
 
@@ -144,7 +143,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
                     presenter?.uploadCommentImageFirebase(mStorageRef, imageUploadBitmap) { downloadURL ->
                         comment.comment_image = downloadURL
                         // Send data for persistence.
-                        presenter?.persistComment(comment, user?.id, feed?._id?.`_$oid`)
+                        presenter?.persistComment(comment, user?.id, feed?._id?.oid)
                     }
 
                     // Delete image
@@ -153,7 +152,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
                     imageUploadBitmap = null
                 } else {
                     // Just persist the comment
-                    presenter?.persistComment(comment, user?.id, feed?._id?.`_$oid`)
+                    presenter?.persistComment(comment, user?.id, feed?._id?.oid)
                 }
             }
             // Collapse keyboard and empty edit text before sending to API
@@ -331,7 +330,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
                 .make(coordinator, "Error Loading Comments.Please Try Again", Snackbar.LENGTH_LONG)
                 .setAction("RETRY") { _ ->
                     // Load comments again
-                    presenter?.loadComments(user?.id, feed?._id?.`_$oid`)
+                    presenter?.loadComments(user?.id, feed?._id?.oid)
                 }
         // Change text color of text
         snackbar.setActionTextColor(Color.RED)

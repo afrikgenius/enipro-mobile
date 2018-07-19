@@ -12,13 +12,15 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.enipro.R
 import com.enipro.data.remote.model.User
 import com.enipro.injection.Injection
-import com.enipro.model.*
+import com.enipro.model.ApplicationService
+import com.enipro.model.EditTextDataExtractor
+import com.enipro.model.ServiceType
+import com.enipro.model.ValidationService
 import com.enipro.presentation.home.HomeActivity
 import com.enipro.presentation.signup.SignUpActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
-import org.parceler.Parcels
 
 class LoginActivity : FragmentActivity(), LoginContract.View {
 

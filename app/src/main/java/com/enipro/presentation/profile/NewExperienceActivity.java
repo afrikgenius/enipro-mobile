@@ -2,9 +2,9 @@ package com.enipro.presentation.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +14,9 @@ import android.widget.EditText;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.enipro.R;
-import com.enipro.data.remote.model.Education;
 import com.enipro.data.remote.model.Experience;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
-
-import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,7 +81,7 @@ public class NewExperienceActivity extends AppCompatActivity {
             Experience experience = validateData();
             if (experience != null) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra(Constants.EXPERIENCE_EXTRA, Parcels.wrap(experience));
+                resultIntent.putExtra(Constants.EXPERIENCE_EXTRA, experience);
                 setResult(Constants.ADD_EXPERIENCE, resultIntent);
                 finish();
             }

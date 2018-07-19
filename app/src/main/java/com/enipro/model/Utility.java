@@ -91,7 +91,7 @@ public class Utility {
     }
 
     public static String getRandomIdentifier() {
-        return Application.getActiveUser().get_id().get_$oid() + new java.util.Random().nextLong() + new java.util.Date();
+        return Application.getActiveUser().get_id().getOid() + new java.util.Random().nextLong() + new java.util.Date();
     }
 
     public static void collapseKeyboard(Activity activity) {

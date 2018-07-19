@@ -61,7 +61,7 @@ public class ProfileInteractor {
             return false;
 
         // Check if profile user exists in connections list
-        String profileUserId = profileUser.get_id().get_$oid();
+        String profileUserId = profileUser.get_id().getOid();
         for (int i = 0, size = connections.size(); i < size; i++) {
             if (profileUserId.equals(connections.get(i).getUserId()))
                 return true;
@@ -86,7 +86,7 @@ public class ProfileInteractor {
                     case Constants.PROFESSIONAL:
                         // TODO This should not be made here, Should be a part of application user data.
                         // In this case, either a request for mentoring, pending, or mentoring is gotten back as the string
-                        presenter.getRequest(applicationUser.get_id().get_$oid(), profileUser.get_id().get_$oid(), requests -> {
+                        presenter.getRequest(applicationUser.get_id().getOid(), profileUser.get_id().getOid(), requests -> {
                             if(requests.size() == 0) {
                                 callback.respond(Constants.CONNECTION_REQUEST_MENTORING);
                             } else if (requests.get(0).getStatus().toUpperCase().equals(Constants.CONNECTION_PENDING))

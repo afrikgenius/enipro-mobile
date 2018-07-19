@@ -2,8 +2,8 @@ package com.enipro.presentation.signup;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +14,6 @@ import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +52,7 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
         ButterKnife.bind(this);
 
         // Get user object passed from previous activity
-        User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
+        User user = getIntent().getParcelableExtra(TAG);
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
                 EniproDatabase.Companion.getInstance(this), this);
@@ -138,7 +136,7 @@ public class AddEducationActivity extends AppCompatActivity implements SignupCon
     @Override
     public void advanceProcess(User user) {
         Intent intent = AddInterestsActivity.newIntent(this);
-        intent.putExtra(AddInterestsActivity.TAG, Parcels.wrap(user));
+        intent.putExtra(AddInterestsActivity.TAG, user);
         startActivity(intent);
     }
 }

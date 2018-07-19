@@ -91,7 +91,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                     if (response.isSuccessful()) {
                         User applicationUser = response.body();
                         applicationUser.setFirebaseToken(Utility.getTokenFromSharedPref(context));
-                        addDisposable(restService.updateUser(applicationUser, applicationUser.get_id().get_$oid())
+                        addDisposable(restService.updateUser(applicationUser, applicationUser.get_id().getOid())
                                 .subscribeOn(ioScheduler)
                                 .observeOn(mainScheduler)
                                 .subscribe(user -> {

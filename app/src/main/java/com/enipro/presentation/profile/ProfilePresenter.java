@@ -97,7 +97,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void addCircle(UserConnection userConnection) {
         checkViewAttached();
-        addDisposable(restService.addUserToCircle(Application.getActiveUser().get_id().get_$oid(), userConnection)
+        addDisposable(restService.addUserToCircle(Application.getActiveUser().get_id().getOid(), userConnection)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
@@ -139,7 +139,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void addNetwork(UserConnection userConnection) {
         checkViewAttached();
-        addDisposable(restService.addUsersToNetwork(Application.getActiveUser().get_id().get_$oid(), userConnection)
+        addDisposable(restService.addUsersToNetwork(Application.getActiveUser().get_id().getOid(), userConnection)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
@@ -154,7 +154,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void removeNetwork(String user_id) {
         checkViewAttached();
-        addDisposable(restService.deleteUserFromNetwork(Application.getActiveUser().get_id().get_$oid(), user_id)
+        addDisposable(restService.deleteUserFromNetwork(Application.getActiveUser().get_id().getOid(), user_id)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
@@ -170,7 +170,7 @@ public class ProfilePresenter extends BasePresenter<ProfileContract.View> implem
     @Override
     public void removeCircle(String user_id) {
         checkViewAttached();
-        addDisposable(restService.deleteUserFromCircle(Application.getActiveUser().get_id().get_$oid(), user_id)
+        addDisposable(restService.deleteUserFromCircle(Application.getActiveUser().get_id().getOid(), user_id)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {

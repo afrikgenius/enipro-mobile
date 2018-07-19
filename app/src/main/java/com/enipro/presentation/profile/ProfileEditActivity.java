@@ -230,10 +230,10 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                         // Upload cover image to firebase and get download URL
                         Utility.uploadImageFirebase(storageReference, cover_image_bitmap, url -> {
                             user.setAvatar_cover(url);
-                            presenter.updateUser(user, Application.getActiveUser().get_id().get_$oid());
+                            presenter.updateUser(user, Application.getActiveUser().get_id().getOid());
                         });
                     } else {
-                        presenter.updateUser(user, Application.getActiveUser().get_id().get_$oid()); // Send user information to API endpoint
+                        presenter.updateUser(user, Application.getActiveUser().get_id().getOid()); // Send user information to API endpoint
                     }
                 });
             } else if (cover_image_bitmap != null) {
@@ -244,10 +244,10 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
                 // Upload cover image to firebase and get download URL
                 Utility.uploadImageFirebase(storageReference, cover_image_bitmap, url -> {
                     user.setAvatar_cover(url);
-                    presenter.updateUser(user, Application.getActiveUser().get_id().get_$oid());
+                    presenter.updateUser(user, Application.getActiveUser().get_id().getOid());
                 });
             } else {
-                presenter.updateUser(user, Application.getActiveUser().get_id().get_$oid()); // Send user information to API endpoint
+                presenter.updateUser(user, Application.getActiveUser().get_id().getOid()); // Send user information to API endpoint
             }
         }
     }

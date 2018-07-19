@@ -23,7 +23,6 @@ import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
 
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
     Button continue_int;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-    
+
     public static Intent newIntent(Context context) {
         return new Intent(context, AddInterestsActivity.class);
     }
@@ -60,7 +59,7 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
         ButterKnife.bind(this);
 
         // Get user object passed from previous activity
-        User user = Parcels.unwrap(getIntent().getParcelableExtra(TAG));
+        User user = getIntent().getParcelableExtra(TAG);
 
         presenter = new SignupPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), null,
                 EniproDatabase.Companion.getInstance(this), this);
@@ -174,7 +173,7 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
     public void advanceProcess(User user) {
         // Open add photo activity passing the user object as a bundle
         Intent addPhotoIntent = AddPhotoActivity.newIntent(this);
-        addPhotoIntent.putExtra(AddPhotoActivity.TAG, Parcels.wrap(user));
+        addPhotoIntent.putExtra(AddPhotoActivity.TAG, user);
         startActivity(addPhotoIntent);
     }
 

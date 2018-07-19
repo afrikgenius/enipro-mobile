@@ -52,7 +52,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     @Override
     public void removeFeed(Feed feed) {
         checkViewAttached();
-        addDisposable(restService.deleteFeedItem(Application.getActiveUser().getId(), feed.get_id().get_$oid())
+        addDisposable(restService.deleteFeedItem(Application.getActiveUser().getId(), feed.get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe());
@@ -151,7 +151,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
         // Pull out user information from local storage.
         User applicationUser = Application.getActiveUser();
-        restService.createFeedItem(feedData, applicationUser.get_id().get_$oid()).enqueue(new Callback<Feed>() {
+        restService.createFeedItem(feedData, applicationUser.get_id().getOid()).enqueue(new Callback<Feed>() {
             @Override
             public void onResponse(@NonNull Call<Feed> call, @NonNull Response<Feed> response) {
                 // Check response code and pass feed data to feed fragment of home activity.
@@ -226,7 +226,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
         User applicationUser = Application.getActiveUser();
 
         // TODO Grab all feeds for the user from API using pagination and store
-        addDisposable(Observable.defer(() -> restService.getFeeds(applicationUser.get_id().get_$oid()))
+        addDisposable(Observable.defer(() -> restService.getFeeds(applicationUser.get_id().getOid()))
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(feedList -> {
@@ -247,7 +247,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
     @Override
     public void deleteFeed(Feed feed) {
-        addDisposable(restService.deleteFeedItem(Application.getActiveUser().get_id().get_$oid(), feed.get_id().get_$oid())
+        addDisposable(restService.deleteFeedItem(Application.getActiveUser().get_id().getOid(), feed.get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(aVoid -> {
@@ -272,7 +272,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     public void loadSavedFeeds() {
         // Collect all saved feed info from application user profile and for each, request feed with feed id.
         List<SavedFeed> feeds = Application.getActiveUser().getSavedFeeds();
-        addDisposable(restService.getSavedFeeds(Application.getActiveUser().get_id().get_$oid())
+        addDisposable(restService.getSavedFeeds(Application.getActiveUser().get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(feedList -> {
@@ -284,7 +284,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
     @Override
     public void removeSaved(Feed feed) {
-        addDisposable(restService.deleteSavedFeed(Application.getActiveUser().get_id().get_$oid(), feed.get_id().get_$oid())
+        addDisposable(restService.deleteSavedFeed(Application.getActiveUser().get_id().getOid(), feed.get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
@@ -301,7 +301,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
     @Override
     public void addSaved(Feed feed) {
-        addDisposable(restService.saveFeed(new SavedFeed(feed.get_id().get_$oid()), Application.getActiveUser().get_id().get_$oid())
+        addDisposable(restService.saveFeed(new SavedFeed(feed.get_id().getOid()), Application.getActiveUser().get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {

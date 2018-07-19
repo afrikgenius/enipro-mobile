@@ -27,7 +27,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.activity_profile_edit.*
-import org.parceler.Parcels
 
 class ProfileActivity : AppCompatActivity(), ProfileContract.View {
 
@@ -47,7 +46,7 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
          */
         fun newIntent(context: Context, user: User): Intent {
             val intent = Intent(context, ProfileActivity::class.java)
-            intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user))
+            intent.putExtra(Constants.APPLICATION_USER, user)
             return intent
         }
     }
@@ -63,7 +62,7 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
         }
 
-        user = Parcels.unwrap(intent.getParcelableExtra(Constants.APPLICATION_USER))
+        user = intent.getParcelableExtra(Constants.APPLICATION_USER)
 
         // TODO This should be done in a view model
         presenter = ProfilePresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this)

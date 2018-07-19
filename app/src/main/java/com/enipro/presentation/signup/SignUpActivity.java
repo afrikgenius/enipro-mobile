@@ -25,7 +25,6 @@ import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
-import org.parceler.Parcels;
 
 import java.util.Arrays;
 
@@ -224,10 +223,10 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
         Intent intent = null;
         if (user_type.equals(Constants.STUDENT)) {
             intent = AddEducationActivity.newIntent(this);
-            intent.putExtra(AddEducationActivity.TAG, Parcels.wrap(user));
+            intent.putExtra(AddEducationActivity.TAG, user);
         } else if (user_type.equals(Constants.PROFESSIONAL)) {
             intent = AddExperienceActivity.newIntent(this);
-            intent.putExtra(AddExperienceActivity.TAG, Parcels.wrap(user));
+            intent.putExtra(AddExperienceActivity.TAG, user);
         }
         startActivity(intent);
     }

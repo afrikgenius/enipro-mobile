@@ -29,6 +29,7 @@ ext {
     support_libraries_version = '27.1.1'
     firebase_lib_version = '17.0.0'
     room_version = '1.1.1'
+    autoparcel_verison = '0.3.1'
 }
 
 
@@ -40,6 +41,7 @@ allprojects {
         maven {
             url "https://maven.google.com" // Google's Maven repository
         }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     }
 }
 

@@ -18,7 +18,6 @@ import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
 import com.enipro.model.Constants;
 
-import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +76,7 @@ public class PaymentsFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payments_form);
         ButterKnife.bind(this);
 
-        paymentFeed = Parcels.unwrap(getIntent().getParcelableExtra(Constants.FEED_EXTRA));
+        paymentFeed = getIntent().getParcelableExtra(Constants.FEED_EXTRA);
         initUIControls(); // Initialise UI Controls to respond accordingly.
     }
 

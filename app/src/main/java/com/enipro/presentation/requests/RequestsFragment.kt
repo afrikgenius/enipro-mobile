@@ -15,6 +15,7 @@ import android.widget.TextView
 import com.enipro.Application
 import com.enipro.R
 import com.enipro.data.remote.model.Request
+import com.enipro.data.remote.model.SessionSchedule
 import com.enipro.data.remote.model.User
 import com.enipro.events.NotificationEvent
 import com.enipro.firebase.FirebaseNotificationBuilder
@@ -28,7 +29,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_requests.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
 
 class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
 
@@ -86,9 +86,9 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
                 Constants.SCHEDULE_DATA_REQUESTCODE -> {
 
                     // Get session schedule object from intent
-                    val schedule = data!!.getParcelableExtra<Parcelable>(Constants.SESSION_SCHEDULE_DATA)
+                    val schedule = data!!.getParcelableExtra<Parcelable>(Constants.SESSION_SCHEDULE_DATA) as SessionSchedule?
                     val request = requestPackage!!.request
-                    request!!.schedule = Parcels.unwrap(schedule)
+                    request!!.schedule = schedule
                     // Perform acceptance of request
                     presenter!!.acceptRequest(request)
                 }

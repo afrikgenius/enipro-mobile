@@ -19,8 +19,6 @@ import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +126,7 @@ public class SessionScheduleActivity extends AppCompatActivity {
             SessionTiming timing = new SessionTiming(days, from, to);
             SessionSchedule schedule = new SessionSchedule("2018-03-30T20:03:50.864Z", "2018-03-30T20:03:50.864Z", timing);
             Intent scheduleReturnIntent = new Intent();
-            scheduleReturnIntent.putExtra(Constants.SESSION_SCHEDULE_DATA, Parcels.wrap(schedule));
+            scheduleReturnIntent.putExtra(Constants.SESSION_SCHEDULE_DATA, schedule);
             setResult(RESULT_OK, scheduleReturnIntent);
             finish();
         });

@@ -38,7 +38,6 @@ import kotlinx.android.synthetic.main.content_post.*
 import kotlinx.android.synthetic.main.footer_post.*
 import kotlinx.android.synthetic.main.media_layout.*
 import kotlinx.android.synthetic.main.post_toolbar.*
-import org.parceler.Parcels
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
@@ -566,7 +565,7 @@ class PostActivity : AppCompatActivity(), PostContract.View {
     override fun sendFeedItem(feed: Feed) {
         // Send feed item back to home activity into feed fragment to be added.
         val resultIntent = Intent()
-        resultIntent.putExtra(PostContract.Presenter.ACTIVITY_RETURN_KEY, Parcels.wrap(feed))
+        resultIntent.putExtra(PostContract.Presenter.ACTIVITY_RETURN_KEY, feed)
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }

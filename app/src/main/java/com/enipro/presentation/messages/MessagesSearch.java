@@ -23,8 +23,6 @@ import com.enipro.data.remote.model.UserType;
 import com.enipro.injection.Injection;
 import com.enipro.model.Constants;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -91,7 +89,7 @@ public class MessagesSearch extends AppCompatActivity implements MessagesContrac
             // Return to the calling activity with the user in a result Intent
             // Send user information back to user search.
             Intent resultIntent = new Intent();
-            resultIntent.putExtra(Constants.MESSAGE_SEARCH_RETURN_KEY, Parcels.wrap(user));
+            resultIntent.putExtra(Constants.MESSAGE_SEARCH_RETURN_KEY, user);
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
         });

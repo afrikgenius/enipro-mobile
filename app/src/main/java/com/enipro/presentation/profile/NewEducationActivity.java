@@ -16,8 +16,6 @@ import com.enipro.data.remote.model.Education;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 
-import org.parceler.Parcels;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -79,9 +77,9 @@ public class NewEducationActivity extends AppCompatActivity {
                 return;
 
             Education education = validateData();
-            if(education != null){
+            if (education != null) {
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra(Constants.EDUCATION_EXTRA, Parcels.wrap(education));
+                resultIntent.putExtra(Constants.EDUCATION_EXTRA, education);
                 setResult(Constants.ADD_EDUCATION, resultIntent);
                 finish();
             }

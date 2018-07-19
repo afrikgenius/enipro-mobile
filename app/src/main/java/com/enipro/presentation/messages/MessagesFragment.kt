@@ -23,7 +23,6 @@ import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_messages.*
-import org.parceler.Parcels
 
 class MessagesFragment : Fragment(), MessagesContract.View, DialogsListAdapter.OnDialogClickListener<Dialog>,
         DialogsListAdapter.OnDialogLongClickListener<Dialog> {
@@ -70,8 +69,8 @@ class MessagesFragment : Fragment(), MessagesContract.View, DialogsListAdapter.O
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.MESSAGE_SEARCH) {
             if (resultCode == RESULT_OK) {
-                val user = data!!.getParcelableExtra<Parcelable>(Constants.MESSAGE_SEARCH_RETURN_KEY)
-                startActivity(MessageActivity.newIntent(activity!!.applicationContext, Parcels.unwrap(user)))
+                val user = data!!.getParcelableExtra<Parcelable>(Constants.MESSAGE_SEARCH_RETURN_KEY) as User?
+                startActivity(MessageActivity.newIntent(activity!!.applicationContext, user))
 
             }
         }

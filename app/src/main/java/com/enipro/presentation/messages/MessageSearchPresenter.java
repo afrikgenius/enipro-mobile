@@ -32,7 +32,7 @@ public class MessageSearchPresenter extends BasePresenter<MessagesContract.Searc
         checkViewAttached();
         User user = Application.getActiveUser();
         if (user.getUserType().equalsIgnoreCase(UserType.INSTANCE.getPROFESSIONAL())) {
-            restService.getNetworkUsers(user.get_id().get_$oid()).enqueue(new Callback<List<User>>() {
+            restService.getNetworkUsers(user.get_id().getOid()).enqueue(new Callback<List<User>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<User>> call, @NotNull Response<List<User>> response) {
                     if (response.isSuccessful()) {
@@ -51,7 +51,7 @@ public class MessageSearchPresenter extends BasePresenter<MessagesContract.Searc
                 }
             });
         } else if (user.getUserType().equalsIgnoreCase(UserType.INSTANCE.getSTUDENT())) { //
-            restService.getCircleUsers(user.get_id().get_$oid()).enqueue(new Callback<List<User>>() {
+            restService.getCircleUsers(user.get_id().getOid()).enqueue(new Callback<List<User>>() {
                 @Override
                 public void onResponse(@NotNull Call<List<User>> call, @NotNull Response<List<User>> response) {
                     if (response.isSuccessful()) {

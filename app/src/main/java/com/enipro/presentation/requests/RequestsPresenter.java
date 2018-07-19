@@ -38,7 +38,7 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
     public void acceptRequest(Request request) {
         checkViewAttached();
         request.setStatus(Constants.ACCEPT_REQUEST);
-        addDisposable(restService.updateRequest(request, request.get_id().get_$oid())
+        addDisposable(restService.updateRequest(request, request.get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(request1 -> {
@@ -55,7 +55,7 @@ public class RequestsPresenter extends BasePresenter<RequestsContract.View> impl
         checkViewAttached();
         Request req = new Request();
         req.setStatus(Constants.DECLINE_REQUEST);
-        addDisposable(restService.updateRequest(req, request.get_id().get_$oid())
+        addDisposable(restService.updateRequest(req, request.get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(request1 -> getView().onRequestDeclined()));

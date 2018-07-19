@@ -36,7 +36,7 @@ public class MessagesPresenter extends BasePresenter<MessagesContract.View> impl
         // TODO gotten from firebase fresh.
         // TODO This should be preferably gotten from Application active user.
         // Get all user in connection with this current user in terms of chat.
-        addDisposable(restService.getChats(Application.getActiveUser().get_id().get_$oid())
+        addDisposable(restService.getChats(Application.getActiveUser().get_id().getOid())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(this::onNext, this::onError));

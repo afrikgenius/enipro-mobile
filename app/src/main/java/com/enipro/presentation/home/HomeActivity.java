@@ -25,8 +25,6 @@ import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.requests.RequestsFragment;
 import com.enipro.presentation.search.UserSearchActivity;
 
-import org.parceler.Parcels;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -78,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     @NonNull
     public static Intent newIntent(Context context, User user) {
         Intent intent = new Intent(context, HomeActivity.class);
-        intent.putExtra(Constants.APPLICATION_USER, Parcels.wrap(user));
+        intent.putExtra(Constants.APPLICATION_USER, user);
         return intent;
     }
 
@@ -159,7 +157,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
         homePresenter.attachView(this);
 
         // Get active user in the application
-        activeUser = Parcels.unwrap(getIntent().getParcelableExtra(Constants.APPLICATION_USER));
+        activeUser = getIntent().getParcelableExtra(Constants.APPLICATION_USER);
 //        activeUser = getIntent().getParcelableExtra(Constants.APPLICATION_USER);
         Application.setActiveUser(activeUser);
         // Load profile avatar using picasso into

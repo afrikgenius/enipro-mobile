@@ -22,7 +22,6 @@ import com.enipro.presentation.post.PostActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed.*
-import org.parceler.Parcels
 
 class FeedFragment : Fragment(), FeedContract.View {
 
@@ -118,7 +117,7 @@ class FeedFragment : Fragment(), FeedContract.View {
         if (requestCode == FeedContract.Presenter.POST_FEED_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK)
-                presenter!!.processFeed(Parcels.unwrap(data!!.getParcelableExtra(FeedContract.Presenter.ACTIVITY_RETURN_KEY)))
+                presenter!!.processFeed(data!!.getParcelableExtra(FeedContract.Presenter.ACTIVITY_RETURN_KEY))
         }
     }
 

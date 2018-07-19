@@ -43,8 +43,6 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import org.parceler.Parcels;
-
 import java.util.List;
 
 import co.paystack.android.ui.CardActivity;
@@ -112,7 +110,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         // Check if application user has saved this feed item
         List<SavedFeed> savedFeeds = Application.getActiveUser().getSavedFeeds();
         for (SavedFeed savedFeed : savedFeeds) {
-            if (savedFeed.getFeedId().equals(feedItem.get_id().get_$oid())) {
+            if (savedFeed.getFeedId().equals(feedItem.get_id().getOid())) {
                 // change saved drawable
                 holder.savedState = true;
                 holder.saveButton.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_bookmark, null));
@@ -202,7 +200,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         // Open the feed comment activity and activate the keyboard on the add comment edit text
         Intent intent = FeedCommentActivity.Companion.newIntent(context);
         intent.putExtra(FeedContract.Presenter.OPEN_KEYBOARD_COMMENT, FeedContract.Presenter.ADD_COMMENT);
-        intent.putExtra(FeedContract.Presenter.FEED, Parcels.wrap(feed));
+        intent.putExtra(FeedContract.Presenter.FEED, feed);
         context.startActivity(intent);
     }
 
@@ -249,14 +247,14 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
     }
 
     void moreOptionsClickListener(Feed feed, int feed_position) {
-        if (feed.getUser().equals(Application.getActiveUser().get_id().get_$oid())) {
+        if (feed.getUser().equals(Application.getActiveUser().get_id().getOid())) {
             new MaterialDialog.Builder(context)
                     .items(R.array.app_user_more_items)
                     .itemsCallback((dialog, itemView, position, text) -> {
                         switch (position) {
                             case 0: // Open post activity with predefined views
                                 Intent intent = PostActivity.Companion.newIntent(context);
-                                intent.putExtra(Constants.FEED_EXTRA, Parcels.wrap(feed));
+                                intent.putExtra(Constants.FEED_EXTRA, feed);
                                 context.startActivity(intent);
                                 break;
                             case 1: // Show tags in a material dialog.
@@ -288,7 +286,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
 
     void onViewClickListener(Feed feed) {
         Intent intent = FeedCommentActivity.Companion.newIntent(context);
-        intent.putExtra(FeedContract.Presenter.FEED, Parcels.wrap(feed));
+        intent.putExtra(FeedContract.Presenter.FEED, feed);
         context.startActivity(intent);
     }
 

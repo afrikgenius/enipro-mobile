@@ -8,12 +8,12 @@ import com.enipro.data.remote.model.ObjectId;
 public class ObjectIdConverter {
 
     @TypeConverter
-    public static String toString(ObjectId objectId){
-        return objectId.get_$oid();
+    public static String toString(ObjectId objectId) {
+        return objectId.getOid();
     }
 
     @TypeConverter
-    public static ObjectId toObjectId(String $oid){
+    public static ObjectId toObjectId(String $oid) {
         return new ObjectId($oid);
     }
 }

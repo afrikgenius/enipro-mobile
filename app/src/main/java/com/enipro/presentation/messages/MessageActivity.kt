@@ -1,7 +1,6 @@
 package com.enipro.presentation.messages
 
 import android.Manifest
-import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -37,7 +36,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_message.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import org.parceler.Parcels
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,7 +73,7 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
 
         fun newIntent(context: Context, user: User?): Intent {
             val intent = Intent(context, MessageActivity::class.java)
-            intent.putExtra(Constants.MESSAGE_CHAT_RETURN_KEY, Parcels.wrap(user))
+            intent.putExtra(Constants.MESSAGE_CHAT_RETURN_KEY, user)
             return intent
         }
     }
@@ -92,7 +90,7 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         // Initialise the view model to hold data for the activity class.
         viewModel = ViewModelProviders.of(this).get(MessageViewModel::class.java)
 
-        user = Parcels.unwrap(intent!!.getParcelableExtra(Constants.MESSAGE_CHAT_RETURN_KEY))
+        user = intent!!.getParcelableExtra(Constants.MESSAGE_CHAT_RETURN_KEY)
         supportActionBar!!.title = user!!.name
 
 
