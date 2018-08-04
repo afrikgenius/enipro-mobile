@@ -50,7 +50,7 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = RequestsPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), activity)
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

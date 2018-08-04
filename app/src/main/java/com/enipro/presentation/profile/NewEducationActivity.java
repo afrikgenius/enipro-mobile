@@ -2,9 +2,9 @@ package com.enipro.presentation.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -16,25 +16,16 @@ import com.enipro.data.remote.model.Education;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class NewEducationActivity extends AppCompatActivity {
 
 
     private EditText school, degree, course;
 
-    @BindView(R.id.start_year)
     EditText start_year;
-    @BindView(R.id.end_year)
     EditText end_year;
-    @BindView(R.id.school)
     TextInputLayout school_layout;
-    @BindView(R.id.degree)
     TextInputLayout degree_layout;
-    @BindView(R.id.course)
     TextInputLayout course_layout;
-    @BindView(R.id.save)
     Button save;
 
 
@@ -52,7 +43,13 @@ public class NewEducationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_education);
-        ButterKnife.bind(this);
+
+        start_year = findViewById(R.id.start_year);
+        end_year = findViewById(R.id.end_year);
+        school_layout = findViewById(R.id.school);
+        degree_layout = findViewById(R.id.degree);
+        course_layout = findViewById(R.id.course);
+        save = findViewById(R.id.save);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

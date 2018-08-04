@@ -23,12 +23,9 @@ import com.enipro.db.EniproDatabase;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -39,13 +36,9 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
 
     public static final String TAG = ".AddInterestsActivity";
 
-    @BindView(R.id.interests)
     EditText interests;
-    @BindView(R.id.int_tags_recycler)
     RecyclerView mTagsRecycler;
-    @BindView(R.id.continue_int)
     Button continue_int;
-    @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
     public static Intent newIntent(Context context) {
@@ -56,7 +49,11 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_interests);
-        ButterKnife.bind(this);
+
+        interests = findViewById(R.id.interests);
+        mTagsRecycler = findViewById(R.id.int_tags_recycler);
+        continue_int = findViewById(R.id.continue_int);
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
 
         // Get user object passed from previous activity
         User user = getIntent().getParcelableExtra(TAG);
@@ -114,11 +111,6 @@ public class AddInterestsActivity extends AppCompatActivity implements SignupCon
             public void afterTextChanged(Editable editable) {
             }
         });
-    }
-
-    @Override
-    public SignupContract.Presenter getPresenter() {
-        return presenter;
     }
 
     @Override

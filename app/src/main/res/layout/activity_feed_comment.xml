@@ -158,8 +158,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="300dp">
 
-                            <com.universalvideoview.UniversalVideoView
-                                android:id="@+id/post_comment_video"
+                            <!-- TODO Exoplayer goes in here.-->
+                            <com.google.android.exoplayer2.ui.PlayerView
+                                android:id="@+id/post_video"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_alignParentStart="true"

@@ -26,9 +26,6 @@ import com.enipro.presentation.home.HomeActivity;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -38,11 +35,8 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     public static final String TAG = ".AddPhotoActivity";
     StorageReference mStorageRef;
 
-    @BindView(R.id.profile_image)
     CircleImageView profile_image;
-    @BindView(R.id.finish)
     Button btnFinish;
-    @BindView(R.id.skip)
     Button btnSkip;
 
     private MaterialDialog progressDialog;
@@ -63,7 +57,10 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
-        ButterKnife.bind(this);
+
+        profile_image = findViewById(R.id.profile_image);
+        btnFinish = findViewById(R.id.finish);
+        btnSkip = findViewById(R.id.skip);
 
         // Animate the activity into the screen from the bottom.
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.pull_hold);
@@ -274,10 +271,5 @@ public class AddPhotoActivity extends AppCompatActivity implements SignupContrac
 
     @Override
     public void advanceProcess(User user) {
-    }
-
-    @Override
-    public SignupContract.Presenter getPresenter() {
-        return presenter;
     }
 }

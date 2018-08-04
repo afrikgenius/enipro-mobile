@@ -104,7 +104,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
                 if (feed!!.comments.isNotEmpty())
                     comment_text.visibility = View.VISIBLE
                 // Load comments
-                commentAdapter!!.setCommentItems(feed!!.comments)
+                commentAdapter?.setCommentItems(feed!!.comments)
             }
         }
 
@@ -253,6 +253,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)

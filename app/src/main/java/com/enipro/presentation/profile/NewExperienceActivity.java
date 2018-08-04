@@ -18,27 +18,17 @@ import com.enipro.data.remote.model.Experience;
 import com.enipro.model.Constants;
 import com.enipro.model.Utility;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class NewExperienceActivity extends AppCompatActivity {
 
 
     private EditText industry, organisation, role;
 
-    @BindView(R.id.start_year)
     EditText start_year;
-    @BindView(R.id.end_year)
     EditText end_year;
-    @BindView(R.id.industry)
     TextInputLayout industry_layout;
-    @BindView(R.id.org)
     TextInputLayout org_layout;
-    @BindView(R.id.role)
     TextInputLayout role_layout;
-    @BindView(R.id.save)
     Button save;
-    @BindView(R.id.checkBox)
     CheckBox checkBox;
 
     /**
@@ -55,7 +45,14 @@ public class NewExperienceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_experience);
-        ButterKnife.bind(this);
+
+        start_year = findViewById(R.id.start_year);
+        end_year = findViewById(R.id.end_year);
+        industry_layout = findViewById(R.id.industry);
+        org_layout = findViewById(R.id.org);
+        role_layout = findViewById(R.id.role);
+        save = findViewById(R.id.save);
+        checkBox = findViewById(R.id.checkBox);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

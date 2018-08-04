@@ -2,8 +2,8 @@ package com.enipro.presentation.profile.student_search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -22,24 +22,16 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class StudentSearch extends AppCompatActivity implements ProfileContract.StudentSearchView {
 
-    @BindView(R.id.student_search_bar)
     EditText student_search_bar;
-    @BindView(R.id.student_recyclerview)
     RecyclerView mRecyclerView;
-    @BindView(R.id.close)
     ImageButton close;
-    @BindView(R.id.next)
     Button next;
-    @BindView(R.id.progress_bar)
     CircularProgressView progress_bar;
-    @BindView(R.id.clear)
     ImageButton search_clear;
 
     private StudentSearchAdapter adapter;
@@ -61,7 +53,14 @@ public class StudentSearch extends AppCompatActivity implements ProfileContract.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_search);
-        ButterKnife.bind(this);
+
+        search_clear = findViewById(R.id.clear);
+        progress_bar = findViewById(R.id.progress_bar);
+        next = findViewById(R.id.next);
+        close = findViewById(R.id.close);
+        mRecyclerView = findViewById(R.id.student_recyclerview);
+        student_search_bar = findViewById(R.id.student_search_bar);
+
 
         // Recycler view and adapter for student item
         mRecyclerView.setHasFixedSize(true);

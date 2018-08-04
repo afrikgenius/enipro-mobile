@@ -18,9 +18,6 @@ import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
 import com.enipro.model.Constants;
 
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import co.paystack.android.Paystack;
 import co.paystack.android.PaystackSdk;
 import co.paystack.android.Transaction;
@@ -41,23 +38,15 @@ public class PaymentsFormActivity extends AppCompatActivity {
     private int expiryMonth, expiryYear;
     private Feed paymentFeed; // The feed whose content is to be paid for.
     boolean errorFlag = false; // Error flag to note an error in the card or transaction.
-
-    @BindView(R.id.card_number)
+    //
     EditText cardNumber;
-    @BindView(R.id.expiry_date)
     EditText expiryDate;
-    @BindView(R.id.cvv)
     EditText cvv;
 
-    @BindView(R.id.pay)
     Button payAmount;
-    @BindView(R.id.close)
     ImageButton close;
-    @BindView(R.id.card_number_error)
     TextView cardNumberError;
-    @BindView(R.id.cvv_error)
     TextView cvvError;
-    @BindView(R.id.exp_date_error)
     TextView expiryDateError;
 
     /**
@@ -74,7 +63,6 @@ public class PaymentsFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payments_form);
-        ButterKnife.bind(this);
 
         paymentFeed = getIntent().getParcelableExtra(Constants.FEED_EXTRA);
         initUIControls(); // Initialise UI Controls to respond accordingly.

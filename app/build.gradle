@@ -87,10 +87,6 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 
-    // Butterknife annotation library
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     // Multidex to allow for more thatn 64k in .dex file
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.stfalcon:chatkit:0.2.2'
@@ -129,7 +125,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
     }
     testImplementation "org.robolectric:robolectric:3.8"
-    testImplementation"org.robolectric:shadows-multidex:3.8"
+    testImplementation "org.robolectric:shadows-multidex:3.8"
 
 }
 

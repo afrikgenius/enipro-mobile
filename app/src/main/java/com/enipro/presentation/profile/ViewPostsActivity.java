@@ -2,8 +2,8 @@ package com.enipro.presentation.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,8 +22,6 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -32,11 +30,9 @@ public class ViewPostsActivity extends AppCompatActivity implements FeedContract
     FeedRecyclerAdapter feedRecyclerAdapter;
     FeedContract.Presenter presenter;
 
-    @BindView(R.id.posts_recyclerview)
+
     RecyclerView mRecyclerView;
-    @BindView(R.id.no_saved_item)
     View no_saved_item;
-    @BindView(R.id.posts_progress_bar)
     CircularProgressView posts_progress_bar;
 
 
@@ -54,7 +50,10 @@ public class ViewPostsActivity extends AppCompatActivity implements FeedContract
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_posts);
-        ButterKnife.bind(this);
+
+        mRecyclerView = findViewById(R.id.posts_recyclerview);
+        no_saved_item = findViewById(R.id.no_saved_item);
+        posts_progress_bar = findViewById(R.id.posts_progress_bar);
 
         Toolbar toolbar = findViewById(R.id.profile_toolbar);
         setSupportActionBar(toolbar);

@@ -25,11 +25,8 @@ import com.enipro.presentation.home.HomeActivity;
 import com.enipro.presentation.login.LoginActivity;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
-
 import java.util.Arrays;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -46,13 +43,9 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
     private String selectedUserType;
 
-    @BindView(R.id.first_name_layout)
     TextInputLayout firstNameTextInputLayout;
-    @BindView(R.id.last_name_layout)
     TextInputLayout lastNameTextInputLayout;
-    @BindView(R.id.signUpEmail_Layout)
     TextInputLayout emailTextInputLayout;
-    @BindView(R.id.signUpPassword_Layout)
     TextInputLayout passTextInputLayout;
 
     public static Intent newIntent(Context context) {
@@ -63,7 +56,11 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        ButterKnife.bind(this);
+
+        firstNameTextInputLayout = findViewById(R.id.first_name_layout);
+        lastNameTextInputLayout = findViewById(R.id.last_name_layout);
+        emailTextInputLayout = findViewById(R.id.signUpEmail_Layout);
+        passTextInputLayout = findViewById(R.id.signUpPassword_Layout);
 
         // Animate the activity into the screen from the bottom.
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.pull_hold);
@@ -89,7 +86,7 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
 
         // Register a validation service for data validation.
         try {
-            validationService.register(getPresenter(), findViewById(R.id.btnSignUpInSignUp),
+            validationService.register(presenter, findViewById(R.id.btnSignUpInSignUp),
                     ValidationService.LISTENER_VIEW_ON_CLICK, _extractor);
         } catch (Exception e) {
         }
@@ -106,11 +103,6 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
         user_type = findViewById(R.id.user_type);
         user_type.setItems(Arrays.asList(getResources().getStringArray(R.array.user_type)));
         user_type.setOnItemSelectedListener((view, position, id, item) -> selectedUserType = item.toString());
-    }
-
-    @Override
-    public SignupContract.Presenter getPresenter() {
-        return presenter;
     }
 
     @Override
@@ -222,11 +214,11 @@ public class SignUpActivity extends FragmentActivity implements SignupContract.V
         // TODO Sort the spinner type generating error when student not clicked.
         Intent intent = null;
         if (user_type.equals(Constants.STUDENT)) {
-            intent = AddEducationActivity.newIntent(this);
-            intent.putExtra(AddEducationActivity.TAG, user);
+            intent = AddEducationActivity.Companion.newIntent(this);
+            intent.putExtra(AddEducationActivity.Companion.getTAG(), user);
         } else if (user_type.equals(Constants.PROFESSIONAL)) {
-            intent = AddExperienceActivity.newIntent(this);
-            intent.putExtra(AddExperienceActivity.TAG, user);
+            intent = AddExperienceActivity.Companion.newIntent(this);
+            intent.putExtra(AddExperienceActivity.Companion.getTAG(), user);
         }
         startActivity(intent);
     }

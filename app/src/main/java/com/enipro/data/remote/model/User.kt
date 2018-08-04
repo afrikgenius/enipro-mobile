@@ -9,7 +9,6 @@ import com.google.firebase.database.IgnoreExtraProperties
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.stfalcon.chatkit.commons.models.IUser
-import java.util.*
 
 @Entity(tableName = "users")
 @IgnoreExtraProperties
@@ -144,7 +143,13 @@ class User : IUser, Parcelable {
         created_at = parcel.readParcelable(Date::class.java.classLoader)
         updated_at = parcel.readParcelable(Date::class.java.classLoader)
         achievements = parcel.readString()
+        circle = parcel.createTypedArrayList(UserConnection)
+        network = parcel.createTypedArrayList(UserConnection)
         interests = parcel.createStringArrayList()
+
+        // Parceling a Mutable List is quite difficult, so the fix is to convert to an ArrayList
+        // before passing it
+        chats = parcel.createTypedArrayList(UserConnection)
         savedFeeds = parcel.createTypedArrayList(SavedFeed)
         education = parcel.createTypedArrayList(Education)
         experiences = parcel.createTypedArrayList(Experience)
@@ -195,7 +200,15 @@ class User : IUser, Parcelable {
         parcel.writeParcelable(created_at, flags)
         parcel.writeParcelable(updated_at, flags)
         parcel.writeString(achievements)
+        parcel.writeTypedList(circle)
+        parcel.writeTypedList(network)
         parcel.writeStringList(interests)
+
+        // TODO Parceling a Mutable List is quite difficult, so the fix is to convert to an ArrayList
+        // TODO before passing it
+        // TODO If possible something else should be done here.
+        parcel.writeTypedList(ArrayList(chats))
+
         parcel.writeTypedList(savedFeeds)
         parcel.writeTypedList(education)
         parcel.writeTypedList(experiences)
@@ -214,4 +227,5 @@ class User : IUser, Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

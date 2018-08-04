@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -37,24 +38,36 @@ public class Parcelable {
     public void testUserParcelable() {
         User details = new User();
         details.setActive(true);
+
+        UserConnection con = new UserConnection("8w487245hhsdf8");
+        List<UserConnection> chats = new ArrayList<>();
+        chats.add(con);
+        details.setChats(chats);
         Parcel parcel = Parcel.obtain();
         details.writeToParcel(parcel, details.describeContents());
         parcel.setDataPosition(0);
 
         User fromParcel = User.CREATOR.createFromParcel(parcel);
-        assertThat(fromParcel.getActive(), is(true));
+        assertThat(fromParcel.getChats().get(0).getUserId(), is("8w487245hhsdf8"));
     }
 
     @Test
     public void testFeedParcelable() {
         Feed details = new Feed();
         details.setModerated(true);
+
+        FeedComment comment = new FeedComment();
+        comment.setComment("THis is a freaking comment");
+
+        List<FeedComment> commentList = new ArrayList<>();
+        commentList.add(comment);
+        details.setComments(commentList);
         Parcel parcel = Parcel.obtain();
         details.writeToParcel(parcel, details.describeContents());
         parcel.setDataPosition(0);
 
         Feed fromParcel = Feed.CREATOR.createFromParcel(parcel);
-        assertThat(fromParcel.getModerated(), is(true));
+        assertThat(fromParcel.getComments().size(), is(1));
     }
 
     @Test

@@ -22,9 +22,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * This activity displays view to select a schedule for a mentoring session between a professional and a student.
  * The schedule is then attached to the request information and it is used to trigger alarm manager of the device when
@@ -34,31 +31,17 @@ public class SessionScheduleActivity extends AppCompatActivity {
 
 
     private static final String PICKER_DIALOG_TAG = "com.enipro.presentation.requests.session_schedule.SessionScheduleActivity";
-    @BindView(R.id.from_time)
+
     EditText from_time;
-
-    @BindView(R.id.to_time)
     EditText to_time;
-
-    @BindView(R.id.monday_chkbox)
     CheckBox monday_checkbox;
-    @BindView(R.id.tuesday_chkbox)
     CheckBox tuesday_checkbox;
-    @BindView(R.id.wed_chkbox)
     CheckBox wednesday_checkbox;
-    @BindView(R.id.thurs_chkbox)
     CheckBox thursday_checkbox;
-    @BindView(R.id.friday_chkbox)
     CheckBox friday_checkbox;
-    @BindView(R.id.sat_chkbox)
     CheckBox saturday_checkbox;
-    @BindView(R.id.sun_chkbox)
     CheckBox sunday_checkbox;
-
-    @BindView(R.id.send_request)
     Button send;
-
-    @BindView(R.id.coordinatorLayout)
     CoordinatorLayout layout;
 
     /**
@@ -75,7 +58,18 @@ public class SessionScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_schedule);
-        ButterKnife.bind(this);
+
+        from_time = findViewById(R.id.from_time);
+        to_time = findViewById(R.id.to_time);
+        monday_checkbox = findViewById(R.id.monday_chkbox);
+        tuesday_checkbox = findViewById(R.id.tuesday_chkbox);
+        wednesday_checkbox = findViewById(R.id.wed_chkbox);
+        thursday_checkbox = findViewById(R.id.thurs_chkbox);
+        friday_checkbox = findViewById(R.id.friday_chkbox);
+        saturday_checkbox = findViewById(R.id.sat_chkbox);
+        sunday_checkbox = findViewById(R.id.sun_chkbox);
+        send = findViewById(R.id.send_request);
+        layout = findViewById(R.id.coordinatorLayout);
 
         Toolbar toolbar = findViewById(R.id.profile_toolbar);
         setSupportActionBar(toolbar);
@@ -124,6 +118,8 @@ public class SessionScheduleActivity extends AppCompatActivity {
 
             // Create a session schedule and timing object with the data
             SessionTiming timing = new SessionTiming(days, from, to);
+
+            // TODO This is very wrong.
             SessionSchedule schedule = new SessionSchedule("2018-03-30T20:03:50.864Z", "2018-03-30T20:03:50.864Z", timing);
             Intent scheduleReturnIntent = new Intent();
             scheduleReturnIntent.putExtra(Constants.SESSION_SCHEDULE_DATA, schedule);

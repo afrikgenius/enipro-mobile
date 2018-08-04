@@ -115,9 +115,8 @@ class FeedFragment : Fragment(), FeedContract.View {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == FeedContract.Presenter.POST_FEED_REQUEST) {
-            // Make sure the request was successful
             if (resultCode == RESULT_OK)
-                presenter!!.processFeed(data!!.getParcelableExtra(FeedContract.Presenter.ACTIVITY_RETURN_KEY))
+                presenter?.processFeed(data?.getParcelableExtra(FeedContract.Presenter.ACTIVITY_RETURN_KEY))
         }
     }
 

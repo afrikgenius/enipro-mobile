@@ -17,82 +17,98 @@ import java.util.List;
 public class ListConverter {
 
     @TypeConverter
-    public static List<String> toListString(String json){
+    public static List<String> toListString(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static List<FeedComment> toListFComment(String value){
-        return null;
-    }
-
-    @TypeConverter
-    public static String fromListFComment(List<FeedComment> comments){
-        return null;
-    }
-
-    @TypeConverter
-    public static String fromListString(List<String> list){
+    public static List<FeedComment> toListFComment(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<String>>() {}.getType();
+        Type type = new TypeToken<List<FeedComment>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    @TypeConverter
+    public static String fromListFComment(List<FeedComment> comments) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<FeedComment>>() {
+        }.getType();
+        return gson.toJson(comments, type);
+    }
+
+    @TypeConverter
+    public static String fromListString(List<String> list) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
         return gson.toJson(list, type);
     }
 
     @TypeConverter
-    public static List<UserConnection> toListUserConnection(String json){
+    public static List<UserConnection> toListUserConnection(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<UserConnection>>() {}.getType();
+        Type type = new TypeToken<List<UserConnection>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static String fromListUserConnection(List<UserConnection> connections){
+    public static String fromListUserConnection(List<UserConnection> connections) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<UserConnection>>() {}.getType();
+        Type type = new TypeToken<List<UserConnection>>() {
+        }.getType();
         return gson.toJson(connections, type);
     }
 
     @TypeConverter
-    public static List<SavedFeed> toListSavedFeed(String json){
+    public static List<SavedFeed> toListSavedFeed(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<SavedFeed>>() {}.getType();
+        Type type = new TypeToken<List<SavedFeed>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static String fromListSavedFeed(List<SavedFeed> savedFeeds){
+    public static String fromListSavedFeed(List<SavedFeed> savedFeeds) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<SavedFeed>>() {}.getType();
+        Type type = new TypeToken<List<SavedFeed>>() {
+        }.getType();
         return gson.toJson(savedFeeds, type);
     }
 
     @TypeConverter
-    public static List<Education> toListEducation(String json){
+    public static List<Education> toListEducation(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Education>>() {}.getType();
+        Type type = new TypeToken<List<Education>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static String fromListEducation(List<Education> education){
+    public static String fromListEducation(List<Education> education) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Education>>() {}.getType();
+        Type type = new TypeToken<List<Education>>() {
+        }.getType();
         return gson.toJson(education, type);
     }
 
     @TypeConverter
-    public static List<Experience> toListExperiences(String json){
+    public static List<Experience> toListExperiences(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Experience>>() {}.getType();
+        Type type = new TypeToken<List<Experience>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 
     @TypeConverter
-    public static String fromListExperiences(List<Experience> experiences){
+    public static String fromListExperiences(List<Experience> experiences) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Experience>>() {}.getType();
+        Type type = new TypeToken<List<Experience>>() {
+        }.getType();
         return gson.toJson(experiences, type);
     }
 }

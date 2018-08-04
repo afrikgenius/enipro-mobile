@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -44,8 +45,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -63,35 +62,20 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
     private List<Education> userEducation;
     private List<Experience> userExperience;
 
-    @BindView(R.id.profile_image_edit)
     ImageButton profile_image_edit;
-    @BindView(R.id.cover_photo_edit)
     ImageButton cover_photo_edit;
-    @BindView(R.id.cover_edit_photoview)
     ImageView cover_photo;
-    @BindView(R.id.profile_edit_imageview)
     ImageView profile_imageview;
-    @BindView(R.id.edu_layout)
     View edu_layout;
-    @BindView(R.id.exp_layout)
     View exp_layout;
-    @BindView(R.id.first_name_layout)
     TextInputLayout first_name_layout;
-    @BindView(R.id.last_name_layout)
     TextInputLayout last_name_layout;
-    @BindView(R.id.headline_layout)
     TextInputLayout headline_layout;
-    @BindView(R.id.bio_layout)
-    TextInputLayout bio_layout;
-    @BindView(R.id.edit_experience_recyclerview)
+    RelativeLayout bio_layout;
     RecyclerView exp_recycler;
-    @BindView(R.id.edit_education_recyclerview)
     RecyclerView edu_recycler;
-    @BindView(R.id.add_education)
     ImageButton add_education;
-    @BindView(R.id.add_experience)
     ImageButton add_experience;
-    @BindView(R.id.save)
     Button save;
 
     /**
@@ -108,7 +92,23 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
-        ButterKnife.bind(this);
+
+        save = findViewById(R.id.save);
+        add_experience = findViewById(R.id.add_experience);
+        add_education = findViewById(R.id.add_education);
+        edu_recycler = findViewById(R.id.edit_education_recyclerview);
+        exp_recycler = findViewById(R.id.edit_experience_recyclerview);
+        bio_layout = findViewById(R.id.bio_layout);
+        headline_layout = findViewById(R.id.headline_layout);
+        last_name_layout = findViewById(R.id.last_name_layout);
+        first_name_layout = findViewById(R.id.first_name_layout);
+        exp_layout = findViewById(R.id.exp_layout);
+        edu_layout = findViewById(R.id.edu_layout);
+        profile_imageview = findViewById(R.id.profile_edit_imageview);
+        cover_photo = findViewById(R.id.cover_edit_photoview);
+        cover_photo_edit = findViewById(R.id.cover_photo_edit);
+        profile_image_edit = findViewById(R.id.profile_image_edit);
+
 
         Toolbar toolbar = findViewById(R.id.profile_edit_toolbar);
         setSupportActionBar(toolbar);
@@ -161,7 +161,7 @@ public class ProfileEditActivity extends AppCompatActivity implements ProfileCon
         first_name = first_name_layout.getEditText();
         last_name = last_name_layout.getEditText();
         headline = headline_layout.getEditText();
-        bio = bio_layout.getEditText();
+//        bio = bio_layout.getEditText();
 
         Glide.with(this).load(user.getAvatar()).apply(new RequestOptions().placeholder(R.drawable.profile_image)).into(profile_imageview);
         Glide.with(this).load(user.getAvatar_cover()).apply(new RequestOptions().placeholder(R.drawable.bg_cover)).into(cover_photo);

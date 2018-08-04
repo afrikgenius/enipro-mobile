@@ -25,8 +25,6 @@ import com.enipro.presentation.profile.ProfileActivity;
 import com.enipro.presentation.requests.RequestsFragment;
 import com.enipro.presentation.search.UserSearchActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -46,9 +44,7 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     private MessagesFragment mMessagesFragment;
     private User activeUser;
 
-    @BindView(R.id.home_profile_image)
     ImageView home_profile_image;
-    @BindView(R.id.search_edit_text)
     EditText search_edit_text;
 
     private static final String FEED_FRAGMENT = "com.enipro.presentation.home.HomeActivity.FEED_FRAGMENT";
@@ -84,16 +80,17 @@ public class HomeActivity extends AppCompatActivity implements HomeContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        home_profile_image = findViewById(R.id.home_profile_image);
+        search_edit_text = findViewById(R.id.search_edit_text);
         // Tab Layout for view pager
         mTabLayout = findViewById(R.id.tabs);
 
         // Search for an enipro user.
-        search_edit_text.setOnClickListener(view -> startActivity(UserSearchActivity.newIntent(this)));
+        search_edit_text.setOnClickListener(view -> startActivity(UserSearchActivity.Companion.newIntent(this)));
 
         // Retrieve fragment instances from bundle
 //        if (savedInstanceState == null) {

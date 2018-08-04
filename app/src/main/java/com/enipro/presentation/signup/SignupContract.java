@@ -11,6 +11,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class SignupContract {
 
+
     interface View extends MvpView {
 
         String SPINNER_USER_TYPE = "USER_TYPE";
@@ -22,6 +23,7 @@ public class SignupContract {
 
         /**
          * Sends error messages as snack bar messages.
+         *
          * @param message the message to send.
          */
         void showMessage(int message);
@@ -38,12 +40,6 @@ public class SignupContract {
 
         void showMessageDialog(String title, String message);
 
-        /**
-         * Returns the presenter the view is attached to.
-         * @return presenter.
-         */
-        Presenter getPresenter();
-
         void showProgress();
 
         void dismissProgress();
@@ -54,12 +50,13 @@ public class SignupContract {
 
         /**
          * Advance the sign up process passing a user object with fields added.
+         *
          * @param user the user object to pass
          */
         void advanceProcess(User user);
     }
 
-    interface Presenter extends MvpPresenter<View>{
+    interface Presenter extends MvpPresenter<View> {
 
         void attachViewItems(String itemName, android.view.View view);
 
@@ -68,8 +65,9 @@ public class SignupContract {
         /**
          * Persists the user profile avatar in firebase storage and saves it in the user avatar property and
          * returns the new user object
-         * @param user the user profile avatar to persist
-         * @param imageView the imageview to grab avatar from
+         *
+         * @param user             the user profile avatar to persist
+         * @param imageView        the imageview to grab avatar from
          * @param storageReference storage reference to use in firebase
          */
         void persistAvatarFirebase(User user, ImageView imageView, StorageReference storageReference, LocalCallback<User> userLocalCallback);

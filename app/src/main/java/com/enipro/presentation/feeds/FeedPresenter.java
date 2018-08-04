@@ -73,7 +73,7 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
             Bitmap imageBitmap = null;
             if (Application.getFeedMediaIdentifier().equals(Application.BITMAP_IDENTIFIER_FEEDS))
                 imageBitmap = Application.getTempBitmap();
-            Utility.uploadImageFirebase(storageReference, imageBitmap, (downloadURL) -> {
+            Utility.uploadImageFirebase(storageReference, imageBitmap, downloadURL -> {
                 feedData.getContent().setImage(downloadURL);
                 // Clear application temp bitmap
                 Application.flushTempBitmap();

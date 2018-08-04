@@ -5,16 +5,16 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
+import android.support.annotation.Nullable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Represents a news feed item in the application.
  */
 
 @Entity(tableName = "feeds")
-class Feed() : Parcelable {
+class Feed : Parcelable {
 
     @SerializedName("_id")
     @Expose
@@ -40,6 +40,7 @@ class Feed() : Parcelable {
 
     @SerializedName("comments")
     @Expose
+    @Nullable
     var comments: MutableList<FeedComment> = ArrayList()
 
     @SerializedName("tags")
@@ -61,17 +62,28 @@ class Feed() : Parcelable {
     constructor(parcel: Parcel) : this() {
         _id = parcel.readParcelable(ObjectId::class.java.classLoader)
         user = parcel.readString()
+        likes = parcel.createTypedArrayList(UserConnection)
         moderated = parcel.readByte() != 0.toByte()
+        content = parcel.readParcelable(FeedContent::class.java.classLoader)
+        comments = parcel.createTypedArrayList(FeedComment)
         tags = parcel.createStringArrayList()
         premiumDetails = parcel.readParcelable(PremiumDetails::class.java.classLoader)
         created_at = parcel.readParcelable(Date::class.java.classLoader)
         updated_at = parcel.readParcelable(Date::class.java.classLoader)
     }
 
+    constructor()
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(_id, flags)
         parcel.writeString(user)
+        parcel.writeTypedList(likes)
         parcel.writeByte(if (moderated) 1 else 0)
+        parcel.writeParcelable(content, flags)
+        // TODO Parceling a Mutable List is quite difficult, so the fix is to convert to an ArrayList
+        // TODO before passing it
+        // TODO If possible something else should be done here.
+        parcel.writeTypedList(ArrayList(comments))
         parcel.writeStringList(tags)
         parcel.writeParcelable(premiumDetails, flags)
         parcel.writeParcelable(created_at, flags)

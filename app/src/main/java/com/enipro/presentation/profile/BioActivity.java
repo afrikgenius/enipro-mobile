@@ -2,8 +2,8 @@ package com.enipro.presentation.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,13 +11,9 @@ import android.widget.TextView;
 import com.enipro.Application;
 import com.enipro.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class BioActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.bio)
     TextView bio;
 
     /**
@@ -34,7 +30,8 @@ public class BioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bio);
-        ButterKnife.bind(this);
+
+        bio = findViewById(R.id.bio);
 
 
         Toolbar toolbar = findViewById(R.id.profile_toolbar);

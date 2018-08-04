@@ -25,18 +25,13 @@ import com.enipro.model.Constants;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MessagesSearch extends AppCompatActivity implements MessagesContract.SearchView {
 
-    @BindView(R.id.messages_search_recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.alternate_toolbar)
     Toolbar alternateToolbar;
-    @BindView(R.id.message_search_toolbar)
     Toolbar messageSearchToolbar;
 
     private MessagesContract.SearchPresenter messagePresenter;
@@ -58,7 +53,10 @@ public class MessagesSearch extends AppCompatActivity implements MessagesContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages_search);
-        ButterKnife.bind(this);
+
+        mRecyclerView = findViewById(R.id.messages_search_recycler_view);
+        alternateToolbar = findViewById(R.id.alternate_toolbar);
+        messageSearchToolbar = findViewById(R.id.message_search_toolbar);
 
         // On arrow back press, finish the activity.
         findViewById(R.id.arrow_back).setOnClickListener(v -> finish());
