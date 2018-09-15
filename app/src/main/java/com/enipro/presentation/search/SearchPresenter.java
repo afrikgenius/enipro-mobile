@@ -1,6 +1,7 @@
 package com.enipro.presentation.search;
 
 
+import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.presentation.base.BasePresenter;
@@ -43,7 +44,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     @Override
     public Observable<List<User>> searchUsers(final String searchTerm) {
-        return Observable.defer(() -> restService.searchEniporUsers(searchTerm))
+        return Observable.defer(() -> restService.searchEniporUsers(searchTerm, Application.getAuthToken()))
                 .retryWhen(observable -> observable.flatMap(o -> {
                     if (o instanceof IOException) {
                         return Observable.just(null);

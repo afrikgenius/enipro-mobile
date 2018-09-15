@@ -1,317 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <import type="com.enipro.model.DateTimeStringProcessor" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="presenter"
+            type="com.enipro.presentation.feeds.FeedPresenter" />
+
+        <variable
+            name="feed"
+            type="com.enipro.data.remote.model.Feed" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context=".presentation.feeds.FeedCommentActivity">
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".presentation.feeds.comments.FeedCommentActivity">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/comment_toolbar"
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        </android.support.design.widget.AppBarLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/comment_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <ScrollView
-            android:id="@+id/comment_scrollview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/post_a_comment"
-            android:layout_below="@id/appbar">
+            </android.support.design.widget.AppBarLayout>
 
-            <RelativeLayout
-                android:id="@+id/content_feed_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <ScrollView
+                android:id="@+id/comment_scrollview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/post_a_comment"
+                android:layout_below="@id/appbar">
 
                 <RelativeLayout
-                    android:id="@+id/content_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="13dp">
+                    android:id="@+id/content_feed_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <RelativeLayout
-                        android:id="@+id/post_header"
-                        android:layout_width="match_parent"
+                        android:id="@+id/content_header"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:background="?attr/selectableItemBackground">
-
-                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/user_post_image"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile_image" />
-
-                        <TextView
-                            android:id="@+id/user_post_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@id/user_post_image"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/user_post_headline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/user_post_name"
-                            android:layout_marginStart="10dp"
-                            android:layout_toStartOf="@id/more_options"
-                            android:layout_toEndOf="@id/user_post_image"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:textColor="@color/material_grey_600"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/user_post_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/user_post_headline"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@id/user_post_image"
-                            android:textColor="@color/material_grey_600"
-                            android:textSize="13sp" />
-
-                        <ImageButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/user_post_headline"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="-7dp"
-                            android:layout_toEndOf="@id/user_post_date"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/ic_lock_active"
-                            android:visibility="gone" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/post_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/post_header"
-                        android:layout_marginTop="7dp">
-
-                        <TextView
-                            android:id="@+id/content"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|end"
-                            android:autoLink="web"
-                            android:clickable="true"
-                            android:ellipsize="end"
-                            android:focusable="true"
-                            android:gravity="start"
-                            android:linksClickable="true"
-                            android:textColor="@color/black" />
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/media_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/content_header"
-                    android:layout_marginBottom="12dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/post_comment_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:adjustViewBounds="true"
-                        android:maxHeight="350dp"
-                        android:minHeight="100dp"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone" />
-
-                    <FrameLayout
-                        android:id="@+id/video_comment_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="13dp">
 
                         <RelativeLayout
+                            android:id="@+id/post_header"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="?attr/selectableItemBackground">
 
-                            <!-- TODO Exoplayer goes in here.-->
-                            <com.google.android.exoplayer2.ui.PlayerView
-                                android:id="@+id/post_video"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_gravity="center"
-                                android:clickable="true"
-                                android:focusable="true" />
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/user_post_image"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:placeholder="@{@drawable/profile_image}"
+                                app:url="@{feed.userObject.avatar}" />
+
+
+                            <TextView
+                                android:id="@+id/user_post_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_toEndOf="@id/user_post_image"
+                                android:text="@{feed.userObject.name}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/user_post_headline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/user_post_name"
+                                android:layout_marginStart="10dp"
+                                android:layout_toStartOf="@id/more_options"
+                                android:layout_toEndOf="@id/user_post_image"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{feed.userObject.headline}"
+                                android:textColor="@color/material_grey_600"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/user_post_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/user_post_headline"
+                                android:layout_marginStart="10dp"
+                                android:layout_toEndOf="@id/user_post_image"
+                                android:text="@{DateTimeStringProcessor.process(feed.updated_at.utilDate)}"
+                                android:textColor="@color/material_grey_600"
+                                android:textSize="13sp" />
+
+                            <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/user_post_headline"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="-7dp"
+                                android:layout_toEndOf="@id/user_post_date"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_lock_active"
+                                android:visibility="gone" />
+
                         </RelativeLayout>
-                    </FrameLayout>
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/media_layout">
+                        <RelativeLayout
+                            android:id="@+id/post_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/post_header"
+                            android:layout_marginTop="7dp">
 
-                </RelativeLayout>
+                            <TextView
+                                android:id="@+id/content"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical|end"
+                                android:autoLink="web"
+                                android:clickable="true"
+                                android:ellipsize="end"
+                                android:focusable="true"
+                                android:gravity="start"
+                                android:linksClickable="true"
+                                android:text="@{feed.content.text}"
+                                android:textColor="@color/black" />
 
-                <RelativeLayout
-                    android:id="@+id/post_footer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tags"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="3dp">
 
-                    <ImageButton
-                        android:id="@+id/post_like_button"
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/media_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:contentDescription="@string/button_like"
-                        android:focusable="true"
-                        android:src="@drawable/ic_favorite_border" />
+                        android:layout_below="@id/content_header"
+                        android:layout_marginBottom="12dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/post_comment_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:maxHeight="350dp"
+                            android:minHeight="100dp"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
+
+                        <FrameLayout
+                            android:id="@+id/video_comment_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp">
+
+                                <!-- TODO Exoplayer goes in here.-->
+                                <com.google.android.exoplayer2.ui.PlayerView
+                                    android:id="@+id/post_video"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_gravity="center"
+                                    android:clickable="true"
+                                    android:focusable="true" />
+                            </RelativeLayout>
+                        </FrameLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/tags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/media_layout">
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/post_footer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tags"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginBottom="3dp">
+
+                        <ImageButton
+                            android:id="@+id/post_like_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/button_like"
+                            android:focusable="true"
+                            android:onClick="@{(view) -> presenter.onLikeClicked(view, feed)}"
+                            android:src="@drawable/ic_favorite_border" />
+
+                        <TextView
+                            android:id="@+id/post_likes_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="9dp"
+                            android:layout_toEndOf="@id/post_like_button"
+                            android:onClick="@{() -> presenter.getFeedLikeUsers(feed)}"
+                            android:textColor="@color/material_grey_600" />
+
+                        <ImageButton
+                            android:id="@+id/post_comment_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/post_likes_count"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/button_comment"
+                            android:focusable="true"
+                            android:onClick="@{() -> presenter.onCommentClicked()}"
+                            android:src="@drawable/ic_comment" />
+
+                        <TextView
+                            android:id="@+id/post_comment_responses"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="9dp"
+                            android:layout_toEndOf="@id/post_comment_button"
+                            android:textColor="@color/material_grey_600" />
+
+                        <ImageButton
+                            android:id="@+id/post_share_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/post_comment_responses"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/button_comment"
+                            android:focusable="true"
+                            android:onClick="@{() -> presenter.onShareClicked(feed)}"
+                            android:src="@drawable/ic_share" />
+
+                        <ImageButton
+                            android:id="@+id/post_save_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:contentDescription="@string/button_comment"
+                            android:focusable="true"
+                            android:onClick="@{(view) -> presenter.onSaveClicked(view,feed)}"
+                            android:src="@drawable/ic_bookmark_outline" />
+
+                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/post_likes_count"
+                        android:id="@+id/comment_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/post_footer"
+                        android:layout_marginStart="12dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="9dp"
-                        android:layout_toEndOf="@id/post_like_button"
-                        android:textColor="@color/material_grey_600" />
+                        android:text="@string/comments"
+                        android:textSize="17sp"
+                        android:visibility="@{feed.comments.size() >0 ?View.VISIBLE: View.GONE}" />
 
-                    <ImageButton
-                        android:id="@+id/post_comment_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/post_likes_count"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:contentDescription="@string/button_comment"
-                        android:focusable="true"
-                        android:src="@drawable/ic_comment" />
+                    <!--Draw a line across-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_above="@id/post_footer"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@color/material_grey_300_" />
 
-                    <TextView
-                        android:id="@+id/post_comment_responses"
-                        android:layout_width="wrap_content"
+                    <!-- Comments -->
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/feeds_comment_recycler_view"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="9dp"
-                        android:layout_toEndOf="@id/post_comment_button"
-                        android:textColor="@color/material_grey_600" />
+                        android:layout_below="@id/comment_text"
+                        android:layout_marginTop="5dp" />
 
-                    <ImageButton
-                        android:id="@+id/post_share_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/post_comment_responses"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:contentDescription="@string/button_comment"
-                        android:focusable="true"
-                        android:src="@drawable/ic_share" />
-
-                    <ImageButton
-                        android:id="@+id/post_save_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:background="@android:color/transparent"
-                        android:clickable="true"
-                        android:contentDescription="@string/button_comment"
-                        android:focusable="true"
-                        android:src="@drawable/ic_bookmark_outline" />
+                    <com.github.rahatarmanahmed.cpv.CircularProgressView
+                        android:id="@+id/progress_bar"
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/comment_text"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        app:cpv_animAutostart="true"
+                        app:cpv_animDuration="2000"
+                        app:cpv_indeterminate="true"
+                        app:cpv_thickness="3dp" />
 
                 </RelativeLayout>
+            </ScrollView>
 
-                <TextView
-                    android:id="@+id/comment_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/post_footer"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/comments"
-                    android:textSize="17sp"
-                    android:visibility="gone" />
-
-                <!--Draw a line across-->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_above="@id/post_footer"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@color/material_grey_300_" />
-
-                <!-- Comments -->
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/feeds_comment_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/comment_text"
-                    android:layout_marginTop="5dp" />
-
-                <com.github.rahatarmanahmed.cpv.CircularProgressView
-                    android:id="@+id/progress_bar"
-                    style="@style/Widget.AppCompat.ProgressBar"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_below="@id/comment_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:visibility="gone"
-                    app:cpv_animAutostart="true"
-                    app:cpv_animDuration="2000"
-                    app:cpv_indeterminate="true"
-                    app:cpv_thickness="3dp"
-                    tools:visibility="visible" />
-
-            </RelativeLayout>
-        </ScrollView>
-
-        <include
-            android:id="@+id/post_a_comment"
-            layout="@layout/comment_footer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
+            <include
+                android:id="@+id/post_a_comment"
+                layout="@layout/comment_footer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:foo="@{1}" />
 
 
-    </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.enipro.injection;
 
 import com.enipro.data.remote.EniproRestService;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,8 +17,8 @@ public class Injection {
     private static Retrofit retrofitInstance;
     private static EniproRestService userRestService;
 
-    public static EniproRestService eniproRestService(){
-        if(userRestService == null){
+    public static EniproRestService eniproRestService() {
+        if (userRestService == null) {
             userRestService = getRetrofitInstance().create(EniproRestService.class);
         }
         return userRestService;
@@ -25,11 +26,17 @@ public class Injection {
 
     static OkHttpClient getOkHttpClient() {
         if (okHttpClient == null) {
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-            okHttpClient = new OkHttpClient.Builder().addInterceptor(logging).build();
+            okHttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(provideHttpLoggingInterceptor())
+                    .build();
         }
         return okHttpClient;
+    }
+
+    static HttpLoggingInterceptor provideHttpLoggingInterceptor() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        return loggingInterceptor;
     }
 
     static Retrofit getRetrofitInstance() {
@@ -42,5 +49,14 @@ public class Injection {
             retrofitInstance = retrofit.build();
         }
         return retrofitInstance;
+    }
+
+    /***
+     * Provides the interceptor for the authorization header token in the application
+     * @return the okhttp interceptor containing Authorization header information.
+     */
+    static Interceptor provideAuthorizationInterceptor() {
+
+        return null;
     }
 }

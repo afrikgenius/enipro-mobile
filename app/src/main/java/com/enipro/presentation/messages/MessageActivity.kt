@@ -328,6 +328,6 @@ class MessageActivity : AppCompatActivity(), MessagesContract.MessageView, Messa
         chats.add(connection)
         appUser.chats = chats
         Application.setActiveUser(appUser)
-        AppExecutors().diskIO().execute { EniproDatabase.getInstance(this)?.userDao()?.updateUser(Application.getActiveUser()) }
+        AppExecutors().diskIO().execute { EniproDatabase.getInstance(this)?.user()?.updateUser(Application.getActiveUser()) }
     }
 }

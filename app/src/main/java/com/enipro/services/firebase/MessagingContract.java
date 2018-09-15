@@ -1,4 +1,4 @@
-package com.enipro.firebase;
+package com.enipro.services.firebase;
 
 import com.enipro.data.remote.model.User;
 import com.enipro.model.LocalCallback;

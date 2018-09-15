@@ -15,13 +15,7 @@ import com.enipro.data.remote.model.Message
 import com.enipro.data.remote.model.PremiumDetails
 import com.enipro.data.remote.model.Request
 import com.enipro.data.remote.model.User
-import com.enipro.db.converter.DateConverter
-import com.enipro.db.converter.DocumentConverter
-import com.enipro.db.converter.FeedContentConverter
-import com.enipro.db.converter.ListConverter
-import com.enipro.db.converter.ObjectIdConverter
-import com.enipro.db.converter.PremiumDetailsConverter
-import com.enipro.db.converter.SessionScheduleConverter
+import com.enipro.db.converter.*
 import com.enipro.db.dao.FeedContentDao
 import com.enipro.db.dao.FeedDao
 import com.enipro.db.dao.MessageDao
@@ -35,7 +29,7 @@ import com.enipro.db.dao.UserDao
 
 @Database(entities = arrayOf(Feed::class, User::class, FeedContent::class, Request::class), version = 1, exportSchema = false)
 // TODO Remove exportSchema and add room.schemaLocation in build.gradle under room annotation processor.
-@TypeConverters(ObjectIdConverter::class, DateConverter::class, FeedContentConverter::class, ListConverter::class, SessionScheduleConverter::class, PremiumDetailsConverter::class, DocumentConverter::class)
+@TypeConverters(ObjectIdConverter::class, DateConverter::class, FeedContentConverter::class, ListConverter::class, SessionScheduleConverter::class, PremiumDetailsConverter::class, DocumentConverter::class, UserConverter::class)
 abstract class EniproDatabase : RoomDatabase() {
 
     private val mIsDatabaseCreated = MutableLiveData<Boolean>()
@@ -43,15 +37,15 @@ abstract class EniproDatabase : RoomDatabase() {
     val databaseCreated: LiveData<Boolean>
         get() = mIsDatabaseCreated
 
-    abstract fun feedDao(): FeedDao
+    abstract fun feed(): FeedDao
 
-    abstract fun feedContentDao(): FeedContentDao
+    abstract fun feedContent(): FeedContentDao
 
-    abstract fun userDao(): UserDao
+    abstract fun user(): UserDao
 
-    abstract fun requestDao(): RequestDao
+    abstract fun request(): RequestDao
 
-    abstract fun messageDao(): MessageDao
+    abstract fun message(): MessageDao
 
     /**
      * Checks whether database already exists.

@@ -1,4 +1,4 @@
-package com.enipro.firebase;
+package com.enipro.services.firebase;
 
 
 import android.content.SharedPreferences;
@@ -42,7 +42,7 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
         if (Application.getActiveUser() != null) {
             // Persist the firebase token with the user data on local and API end
             Application.getActiveUser().setFirebaseToken(token);
-            new AppExecutors().diskIO().execute(() -> EniproDatabase.Companion.getInstance(getApplicationContext()).userDao().updateUser(Application.getActiveUser()));
+            new AppExecutors().diskIO().execute(() -> EniproDatabase.Companion.getInstance(getApplicationContext()).user().updateUser(Application.getActiveUser()));
 
             // TODO Send new token to the web service.
 

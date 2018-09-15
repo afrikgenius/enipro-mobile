@@ -22,29 +22,18 @@ public class FeedContract {
         void showErrorNotification();
 
         // Updates the user interface with the newly added feed item.
-        void updateUI(Feed feedItem, User user);
+        void updateUI(Feed feedItem);
 
         void showErrorMessage();
-
-        void showLoading();
-
-        void hideLoading();
-
-        /**
-         * Runs when saved feeds have been retrieved for user.
-         */
-        void onSavedFeedsRetrieved(List<Feed> feeds);
     }
 
-    interface CommentView extends MvpView {
+    public interface CommentView extends MvpView {
 
         void showErrorNotification();
 
         void showLoading();
 
         void hideLoading();
-
-        void showErrorMessage();
 
         /**
          * Updates the UI with the feed comment.
@@ -53,20 +42,9 @@ public class FeedContract {
          * @param user        the user object.
          */
         void updateUI(FeedComment commentItem, User user);
-
-        void updateFeedData(List<FeedComment> comments);
     }
 
     public interface CommentPresenter extends MvpPresenter<FeedContract.CommentView> {
-
-        /**
-         * Returns the information of a user with the user id in a callback passed into the function.
-         *
-         * @param _id      the id of the user.
-         * @param callback the callback function to be called after a response is received.
-         */
-        void getUser(String _id, LocalCallback<User> callback);
-
 
         /**
          * Sends a feed comment information to the web API and also persists in datastore.
@@ -86,14 +64,7 @@ public class FeedContract {
          */
         void uploadCommentImageFirebase(StorageReference storageReference, Bitmap bitmap, LocalCallback<String> localCallback);
 
-
-        /**
-         * Loads comments for a feed
-         *
-         * @param user_id
-         * @param feed_id
-         */
-        void loadComments(String user_id, String feed_id);
+//        void onCommentClicked(Feed feed);
 
     }
 
@@ -113,21 +84,6 @@ public class FeedContract {
         void deleteFeed(Feed feed);
 
         /**
-         * Fetches new feeds on manual request by the user.
-         *
-         * @return the feeds fetched by the update operation.
-         */
-        List<Feed> update_feeds();
-
-        /**
-         * Analyses the feed text and recognises hashtags, urls, names of people etc.
-         *
-         * @param feed_text
-         * @return
-         */
-        String analyseFeedText(String feed_text);
-
-        /**
          * Returns the information of a user with the user id in a callback passed into the function.
          *
          * @param _id      the id of the user.
@@ -136,22 +92,11 @@ public class FeedContract {
         void getUser(String _id, LocalCallback callback);
 
         /**
-         * Loads feeds for the current active user in the application from both local storage and online storage.
-         * Implementation loads only feeds from online storage that are not present in local storage to reduce the
-         * amount of data being returned by the API.
-         *
-         * @param localCallback A callback given to pass the result back to the calling function since it will be run in an executor.
-         */
-        void loadFeeds(LocalCallback<List<Feed>> localCallback);
-
-        /**
          * Performs some operations on the feed data before sending down to API.
          *
          * @param feed the feed data to process.
          */
         void processFeed(Feed feed);
-
-        void removeFeed(Feed feed);
 
         /**
          * Loads saved feeds that the application user has in profile.
@@ -161,12 +106,14 @@ public class FeedContract {
 
         /**
          * Add the feed item to saved feeds in the users profile.
+         *
          * @param feed the feed item to add.
          */
         void addSaved(Feed feed);
 
         /**
          * Removes a feed item from the saved feeds in the users profile
+         *
          * @param feed the feed item to remove.
          */
         void removeSaved(Feed feed);

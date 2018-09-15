@@ -1,4 +1,4 @@
-package com.enipro.firebase;
+package com.enipro.services.firebase;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

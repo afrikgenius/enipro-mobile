@@ -8,6 +8,7 @@
     <string name="title_activity_swipe_view_demo2">Swipe Demo2</string>
     <string name="title_activity_login">Login Activity</string>
     <string name="title_activity_sign_up">Sign up</string>
+    <string name="retry">RETRY</string>
 
     <!-- Strings used in the view pager activity and its fragments. (Main Activity) -->
     <string name="login_text">Login</string>
@@ -182,6 +183,7 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
     <string name="share_text">Share via</string>
 
     <string name="no_feed_data">No Feed Data</string>
+    <string name="cannot_load_feeds">Cannot load feeds at this time.</string>
     <string name="no_saved_feed">No saved Feed</string>
     <string name="no_feed_data_instructions">Tap the \'+\' button to create a feed item.</string>
     <string name="add_comment_hint">Write a comment&#8230;</string>
@@ -403,6 +405,11 @@ Knowledge Domains: User experience design, User Research (evaluative), Service D
     <string name="show_more">SHOW MORE</string>
 
     <string name="request_accepted">Request Accepted</string>
+    <string name="auth_token_value">Auth</string>
+    <string name="lastRequestedPage">LastRequestedPage</string>
+
+    <string name="last_requested_name_pref">LastRequestedNamePref</string>
+    <string name="auth_shared_pref">AuthPref</string>
 
 
     <string-array name="industries">

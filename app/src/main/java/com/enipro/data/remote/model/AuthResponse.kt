@@ -3,12 +3,11 @@ package com.enipro.data.remote.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Login {
-
-    @SerializedName("email")
+class AuthResponse {
+    @SerializedName("token")
     @Expose
-    var email: String? = null
-    @SerializedName("password")
+    var token: String? = null
+    @SerializedName("user_id")
     @Expose
-    var password: String? = null
+    var userId: String? = null
 }

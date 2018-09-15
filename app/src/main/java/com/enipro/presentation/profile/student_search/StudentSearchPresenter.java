@@ -1,5 +1,6 @@
 package com.enipro.presentation.profile.student_search;
 
+import com.enipro.Application;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.User;
 import com.enipro.presentation.base.BasePresenter;
@@ -43,7 +44,7 @@ public class StudentSearchPresenter extends BasePresenter<ProfileContract.Studen
 
     @Override
     public Observable<List<User>> searchUsers(final String searchTerm) {
-        return Observable.defer(() -> restService.searchEniproStudents(searchTerm))
+        return Observable.defer(() -> restService.searchEniproStudents(searchTerm, Application.getAuthToken()))
                 .retryWhen(observable -> observable.flatMap(o -> {
                     if (o instanceof IOException) {
                         return Observable.just(null);

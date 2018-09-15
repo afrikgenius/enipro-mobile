@@ -18,7 +18,7 @@ import com.enipro.data.remote.model.Request
 import com.enipro.data.remote.model.SessionSchedule
 import com.enipro.data.remote.model.User
 import com.enipro.events.NotificationEvent
-import com.enipro.firebase.FirebaseNotificationBuilder
+import com.enipro.services.firebase.FirebaseNotificationBuilder
 import com.enipro.injection.Injection
 import com.enipro.model.Constants
 import com.enipro.model.Utility
@@ -126,7 +126,6 @@ class RequestsFragment : Fragment(), RequestsContract.View, RequestInteractor {
     }
 
     override fun onRequestsError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onRequestAccepted() {

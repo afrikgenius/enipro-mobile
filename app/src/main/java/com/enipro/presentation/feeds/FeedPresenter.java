@@ -1,12 +1,26 @@
 package com.enipro.presentation.feeds;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.graphics.Palette;
+import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.crashlytics.android.Crashlytics;
 import com.enipro.Application;
+import com.enipro.R;
 import com.enipro.data.remote.EniproRestService;
 import com.enipro.data.remote.model.Document;
 import com.enipro.data.remote.model.Feed;
@@ -19,43 +33,49 @@ import com.enipro.model.Constants;
 import com.enipro.model.LocalCallback;
 import com.enipro.model.Utility;
 import com.enipro.presentation.base.BasePresenter;
+import com.enipro.presentation.feeds.comments.FeedCommentActivity;
+import com.enipro.presentation.post.PostActivity;
+import com.enipro.presentation.profile.ProfileActivity;
+import com.enipro.presentation.utility.ImageOverlayView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import org.apache.commons.io.FilenameUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
+import co.paystack.android.ui.CardActivity;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.HttpException;
-import retrofit2.Response;
 
 public class FeedPresenter extends BasePresenter<FeedContract.View> implements FeedContract.Presenter {
 
     private EniproDatabase dbInstance;
 
+    private Context context;
+    private boolean likeState = false;
+    private boolean savedState = false;
 
     public FeedPresenter(EniproRestService restService, Scheduler ioScheduler, Scheduler mainScheduler, Context context) {
         super(restService, ioScheduler, mainScheduler);
         dbInstance = EniproDatabase.Companion.getInstance(context);
+        this.context = context;
     }
 
     @Override
-    public void removeFeed(Feed feed) {
-        checkViewAttached();
-        addDisposable(restService.deleteFeedItem(Application.getActiveUser().getId(), feed.get_id().getOid())
+    public void deleteFeed(Feed feed) {
+        addDisposable(restService.deleteFeedItem(feed.get_id().getOid(), Application.getAuthToken())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe());
+                .subscribe(aVoid -> {
+                }, throwable -> {
+                }, () -> {
+                }));
     }
 
     @Override
@@ -93,7 +113,6 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
             Uri imageURI = null;
             if (Application.getFeedMediaIdentifier().equals(Application.VIDEO_IDENTIFIER_FEEDS))
                 imageURI = Uri.fromFile(new File(Application.getTempVideoPath()));
-//            Log.d(Application.TAG, imageURI.toString());
             Utility.uploadVideoFirebase(storageReference, imageURI, (downloadURL) -> {
                 feedData.getContent().setVideo(downloadURL);
 //                sendPostToAPI(feedData);
@@ -108,7 +127,6 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
             });
         } else {
-//            Log.d(Application.TAG, "No media file, checking for doc");
             // Checks if a document exists and upload the doc to firebase and send post.
             if (feedData.getContent().isDocExists()) {
                 uploadDocFirebase(feedData);
@@ -127,8 +145,6 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     private void uploadDocFirebase(Feed feedData) {
         File file = Application.getDocumentPostFile();
         Uri fileUri = Uri.fromFile(file);
-//        Log.d(Application.TAG, file.getPath());
-        // Send doc to firebase and persist the download URL
         StorageReference storageReference = FirebaseStorage
                 .getInstance()
                 .getReference()
@@ -148,37 +164,14 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
     @Override
     public void sendPostToAPI(Feed feedData) {
         checkViewAttached();
-
-        // Pull out user information from local storage.
-        User applicationUser = Application.getActiveUser();
-        restService.createFeedItem(feedData, applicationUser.get_id().getOid()).enqueue(new Callback<Feed>() {
-            @Override
-            public void onResponse(@NonNull Call<Feed> call, @NonNull Response<Feed> response) {
-                // Check response code and pass feed data to feed fragment of home activity.
-                if (response.isSuccessful()) {
-                    // Show notification, Persist feed data information in mobile data store and update UI
+        addDisposable(restService.createFeedItem(feedData, Application.getAuthToken())
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
+                .subscribe(feed -> {
                     getView().showCompleteNotification();
-
-                    // Persist in data store.
-                    new AppExecutors().diskIO().execute(() -> dbInstance.feedDao().insertFeed(response.body()));
-                    getView().updateUI(response.body(), applicationUser);
-                } else {
-                    getView().showErrorNotification();
-                    JSONObject jsonObject;
-                    try {
-                        jsonObject = new JSONObject(response.errorBody().string());
-//                        Log.d("Application", jsonObject.getString("errors"));
-                    } catch (IOException | JSONException io_json) {
-                        // TODO Fix casting to activity for FeedFragment      Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Feed> call, @NonNull Throwable throwable) {
-                getView().showErrorNotification(); // Show Error occured.
-            }
-        });
+                    // new AppExecutors().diskIO().execute(() -> dbInstance.feedDao().insertFeed(response.body()));
+                    getView().updateUI(feed);
+                }, throwable -> getView().showErrorNotification()));
     }
 
     /**
@@ -192,91 +185,27 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
         checkViewAttached();
         // Check if the id parameter is that of the active user and return active user object
         new AppExecutors().diskIO().execute(() -> {
-            User appUser = dbInstance.userDao().getUser(_id);
+            User appUser = dbInstance.user().getUser(_id);
             if (appUser != null)
                 localCallback.respond(appUser);
             else {
-                restService.getUser(_id).enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                        if (response.isSuccessful()) {
-                            localCallback.respond(response.body()); // Passing the result in a local callback.
-                        } else {
-                            JSONObject jsonObject;
-                            try {
-                                jsonObject = new JSONObject(response.errorBody().string());
-//                                Log.d("Application", jsonObject.getString("errors"));
-                            } catch (IOException | JSONException io_json) {
-//                                Log.e(Enipro.APPLICATION + ":" + getClass().getCanonicalName(), io_json.getMessage());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable throwable) {
-                    }
-                });
+                addDisposable(restService.getUser(_id, Application.getAuthToken())
+                        .subscribeOn(ioScheduler)
+                        .observeOn(mainScheduler)
+                        .subscribe(user -> localCallback.respond(user)));
             }
         });
     }
 
     @Override
-    public void loadFeeds(LocalCallback<List<Feed>> localCallback) {
-        checkViewAttached();
-        User applicationUser = Application.getActiveUser();
-
-        // TODO Grab all feeds for the user from API using pagination and store
-        addDisposable(Observable.defer(() -> restService.getFeeds(applicationUser.get_id().getOid()))
-                .subscribeOn(ioScheduler)
-                .observeOn(mainScheduler)
-                .subscribe(feedList -> {
-                    getView().showLoading();
-                    localCallback.respond(feedList);
-
-                    if (feedList.size() == 0)
-                        localCallback.respond(null); // Null callback result means no feed data.
-                    else {
-                        // Reverse the order of the feeds
-                        Collections.reverse(feedList);
-                        localCallback.respond(feedList);
-                    }
-                }, throwable -> getView().showErrorMessage(), () -> {
-                    getView().hideLoading();
-                }));
-    }
-
-    @Override
-    public void deleteFeed(Feed feed) {
-        addDisposable(restService.deleteFeedItem(Application.getActiveUser().get_id().getOid(), feed.get_id().getOid())
-                .subscribeOn(ioScheduler)
-                .observeOn(mainScheduler)
-                .subscribe(aVoid -> {
-                }, throwable -> {
-                }, () -> {
-                }));
-    }
-
-    @Override
-    public String analyseFeedText(String feed_text) {
-        return null;
-    }
-
-    @Override
-    public List<Feed> update_feeds() {
-        // TODO Implement fetching of feeds not present in the feed fragment and also in local storage.
-        return null;
-    }
-
-
-    @Override
     public void loadSavedFeeds() {
         // Collect all saved feed info from application user profile and for each, request feed with feed id.
         List<SavedFeed> feeds = Application.getActiveUser().getSavedFeeds();
-        addDisposable(restService.getSavedFeeds(Application.getActiveUser().get_id().getOid())
+        addDisposable(restService.getSavedFeeds(Application.getAuthToken())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(feedList -> {
-                    getView().onSavedFeedsRetrieved(feedList);
+                .subscribe(response -> {
+//                    getView().onSavedFeedsRetrieved(response.getResult());
                 }, throwable -> {
                 }, () -> {
                 }));
@@ -284,35 +213,252 @@ public class FeedPresenter extends BasePresenter<FeedContract.View> implements F
 
     @Override
     public void removeSaved(Feed feed) {
-        addDisposable(restService.deleteSavedFeed(Application.getActiveUser().get_id().getOid(), feed.get_id().getOid())
+        addDisposable(restService.deleteSavedFeed(feed.get_id().getOid(), Application.getAuthToken())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
                     // A new user information is gotten, save in local storage and application user
-                    new AppExecutors().diskIO().execute(() -> dbInstance.userDao().updateUser(user));
+                    new AppExecutors().diskIO().execute(() -> dbInstance.user().updateUser(user));
                     Application.setActiveUser(user);
                 }, throwable -> {
                     String errorBody = ((HttpException) throwable).response().errorBody().string();
-//                    Log.d(Application.TAG, errorBody);
-//                    Log.d(Application.TAG, throwable.getMessage());
                 }, () -> {
                 }));
     }
 
     @Override
     public void addSaved(Feed feed) {
-        addDisposable(restService.saveFeed(new SavedFeed(feed.get_id().getOid()), Application.getActiveUser().get_id().getOid())
+        addDisposable(restService.saveFeed(new SavedFeed(feed.get_id().getOid()), Application.getAuthToken())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(user -> {
                     // A new user information is gotten, save in local storage and application user
-                    new AppExecutors().diskIO().execute(() -> dbInstance.userDao().updateUser(user));
+                    new AppExecutors().diskIO().execute(() -> dbInstance.user().updateUser(user));
                     Application.setActiveUser(user);
                 }, throwable -> {
                     String errorBody = ((HttpException) throwable).response().errorBody().string();
-//                    Log.d(Application.TAG, errorBody);
-//                    Log.d(Application.TAG, throwable.getMessage());
                 }, () -> {
                 }));
+    }
+
+    /**
+     * Checks if the authenticated user has liked a feed item or not. This does not require a network
+     * call since the feed information is also saved in Room.
+     *
+     * @param feed the feed item
+     * @return true if liked or false otherwise
+     */
+    boolean getLikeState(Feed feed) {
+        return false;
+    }
+
+    boolean getSaveSatate(Feed feed) {
+        return false;
+    }
+
+    public void onLikeClicked(View view, Feed feed) {
+        if (!likeState) {
+            // First off increase the number of comments and make the animation happen then
+            // revert if error occurred
+            ((ImageButton) view).setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_favorite, null));
+            Utility.applyBounceAnimation((ImageButton) view, context);
+//            String likesStr =
+            int currentNoLikes = Integer.valueOf("5");
+
+//            likeFeed(feed.getId()).subscribe(feedObject -> {
+//                int likes = feed.getLikesCount();
+//            }, throwable -> {
+//
+//            });
+            likeFeed(feed.getId());
+        } else {
+            unlikeFeed(feed.getId());
+            ((ImageButton) view).setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_favorite_border, null));
+            Utility.applyBounceAnimation((ImageButton) view, context);
+        }
+        likeState = !likeState; // Invert like state.
+    }
+
+    Observable<Feed> likeFeed(String feed_id) {
+        return restService.likeFeed(feed_id, Application.getAuthToken())
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler);
+    }
+
+    Observable<Feed> unlikeFeed(String feed_id) {
+        return restService.unlikeFeed(feed_id, Application.getAuthToken())
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler);
+    }
+
+    /***
+     * Starts an activity that displays a list of users that liked a feed item.
+     * @param feed the feed to get information from.
+     */
+    public void getFeedLikeUsers(Feed feed) {
+
+    }
+
+    public void onHeaderClicked(User user) {
+        context.startActivity(ProfileActivity.Companion.newIntent(context, user));
+    }
+
+    /**
+     * Activates the comment edit text when the comment button is clicked.
+     */
+    public void onCommentClicked() {
+//        binding.postAComment.commentEditText.requestFocus();
+//        ((Activity) context).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    /**
+     * Advances the current activity to the feed comment activity containing information (comments)
+     * on feed item clicked.
+     *
+     * @param feed the feed object attached to feed item clicked.
+     */
+    public void onCommentButtonClicked(Feed feed) {
+        // Open the feed comment activity and activate the keyboard on the add comment edit text
+        Intent intent = FeedCommentActivity.Companion.newIntent(context);
+        intent.putExtra(FeedContract.Presenter.OPEN_KEYBOARD_COMMENT, FeedContract.Presenter.ADD_COMMENT);
+        intent.putExtra(FeedContract.Presenter.FEED, feed);
+        context.startActivity(intent);
+    }
+
+    public void onViewClicked(Feed feed) {
+        Intent intent = FeedCommentActivity.Companion.newIntent(context);
+        intent.putExtra(FeedContract.Presenter.FEED, feed);
+        context.startActivity(intent);
+    }
+
+
+    public void onSaveClicked(View view, Feed feed) {
+        // Change drawable to a full favorite button and apply a one bounce animation on it.
+        if (!savedState) {
+            ((ImageButton) view).setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_bookmark, null));
+            Utility.applyBounceAnimation((ImageButton) view, context);
+            // Snack bar Saved
+            Utility.showToast(context, R.string.saved, false);
+//            presenter.addSaved(feed); // TODO Come back to this
+        } else {
+            ((ImageButton) view).setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_bookmark_outline, null));
+            Utility.applyBounceAnimation((ImageButton) view, context);
+//            presenter.removeSaved(feed); // TODO Come back to this
+        }
+        savedState = !savedState; // Invert saved state.
+    }
+
+    public void onShareClicked(Feed feed) {
+        // Create an intent with a SEND Action
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain"); // Change Mime type to handle enipro posts.
+
+        // Grab feed item information and put in intent.
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, feed.getContent().getText());
+        context.startActivity(Intent.createChooser(sharingIntent, context.getResources().getString(R.string.share_text)));
+    }
+
+    public void onDocClicked(Feed feedItem) {
+        // Get document object
+        Document doc = feedItem.getContent().getDoc();
+        //  Download the item and open using default app for that item.
+        // TODO Try on all devices to see if this feature works.
+        // In a case the feed item has been tagged premium, show item pricing and option to pay
+        if (feedItem.getPremiumDetails() == null) {
+            MimeTypeMap myMime = MimeTypeMap.getSingleton();
+            Intent newIntent = new Intent(Intent.ACTION_VIEW);
+            String mimeType = myMime.getMimeTypeFromExtension(doc.getExtension());
+            newIntent.setDataAndType(Uri.parse(doc.getUrl()), mimeType);
+            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                context.startActivity(newIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            // TODO Show option to pay for content. A dialog showing information like document name and price of content.
+            // TODO Check if the user has paid for this item. Get current user then
+            // TODO
+
+//            Intent paymentIntent = PaymentsFormActivity.newIntent(context);
+//            paymentIntent.putExtra(Constants.FEED_EXTRA, Parcels.wrap(feedItem));
+
+            // TODO If this is better, make use of this instead
+            Intent intent = new Intent(context, CardActivity.class);
+            context.startActivity(intent);
+        }
+    }
+
+    public void onMoreClicked(Feed feed) {
+        if (feed.getUser().equals(Application.getActiveUser().get_id().getOid())) {
+            new MaterialDialog.Builder(context)
+                    .items(R.array.app_user_more_items)
+                    .itemsCallback((dialog, itemView, position, text) -> {
+                        switch (position) {
+                            case 0: // Open post activity with predefined views
+                                Intent intent = PostActivity.Companion.newIntent(context);
+                                intent.putExtra(Constants.FEED_EXTRA, feed);
+                                context.startActivity(intent);
+                                break;
+                            case 1: // Show tags in a material dialog.
+                                break;
+                            case 2: // Delete post
+//                                presenter.removeFeed(feed);
+//                                removeItem(feed_position);
+//                                // call presenter to delete post from API
+//                                presenter.deleteFeed(feed);
+                                break;
+                        }
+                    }).show();
+        } else {
+            // Not application users post. the user can hide
+            new MaterialDialog.Builder(context)
+                    .items(R.array.foreign_user_more_items)
+                    .itemsCallback((dialog, itemView, position, text) -> {
+                        // Action Listeners for hiding post and
+                        switch (position) {
+                            case 0: // Hide Post
+//                                removeItem(feed_position);
+                                break;
+                            case 1: // Show tags in a material dialog
+                                break;
+                        }
+                    }).show();
+        }
+    }
+
+    // TODO Build support for upload of multiple images
+    public void onImageClicked(Feed feed) {
+        List<String> urls = new ArrayList<>();
+        urls.add(feed.getContent().getImage());
+        ImageOverlayView overlayView = new ImageOverlayView(context);
+        overlayView.setCommentsCount(feed.getCommentsCount());
+        overlayView.setLikesCount(feed.getLikesCount());
+
+        // TODO  This process makes two network requests to load the image
+        // TODO 1. Using Glide 2. Using FrescoImageViewer
+
+        // Get background color from the image using Palette api
+        Glide.with(context)
+                .asBitmap()
+                .load(feed.getContent().getImage())
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+
+                        // Get the color using the Palette api
+                        Palette palette = Palette.from(resource).generate();
+                        int color = palette.getVibrantColor(context.getResources().getColor(R.color.black));
+                        ImageViewer viewer = new ImageViewer.Builder<>(context, urls)
+                                .setStartPosition(0)
+                                .setOverlayView(overlayView)
+                                .setBackgroundColor(color)
+                                .build();
+
+                        overlayView.findViewById(R.id.photo_viewer_back).setOnClickListener(v -> viewer.onDismiss());
+                        viewer.show();
+
+                    }
+                });
     }
 }

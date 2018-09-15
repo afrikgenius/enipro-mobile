@@ -37,7 +37,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         mRunnable = () -> {
             Intent intent;
-            List<User> users = db.userDao().getUsers();
+            List<User> users = db.user().getUsers();
 
             if (users.size() == 1) {
                 intent = HomeActivity.newIntent(this, users.get(0)); // Launch Home activity

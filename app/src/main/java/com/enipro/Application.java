@@ -1,11 +1,15 @@
 package com.enipro;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.multidex.MultiDexApplication;
 
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -36,6 +40,8 @@ public class Application extends MultiDexApplication {
 
     public static boolean profileEdited = false;
 
+    private static Context context;
+
     /**
      * Tag used to log messages in the application
      */
@@ -54,11 +60,14 @@ public class Application extends MultiDexApplication {
         super.onCreate();
         JodaTimeAndroid.init(this);
 
+        Fresco.initialize(this);
+
         // Initialise payments api
         PaystackSdk.initialize(getApplicationContext());
+        context = getApplicationContext();
 
         database = EniproDatabase.Companion.getInstance(this);
-        new AppExecutors().diskIO().execute(() -> activeUser = database.userDao().getActiveUser(true));
+        new AppExecutors().diskIO().execute(() -> activeUser = database.user().getActiveUser(true));
     }
 
     public static Locale getLocale() {
@@ -91,6 +100,17 @@ public class Application extends MultiDexApplication {
      */
     public static void setActiveUser(User user) {
         activeUser = user;
+    }
+
+    public static String getAuthToken() {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.auth_shared_pref), Context.MODE_PRIVATE);
+        String s = sharedPref.getString(context.getString(R.string.auth_token_value), "");
+        return "Bearer " + s;
+    }
+
+    public static void setAuthToken(String authToken) {
+        SharedPreferences pref = context.getSharedPreferences(context.getString(R.string.auth_shared_pref), Context.MODE_PRIVATE);
+        pref.edit().putString(context.getString(R.string.auth_token_value), authToken).apply();
     }
 
     /**

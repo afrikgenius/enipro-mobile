@@ -12,22 +12,16 @@ import android.view.View;
 
 import com.enipro.R;
 import com.enipro.data.remote.model.Feed;
-import com.enipro.data.remote.model.User;
 import com.enipro.injection.Injection;
 import com.enipro.model.Utility;
 import com.enipro.presentation.feeds.FeedContract;
 import com.enipro.presentation.feeds.FeedPresenter;
-import com.enipro.presentation.generic.FeedRecyclerAdapter;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-
-import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class ViewPostsActivity extends AppCompatActivity implements FeedContract.View {
-
-    FeedRecyclerAdapter feedRecyclerAdapter;
     FeedContract.Presenter presenter;
 
 
@@ -76,18 +70,6 @@ public class ViewPostsActivity extends AppCompatActivity implements FeedContract
         presenter.attachView(this);
         presenter.loadSavedFeeds();
 
-        feedRecyclerAdapter = new FeedRecyclerAdapter(this, null, presenter, true);
-        mRecyclerView.setAdapter(feedRecyclerAdapter);
-    }
-
-
-    @Override
-    public void onSavedFeedsRetrieved(List<Feed> feeds) {
-        if (feeds.size() == 0)
-            no_saved_item.setVisibility(View.VISIBLE);
-        else
-            feedRecyclerAdapter.setItems(feeds);
-        posts_progress_bar.setVisibility(View.GONE);
     }
 
     @Override
@@ -101,22 +83,12 @@ public class ViewPostsActivity extends AppCompatActivity implements FeedContract
     }
 
     @Override
-    public void updateUI(Feed feedItem, User user) {
+    public void updateUI(Feed feedItem) {
 
     }
 
     @Override
     public void showPostNotification() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
 
     }
 

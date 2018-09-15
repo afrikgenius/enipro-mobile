@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.annotation.Nullable
+import android.support.v7.util.DiffUtil
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -28,7 +29,7 @@ class Feed : Parcelable {
 
     @SerializedName("likes")
     @Expose
-    var likes: List<UserConnection> = ArrayList()
+    var likes: List<String> = ArrayList()
 
     @SerializedName("moderated")
     @Expose
@@ -38,10 +39,22 @@ class Feed : Parcelable {
     @Expose
     var content: FeedContent? = null
 
+    @SerializedName("likes_count")
+    @Expose
+    var likesCount: Int? = null
+
+    @SerializedName("comments_count")
+    @Expose
+    var commentsCount: Int? = null
+
     @SerializedName("comments")
     @Expose
     @Nullable
     var comments: MutableList<FeedComment> = ArrayList()
+
+    @SerializedName("user")
+    @Expose
+    var userObject: User? = null
 
     @SerializedName("tags")
     @Expose
@@ -62,12 +75,15 @@ class Feed : Parcelable {
     constructor(parcel: Parcel) : this() {
         _id = parcel.readParcelable(ObjectId::class.java.classLoader)
         user = parcel.readString()
-        likes = parcel.createTypedArrayList(UserConnection)
+        likes = parcel.createStringArrayList()
         moderated = parcel.readByte() != 0.toByte()
         content = parcel.readParcelable(FeedContent::class.java.classLoader)
-        comments = parcel.createTypedArrayList(FeedComment)
+        likesCount = parcel.readInt()
+        commentsCount = parcel.readInt()
+        comments = parcel.createTypedArrayList(FeedComment.CREATOR)
         tags = parcel.createStringArrayList()
         premiumDetails = parcel.readParcelable(PremiumDetails::class.java.classLoader)
+        userObject = parcel.readParcelable(User::class.java.classLoader)
         created_at = parcel.readParcelable(Date::class.java.classLoader)
         updated_at = parcel.readParcelable(Date::class.java.classLoader)
     }
@@ -77,31 +93,53 @@ class Feed : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(_id, flags)
         parcel.writeString(user)
-        parcel.writeTypedList(likes)
+        parcel.writeStringList(likes)
         parcel.writeByte(if (moderated) 1 else 0)
         parcel.writeParcelable(content, flags)
         // TODO Parceling a Mutable List is quite difficult, so the fix is to convert to an ArrayList
         // TODO before passing it
         // TODO If possible something else should be done here.
+        parcel.writeInt(likesCount as Int)
+        parcel.writeInt(commentsCount as Int)
         parcel.writeTypedList(ArrayList(comments))
         parcel.writeStringList(tags)
         parcel.writeParcelable(premiumDetails, flags)
+        parcel.writeParcelable(userObject, flags)
         parcel.writeParcelable(created_at, flags)
         parcel.writeParcelable(updated_at, flags)
+    }
+
+    fun getId(): String {
+        return this._id!!.oid
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Feed> {
-        override fun createFromParcel(parcel: Parcel): Feed {
-            return Feed(parcel)
+    companion object {
+
+        @JvmField
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Feed>() {
+            override fun areContentsTheSame(oldItem: Feed?, newItem: Feed?): Boolean {
+                return oldItem!!.equals(newItem)
+            }
+
+            override fun areItemsTheSame(oldItem: Feed?, newItem: Feed?): Boolean {
+                return oldItem?._id == newItem?._id
+            }
         }
 
-        override fun newArray(size: Int): Array<Feed?> {
-            return arrayOfNulls(size)
+        @JvmField
+        val CREATOR = object : Parcelable.Creator<Feed> {
+
+            override fun createFromParcel(parcel: Parcel): Feed {
+                return Feed(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Feed?> {
+                return arrayOfNulls(size)
+            }
         }
     }
-
 }

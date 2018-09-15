@@ -56,7 +56,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.model.User;
-import com.enipro.firebase.FirebaseNotificationBuilder;
+import com.enipro.services.firebase.FirebaseNotificationBuilder;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -251,7 +251,7 @@ public class Utility {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
     }
-    
+
     public static void showNotification(final Context context, final Intent intent, String title, String message, String receiver, String receiverUid, String firebaseToken) {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,

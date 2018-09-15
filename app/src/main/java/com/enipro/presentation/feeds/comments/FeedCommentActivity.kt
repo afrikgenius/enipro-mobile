@@ -1,10 +1,14 @@
-package com.enipro.presentation.feeds
+package com.enipro.presentation.feeds.comments
 
 import android.Manifest
 import android.app.Activity
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -15,6 +19,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -28,10 +33,15 @@ import com.enipro.R
 import com.enipro.data.remote.model.Feed
 import com.enipro.data.remote.model.FeedComment
 import com.enipro.data.remote.model.User
+import com.enipro.databinding.ActivityFeedCommentBinding
 import com.enipro.injection.Injection
-import com.enipro.model.DateTimeStringProcessor
+import com.enipro.model.Enipro
 import com.enipro.model.Utility
-import com.github.rahatarmanahmed.cpv.CircularProgressView
+import com.enipro.presentation.feeds.FeedContract
+import com.enipro.presentation.feeds.FeedPresenter
+import com.enipro.presentation.utility.NetworkState
+import com.enipro.viewmodels.FeedCommentViewModel
+import com.enipro.viewmodels.FeedCommentViewModelFactory
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -44,13 +54,15 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
 
 
     private var feed: Feed? = null
-    private var presenter: FeedContract.CommentPresenter? = null
-    private var user: User? = null
-    private var commentAdapter: CommentsRecyclerAdapter? = null
-
+    private var commentPresenter: FeedContract.CommentPresenter? = null
+    private var adapter: CommentsRecyclerAdapter? = null
     private var imageUploadBitmap: Bitmap? = null
     private var mStorageRef: StorageReference? = null
-    private var progressBar: CircularProgressView? = null
+    private var binding: ActivityFeedCommentBinding? = null
+
+    private var viewModel: FeedCommentViewModel? = null
+
+    private var feedPresenter: FeedContract.Presenter? = null
 
     companion object {
 
@@ -62,14 +74,20 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feed_comment)
-
-        presenter = FeedCommentPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this)
-        presenter!!.attachView(this)
+        supportActionBar?.setHomeButtonEnabled(true)
 
         feed = intent.extras.getParcelable(FeedContract.Presenter.FEED)
-        user_post_date.text = DateTimeStringProcessor.process(feed?.updated_at?.utilDate)
-        content.text = feed?.content?.text
+
+        viewModel = ViewModelProviders.of(this, FeedCommentViewModelFactory(feed?._id?.oid)).get(FeedCommentViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_feed_comment)
+        binding?.feed = feed
+
+        feedPresenter = FeedPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this) //, binding)
+
+        commentPresenter = FeedCommentPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), this)
+        commentPresenter!!.attachView(this)
+
+        binding?.presenter = feedPresenter as FeedPresenter
 
         // If there is an image
         if (feed?.content?.image != null) {
@@ -83,32 +101,37 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
             // TODO User ExoPlayer here to start video play
         }
 
-        feeds_comment_recycler_view.setHasFixedSize(true)
-        feeds_comment_recycler_view.addItemDecoration(Utility.DividerItemDecoration(this))
+        binding?.feedsCommentRecyclerView?.setHasFixedSize(true)
+        binding?.feedsCommentRecyclerView?.addItemDecoration(Utility.DividerItemDecoration(this))
         val layoutManager = object : LinearLayoutManager(this) {
             override fun canScrollVertically(): Boolean {
                 return false
             }
         }
-        feeds_comment_recycler_view.layoutManager = layoutManager
+        binding?.feedsCommentRecyclerView?.layoutManager = layoutManager
+        adapter = CommentsRecyclerAdapter(this)
 
-        commentAdapter = CommentsRecyclerAdapter(this, null, presenter as FeedContract.CommentPresenter)
+        viewModel?.liveData?.observe(this, Observer<PagedList<FeedComment>> {
+            adapter?.submitList(it)
+        })
 
-        // TODO This should be done in a view model
-        presenter!!.getUser(feed!!.user) { user_data ->
-            runOnUiThread {
-                user = user_data
-                user_post_name.text = user!!.name
-                user_post_headline.text = user!!.headline
-                Glide.with(this).load(user!!.avatar).apply(RequestOptions().placeholder(R.drawable.bg_image)).into(user_post_image)
-                if (feed!!.comments.isNotEmpty())
-                    comment_text.visibility = View.VISIBLE
-                // Load comments
-                commentAdapter?.setCommentItems(feed!!.comments)
+        viewModel?.networkState?.observe(this, Observer<NetworkState> {
+            Log.d(Enipro.APPLICATION, "State:" + it?.status)
+            when {
+                it?.status == NetworkState.Status.RUNNING -> {
+                    binding?.progressBar?.visibility = View.VISIBLE
+                }
+                it?.status == NetworkState.Status.FAILED -> {
+                    showErrorMessage()
+                }
+                it?.status == NetworkState.Status.SUCCESS -> {
+                    if (adapter?.itemCount == 0)
+                        binding?.progressBar?.visibility = View.GONE
+                }
             }
-        }
+        })
+        binding?.feedsCommentRecyclerView?.adapter = adapter
 
-        // Get intent that started the activity and get extra for keyboard event
         // Get intent that started the activity and get extra for keyboard event.
         if (intent.getIntExtra(FeedContract.Presenter.OPEN_KEYBOARD_COMMENT, 0x01) == FeedContract.Presenter.ADD_COMMENT) {
             // Request focus for edit text and Open the keyboard
@@ -130,7 +153,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
             else {
                 val comment = FeedComment()
                 comment.comment = comment_editText.text.toString()
-                comment.user = Application.getActiveUser().id
+//                comment.user = Application.getActiveUser().id
 
                 mStorageRef = FirebaseStorage.getInstance().reference
                 // navigate to profile_avatar reference
@@ -140,10 +163,10 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
 
                     // Sending the avatar to firebase storage is done on a separate thread and persisting user with
                     // a call to the API should be done when the avatar is successfully sent to firebase storage.
-                    presenter?.uploadCommentImageFirebase(mStorageRef, imageUploadBitmap) { downloadURL ->
+                    commentPresenter?.uploadCommentImageFirebase(mStorageRef, imageUploadBitmap) { downloadURL ->
                         comment.comment_image = downloadURL
                         // Send data for persistence.
-                        presenter?.persistComment(comment, user?.id, feed?._id?.oid)
+                        commentPresenter?.persistComment(comment, feed?.userObject?.id, feed?._id?.oid)
                     }
 
                     // Delete image
@@ -152,7 +175,7 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
                     imageUploadBitmap = null
                 } else {
                     // Just persist the comment
-                    presenter?.persistComment(comment, user?.id, feed?._id?.oid)
+                    commentPresenter?.persistComment(comment, feed?.userObject?.id, feed?._id?.oid)
                 }
             }
             // Collapse keyboard and empty edit text before sending to API
@@ -183,7 +206,6 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
     }
 
     private fun setActionButtonListeners() {
-
         camera.setOnClickListener {
             val check = Utility.checkPermission(this, Manifest.permission.CAMERA, Application.PermissionRequests.MY_PERMISSION_REQUEST_CAMERA, resources.getString(R.string.camera_rationale))
             if (check) {
@@ -206,7 +228,6 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         } // Activate comment edit text
         //        post_share_button.setOnClickListener(v -> Utility.shareContent());
-        // TODO @ Reference button
     }
 
     private fun setOnCommentContentChange() {
@@ -309,29 +330,19 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
 
     override fun updateUI(commentItem: FeedComment, user: User) {
         //        Log.d(Application.TAG, "Comment sent to adapter");
-        commentAdapter?.addItem(commentItem)
+//        commentAdapter?.addItem(commentItem)
         feeds_comment_recycler_view.smoothScrollToPosition(0)
         if (feed?.comments!!.isNotEmpty())
             comment_text.visibility = View.VISIBLE
     }
 
-    override fun updateFeedData(comments: MutableList<FeedComment>) {
-        feed?.comments = comments
-        commentAdapter?.setCommentItems(comments)
-        if (comments.size != 0)
-            comment_text.visibility = View.VISIBLE
-        else
-            comment_text.visibility = View.GONE
-        //        post_comment_responses.setText(comments.size());
-    }
-
-    override fun showErrorMessage() {
+    private fun showErrorMessage() {
         // Display snack bar showing
         val snackbar = Snackbar
                 .make(coordinator, "Error Loading Comments.Please Try Again", Snackbar.LENGTH_LONG)
                 .setAction("RETRY") { _ ->
-                    // Load comments again
-                    presenter?.loadComments(user?.id, feed?._id?.oid)
+                    binding?.progressBar?.visibility = View.VISIBLE
+                    viewModel?.invalidateDataSource()
                 }
         // Change text color of text
         snackbar.setActionTextColor(Color.RED)
@@ -339,14 +350,14 @@ class FeedCommentActivity : AppCompatActivity(), FeedContract.CommentView {
         snackbar.show()
 
         // Also hide progress bar
-        progressBar?.visibility = View.GONE
+        binding?.progressBar?.visibility = View.GONE
     }
 
     override fun showLoading() {
-        progressBar?.visibility = View.VISIBLE
+        binding?.progressBar?.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        progressBar?.visibility = View.GONE
+        binding?.progressBar?.visibility = View.GONE
     }
 }

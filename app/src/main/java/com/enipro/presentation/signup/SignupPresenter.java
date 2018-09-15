@@ -197,7 +197,7 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
      * @param user the user to persist in Enipro.
      */
     private void persistEniproAPI(final User user) {
-        restService.signup(user).enqueue(new Callback<User>() {
+        restService.createAccount(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 getView().dismissProgress(); // Dismiss progress dialog.
@@ -207,7 +207,7 @@ public class SignupPresenter extends BasePresenter<SignupContract.View> implemen
                         User activeUser = response.body();
                         activeUser.setActive(true); // TODO Check what is going on here.
                         Application.setActiveUser(activeUser); // Set the active user of the application.
-                        db.userDao().insertUser(activeUser); // Execute the operation on the diskIO thread.
+                        db.user().insertUser(activeUser); // Execute the operation on the diskIO thread.
                     });
                     // Open application
                     getView().openApplication(response.body());

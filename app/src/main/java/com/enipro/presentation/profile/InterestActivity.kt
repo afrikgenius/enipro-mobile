@@ -49,7 +49,7 @@ class InterestActivity : AppCompatActivity(), ProfileContract.View {
             } else {
                 Application.getActiveUser().interests = tagRecyclerAdapter!!.items
                 // Send update to server and persist information in local storage and finish activity
-                AppExecutors().diskIO().execute { EniproDatabase.getInstance(this)!!.userDao().updateUser(Application.getActiveUser()) }
+                AppExecutors().diskIO().execute { EniproDatabase.getInstance(this)!!.user().updateUser(Application.getActiveUser()) }
                 // TODO Come back to this
                 //                presenter.updateUser(Application.getActiveUser());
                 finish()
@@ -131,13 +131,6 @@ class InterestActivity : AppCompatActivity(), ProfileContract.View {
     }
 
     companion object {
-
-        /**
-         * Returns a new intent to open an instance of this activity.
-         *
-         * @param context the context to use
-         * @return intent.
-         */
         fun newIntent(context: Context): Intent {
             return Intent(context, InterestActivity::class.java)
         }

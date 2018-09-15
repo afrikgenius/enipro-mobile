@@ -45,13 +45,13 @@
         <activity android:name=".presentation.profile.ProfileEditActivity" />
 
         <!-- Instance ID Service for firebase. -->
-        <service android:name=".firebase.FirebaseInstanceIDService">
+        <service android:name=".services.firebase.FirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".firebase.EniproMessagingService">
+        <service android:name=".services.firebase.EniproMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -70,7 +70,7 @@
         <activity android:name=".presentation.profile.NewEducationActivity" />
         <activity android:name=".presentation.profile.NewExperienceActivity" />
         <activity android:name=".presentation.generic.industry.IndustryActivity" />
-        <activity android:name=".presentation.feeds.FeedCommentActivity" />
+        <activity android:name=".presentation.feeds.comments.FeedCommentActivity" />
         <activity android:name=".presentation.post.PostActivity"/>
 
         <receiver android:name=".services.SessionScheduleService" />

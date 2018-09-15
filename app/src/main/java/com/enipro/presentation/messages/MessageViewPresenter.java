@@ -66,18 +66,18 @@ public class MessageViewPresenter extends BasePresenter<MessagesContract.Message
                             getMessageFromFirebaseUser(chat.getSenderUid(), chat.getReceiverUid());
 
                             // Create chat item with user information in user object for both users.
-                            final UserConnection userConnection = new UserConnection(receiver.get_id().getOid());
-                            addDisposable(restService.createChat(sender.get_id().getOid(), userConnection)
-                                    .subscribeOn(ioScheduler)
-                                    .observeOn(mainScheduler)
-                                    .subscribe(user -> getView().onChatCreateSuccess(userConnection), throwable -> getView().onChatCreateError()));
+//                            final UserConnection userConnection = new UserConnection(receiver.get_id().getOid());
+//                            addDisposable(restService.createChat(sender.get_id().getOid(), userConnection)
+//                                    .subscribeOn(ioScheduler)
+//                                    .observeOn(mainScheduler)
+//                                    .subscribe(user -> getView().onChatCreateSuccess(userConnection), throwable -> getView().onChatCreateError()));
 
                             // Create chat item on the receivers user information also
-                            final UserConnection secondUserConnection = new UserConnection(sender.get_id().getOid());
-                            addDisposable(restService.createChat(receiver.get_id().getOid(), secondUserConnection)
-                                    .subscribeOn(ioScheduler)
-                                    .observeOn(mainScheduler)
-                                    .subscribe());
+//                            final UserConnection secondUserConnection = new UserConnection(sender.get_id().getOid());
+//                            addDisposable(restService.createChat(receiver.get_id().getOid(), secondUserConnection)
+//                                    .subscribeOn(ioScheduler)
+//                                    .observeOn(mainScheduler)
+//                                    .subscribe());
                         }
                         // TODO Save the message in local storage.
 //                        new AppExecutors().diskIO().execute(() -> EniproDatabase.getInstance(context).messageDao().insertMessage(chat));
@@ -86,7 +86,7 @@ public class MessageViewPresenter extends BasePresenter<MessagesContract.Message
                         // Since chat sender is the application user, the username can be the application user's name
                         String username = Application.getActiveUser().getName();
                         String id = Application.getActiveUser().get_id().getOid();
-                        Utility.sendPushNotificationToReceiver(username, id,  chat.getText(), chat.getSenderUid(), senderFirebaseToken, receiverFirebaseToken, Constants.MESSAGE_ID);
+                        Utility.sendPushNotificationToReceiver(username, id, chat.getText(), chat.getSenderUid(), senderFirebaseToken, receiverFirebaseToken, Constants.MESSAGE_ID);
                         getView().onFirebaseMessageSent();
                     }
 

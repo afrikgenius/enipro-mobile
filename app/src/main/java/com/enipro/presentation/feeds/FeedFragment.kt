@@ -1,25 +1,38 @@
 package com.enipro.presentation.feeds
 
 import android.app.Activity.RESULT_OK
-import android.support.v4.app.Fragment
 import android.app.NotificationManager
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.NotificationCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.enipro.Application
 import com.enipro.R
 import com.enipro.data.remote.model.Feed
-import com.enipro.data.remote.model.User
+import com.enipro.databinding.FragmentFeedBinding
+import com.enipro.db.EniproDatabase
+import com.enipro.injection.AppExecutors
 import com.enipro.injection.Injection
 import com.enipro.model.Utility
 import com.enipro.presentation.generic.FeedRecyclerAdapter
 import com.enipro.presentation.post.PostActivity
+import com.enipro.presentation.utility.NetworkState
+import com.enipro.repository.FeedRepository
+import com.enipro.viewmodels.FeedViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_feed.*
 
@@ -30,64 +43,87 @@ class FeedFragment : Fragment(), FeedContract.View {
     private var mBuilder: NotificationCompat.Builder? = null
     private var notificationManager: NotificationManager? = null
 
-    companion object {
+    private lateinit var viewModel: FeedViewModel
+    private var binding: FragmentFeedBinding? = null
 
-        var FEED_ADAPTER_STATE = "com.enipro.presentation.feeds.FEED_ADAPTER_STATE"
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_feed, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        feed_fab.setOnClickListener {
-            startActivityForResult(PostActivity.newIntent(context), FeedContract.Presenter.POST_FEED_REQUEST)
-        }
+        binding?.feedsRecyclerView?.layoutManager = LinearLayoutManager(activity)
+        viewModel = getViewModel()
 
-        // TODO Incorporate a view model into the design at this stage
-        swiperefresh_feeds.setOnRefreshListener {
-            presenter!!.loadFeeds {
-                refreshLayoutItems(it)
-                swiperefresh_feeds.isRefreshing = false
-            }
-        }
-
-        feeds_recycler_view.setHasFixedSize(true)
-        feeds_recycler_view.addItemDecoration(Utility.DividerItemDecoration(activity))
+        binding?.feedsRecyclerView?.setHasFixedSize(true)
+        binding?.feedsRecyclerView?.addItemDecoration(Utility.DividerItemDecoration(activity))
         setRVScrollEvent()
 
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        feeds_recycler_view.layoutManager = linearLayoutManager
-
         presenter = FeedPresenter(Injection.eniproRestService(), Schedulers.io(), AndroidSchedulers.mainThread(), activity)
-        presenter!!.attachView(this)
+        presenter?.attachView(this)
 
-
-        adapter = FeedRecyclerAdapter(activity, null, presenter, false)
-        feeds_recycler_view.adapter = adapter
-
-        // TODO This should be done by the view model instead of being done here
-        presenter!!.loadFeeds {
-            refreshLayoutItems(it)
+        initAdapter()
+        initSwipeToRefresh()
+        viewModel.fetchFeedData() // Call to initiate a change in the dummy live data
+        binding?.feedFab?.setOnClickListener {
+            startActivityForResult(PostActivity.newIntent(context), FeedContract.Presenter.POST_FEED_REQUEST)
         }
 
         // TODO Provide a channel id for this builder
         mBuilder = NotificationCompat.Builder(activity!!.applicationContext, "")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setProgress(0, 0, true)
-        notificationManager = activity!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+        notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
     }
 
-    private fun refreshLayoutItems(result: List<Feed>?) {
-        if (result == null)
-            no_feed_layout.visibility = View.VISIBLE
-        else {
-            adapter!!.clear()
-            adapter!!.setItems(result)
+
+    /**
+     * Creates the view model that uses a database + network approach to handle the paging library
+     * to update the UI.
+     */
+    private fun getViewModel(): FeedViewModel {
+        return ViewModelProviders.of(activity as FragmentActivity, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                val repository = FeedRepository(
+                        context = activity?.applicationContext!!,
+                        db = EniproDatabase.getInstance(activity?.applicationContext as Application)!!,
+                        api = Injection.eniproRestService(),
+                        exceutor = AppExecutors().diskIO(),
+                        compositeDisposable = CompositeDisposable() // TODO Should be injected with Dagger instead
+                )
+                @Suppress("UNCHECKED_CAST")
+                return FeedViewModel(repository = repository) as T
+            }
+        })[FeedViewModel::class.java]
+    }
+
+    private fun initSwipeToRefresh() {
+        viewModel.refreshState.observe(this, Observer {
+            swiperefresh_feeds.isRefreshing = it == NetworkState.LOADING
+        })
+
+        swiperefresh_feeds.setOnRefreshListener {
+            viewModel.refresh()
         }
+    }
+
+
+    private fun initAdapter() {
+        adapter = FeedRecyclerAdapter(activity?.applicationContext!!) {
+            viewModel.retry()
+        }
+        binding?.feedsRecyclerView?.adapter = adapter
+
+        viewModel.feeds.observe(this, Observer {
+            adapter?.submitList(it)
+        })
+
+        viewModel.networkState.observe(this, Observer {
+            adapter?.setNetworkState(it)
+        })
     }
 
     fun setRVScrollEvent() {
@@ -103,12 +139,6 @@ class FeedFragment : Fragment(), FeedContract.View {
                     feed_fab.show()
             }
         })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (swiperefresh_feeds.isRefreshing)
-            swiperefresh_feeds.isRefreshing = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -139,33 +169,11 @@ class FeedFragment : Fragment(), FeedContract.View {
         notificationManager!!.notify(0, mBuilder!!.build())
     }
 
-    override fun updateUI(feedItem: Feed?, user: User?) {
-        if (no_feed_layout.visibility == View.VISIBLE)
-            no_feed_layout.visibility = View.GONE
-        adapter!!.addItem(feedItem)
-        feeds_recycler_view.smoothScrollToPosition(0)
-    }
-
-    override fun onSavedFeedsRetrieved(feeds: MutableList<Feed>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showLoading() {
-        progress_view.visibility = View.VISIBLE
-        progress_view.startAnimation()
-        feeds_recycler_view.visibility = View.GONE
-    }
-
-    override fun hideLoading() {
-        progress_view.visibility = View.GONE
-        progress_view.stopAnimation()
-        feeds_recycler_view.visibility = View.VISIBLE
+    override fun updateUI(feedItem: Feed?) {
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (swiperefresh_feeds.isRefreshing)
-            swiperefresh_feeds.isRefreshing = false
         if (presenter != null)
             presenter!!.detachView()
     }

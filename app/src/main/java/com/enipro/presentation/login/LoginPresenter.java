@@ -3,17 +3,22 @@ package com.enipro.presentation.login;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.enipro.Application;
 import com.enipro.R;
 import com.enipro.data.remote.EniproRestService;
-import com.enipro.data.remote.model.Login;
+import com.enipro.data.remote.model.AuthResponse;
+import com.enipro.data.remote.model.UserCred;
 import com.enipro.data.remote.model.User;
 import com.enipro.db.EniproDatabase;
 import com.enipro.injection.AppExecutors;
 import com.enipro.model.DataValidator;
+import com.enipro.model.Enipro;
 import com.enipro.model.Utility;
 import com.enipro.model.ValidationService;
 import com.enipro.presentation.base.BasePresenter;
@@ -79,48 +84,49 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
             getView().setViewError(views.get(LoginContract.View.EMAIL), "Please enter a valid email");
         else {
             // Use rest service to verify user credentials
-            Login login = new Login();
-            login.setEmail(emailAddress);
-            login.setPassword(password);
+            UserCred cred = new UserCred();
+            cred.setEmail(emailAddress);
+            cred.setPassword(password);
             getView().showProgress();
-            restService.login(login).enqueue(new Callback<User>() {
+            restService.auth_token(cred).enqueue(new Callback<AuthResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                public void onResponse(@NonNull Call<AuthResponse> call, @NonNull Response<AuthResponse> response) {
                     // Dismiss progress.
                     getView().dismissProgress();
                     if (response.isSuccessful()) {
-                        User applicationUser = response.body();
-                        applicationUser.setFirebaseToken(Utility.getTokenFromSharedPref(context));
-                        addDisposable(restService.updateUser(applicationUser, applicationUser.get_id().getOid())
+                        AuthResponse authResponse = response.body();
+                        Application.setAuthToken(authResponse.getToken());
+
+                        // Save the token in shared pref.
+                        // TODO A getUser and updateUser is sent in here. Not cool.
+                        addDisposable(restService.getUser(authResponse.getUserId(), Application.getAuthToken())
                                 .subscribeOn(ioScheduler)
                                 .observeOn(mainScheduler)
-                                .subscribe(user -> {
-                                    // Persist user information in mobile datastore.
-                                    new AppExecutors().diskIO().execute(() -> {
-                                        applicationUser.setActive(true); // TODO Check what is going on here.
-                                        Application.setActiveUser(applicationUser); // Set the active user of the application.
-                                        db.userDao().insertUser(applicationUser); // Execute the operation on the diskIO thread.
-                                    });
+                                .subscribe(appUser -> {
+                                    appUser.setFirebaseToken(Utility.getTokenFromSharedPref(context));
+                                    addDisposable(restService.updateUser(appUser, appUser.get_id().getOid(), Application.getAuthToken())
+                                            .subscribeOn(ioScheduler)
+                                            .observeOn(mainScheduler)
+                                            .subscribe(user -> {
+                                                // Persist user information in mobile datastore.
+                                                new AppExecutors().diskIO().execute(() -> {
+                                                    appUser.setActive(true); // TODO Check what is going on here.
+                                                    Application.setActiveUser(appUser); // Set the active user of the application.
+                                                    db.user().insertUser(appUser); // Execute the operation on the diskIO thread.
+                                                });
 
-                                    // Login user information into Firebase Auth using Email/Password Authentication.
-                                    loginFirebaseAuth(emailAddress, password);
+                                                // Login user information into Firebase Auth using Email/Password Authentication.
+                                                loginFirebaseAuth(emailAddress, password);
 
-                                    // Open application
-                                    getView().openApplication(applicationUser);
+                                                // Open application
+                                                getView().openApplication(appUser);
+                                            }));
                                 }));
-                    } else {
-                        JSONObject jsonObject;
-                        try {
-                            jsonObject = new JSONObject(response.errorBody().string());
-                            getView().showMessage(LoginContract.View.MESSAGE_DIALOG, jsonObject.getString("description"));
-                        } catch (IOException | JSONException io_json) {
-//                            Log.e(Enipro.APPLICATION + ":" + ((Activity) getView()).getLocalClassName(), io_json.getMessage());
-                        }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable throwable) {
+                public void onFailure(Call<AuthResponse> call, Throwable throwable) {
                     getView().dismissProgress();
                     getView().showMessage(LoginContract.View.MESSAGE_DIALOG, "An application error occurred. Please try again.");
                 }
@@ -159,7 +165,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
                 // Get the firebase UID and persist it
                 Application.getActiveUser().setFirebaseUID(task.getResult().getUser().getUid());
-                new AppExecutors().diskIO().execute(() -> db.userDao().updateUser(Application.getActiveUser()));
+                new AppExecutors().diskIO().execute(() -> db.user().updateUser(Application.getActiveUser()));
             } else {
                 // TODO Put on a future thread to execute again later in the application.
             }
